@@ -5,7 +5,7 @@
         <div class="flex items-center justify-between gap-8">
           <NuxtLink to="/" class="flex items-center">
             <img
-                :src="isDark ? '/images/logo-dark.svg' : '/images/logo-light.svg'"
+                :src="isDark ? '/images/icon-dark.svg' : '/images/icon-light.svg'"
                 alt="Logo"
                 class="h-8"
             />

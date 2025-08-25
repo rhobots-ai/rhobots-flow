@@ -23,8 +23,9 @@
               <PanelLeft class="h-5 w-5 text-gray-600 dark:text-gray-400" />
             </button>
             <NuxtLink to="/home" class="flex items-center">
-              <img :src="isDark ? '/images/logo-text-dark.svg' : '/images/logo-text-light.svg'" alt="Logo"
-                class="h-6" />
+              <span class="text-xl font-bold text-gray-900 dark:text-white">
+                App Template
+              </span>
             </NuxtLink>
           </div>
           <NuxtLink v-show="!isSidebarOpen" to="/home"

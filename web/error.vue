@@ -46,7 +46,7 @@
       <div class="mt-8 text-center">
         <NuxtLink to="/" class="inline-block">
           <img
-              :src="isDark ? '/images/logo-dark.svg' : '/images/logo-light.svg'"
+              :src="isDark ? '/images/icon-dark.svg' : '/images/icon-light.svg'"
               alt="Logo"
               class="h-8 mx-auto"
           />

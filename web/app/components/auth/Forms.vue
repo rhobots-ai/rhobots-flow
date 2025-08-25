@@ -3,7 +3,7 @@
     <!-- Logo -->
     <div class="text-center mb-6">
       <img
-          :src="isDark ? '/images/logo-dark.svg' : '/images/logo-light.svg'"
+          :src="isDark ? '/images/icon-dark.svg' : '/images/icon-light.svg'"
           alt="Logo"
           class="h-8 mx-auto"
       />

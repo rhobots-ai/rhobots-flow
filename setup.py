@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Setup script for Autobots repository.
+Setup script for App Template repository.
 This script helps developers customize the template by replacing placeholder strings
 with their own project-specific values.
 """
@@ -20,7 +20,7 @@ class ProjectSetup:
         
         # Define file patterns and their replacement contexts
         self.file_replacements = {
-            # Display name replacements (Autobots)
+            # Display name replacements (App Template)
             'display_name': [
                 'web/app/layouts/default.vue',
                 'web/app/components/auth/Login.vue',
@@ -34,7 +34,8 @@ class ProjectSetup:
             'kebab_case': [
                 'docker-compose.dev.yml',
                 'web/build.sh',
-                'README.md'
+                'README.md',
+                '.env.example'
             ],
             # Snake case replacements (app_template)
             'snake_case': [
@@ -42,13 +43,14 @@ class ProjectSetup:
                 'postgres/init/01-create_database.sql',
                 'docker-compose.dev.yml',
                 'backend/config/settings.py',
-                'README.md'
+                'README.md',
+                '.env.example'
             ]
         }
 
     def get_user_input(self) -> Dict[str, str]:
         """Get user input for project configuration."""
-        print("🚀 Welcome to Autobots Setup!")
+        print("🚀 Welcome to App Template Setup!")
         print("=" * 50)
         print("This script will help you customize the template for your project.")
         print("Please provide the following information:\n")
@@ -122,7 +124,7 @@ class ProjectSetup:
         print(f"Log Prefix:       '{config['log_prefix']}'")
         
         print("\n🔄 The following replacements will be made:")
-        print(f"  'Autobots' → '{config['display_name']}'")
+        print(f"  'App Template' → '{config['display_name']}'")
         print(f"  'app-template' → '{config['kebab_name']}'")
         print(f"  'app_template' → '{config['snake_name']}'")
         print(f"  Database: 'app_template' → '{config['database_name']}'")
@@ -170,7 +172,7 @@ class ProjectSetup:
         # Define specific replacement patterns
         replacements = [
             # Display name replacements
-            ('Autobots', config['display_name']),
+            ('App Template', config['display_name']),
             
             # Specific context replacements
             ('app-template-backend:latest', f"{config['docker_prefix']}-backend:latest"),
@@ -230,7 +232,7 @@ class ProjectSetup:
 
     def cleanup_setup_files(self) -> None:
         """Remove setup-related files that are no longer needed."""
-        setup_files = ['setup.py']
+        setup_files = ['setup.py', 'SETUP_GUIDE.md']
         
         print(f"\n🧹 Cleaning up setup files...")
         for file_name in setup_files:

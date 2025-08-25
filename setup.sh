@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Autobots Setup Script
+# App Template Setup Script
 # This script helps developers customize the template for their project
 
 set -e
 
-echo "🚀 Autobots Setup"
+echo "🚀 App Template Setup"
 echo "===================="
 
 # Check if Python 3 is available

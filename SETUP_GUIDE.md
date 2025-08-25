@@ -1,6 +1,6 @@
 # Setup Guide
 
-This guide explains how to use the setup script to customize the Autobots for your project.
+This guide explains how to use the setup script to customize the App Template for your project.
 
 ## Quick Start
 
@@ -21,7 +21,7 @@ This guide explains how to use the setup script to customize the Autobots for yo
 ## Example Session
 
 ```
-🚀 Welcome to Autobots Setup!
+🚀 Welcome to App Template Setup!
 ==================================================
 This script will help you customize the template for your project.
 Please provide the following information:
@@ -46,7 +46,7 @@ Docker Prefix:    'taskmaster-pro'
 Log Prefix:       'taskmaster_pro'
 
 🔄 The following replacements will be made:
-  'Autobots' → 'TaskMaster Pro'
+  'App Template' → 'TaskMaster Pro'
   'app-template' → 'taskmaster-pro'
   'app_template' → 'taskmaster_pro'
   Database: 'app_template' → 'taskmaster_pro'

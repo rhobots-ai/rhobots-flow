@@ -1,4 +1,4 @@
-## Autobots (Monorepo)
+## App Template (Monorepo)
 
 Starter template for a full‑stack app: Django backend + Vue 3 (Vite + Tailwind) frontend. Designed to be copied and adapted without modifying the underlying tooling and infra.
 

@@ -1,0 +1,34 @@
+FROM node:24-alpine
+
+WORKDIR /app
+
+# Add dependencies
+RUN apk update && apk upgrade --no-cache libc6-compat libcrypto3 libssl3
+
+RUN apk add --no-cache dumb-init curl
+
+# Install dependencies
+RUN corepack enable && corepack prepare pnpm@10.15.0 --activate
+
+# Copy full source for development
+COPY . .
+
+RUN pnpm install --filter web --frozen-lockfile
+
+# Pass build-time environment variables
+ARG NUXT_PUBLIC_AUTH_BASE_URL
+ARG NUXT_PUBLIC_APP_BASE_URL
+ARG NUXT_PUBLIC_API_SCHEME
+ARG NUXT_PUBLIC_API_BASE_URL
+
+ENV NUXT_PUBLIC_AUTH_BASE_URL=$NUXT_PUBLIC_AUTH_BASE_URL
+ENV NUXT_PUBLIC_APP_BASE_URL=$NUXT_PUBLIC_APP_BASE_URL
+ENV NUXT_PUBLIC_API_SCHEME=$NUXT_PUBLIC_API_SCHEME
+ENV NUXT_PUBLIC_API_BASE_URL=$NUXT_PUBLIC_API_BASE_URL
+
+EXPOSE 3000
+
+WORKDIR /app/web
+
+# CMD ["tail", "-f", "/dev/null"]
+CMD ["pnpm", "run", "dev"]

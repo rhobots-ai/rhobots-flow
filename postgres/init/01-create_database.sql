@@ -1,0 +1,2 @@
+CREATE DATABASE app_template;
+CREATE DATABASE auth;

@@ -25,12 +25,12 @@
           </NuxtLink>
 
           <!-- Sample Link -->
-          <NuxtLink to="/sample"
+          <NuxtLink to="/ui-reference"
             class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors mt-1"
             :class="$route.path.startsWith('/sample') ? 'bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'"
             @click="handleClose">
             <Layout class="h-5 w-5" />
-            Sample
+            UI Reference
           </NuxtLink>
         </div>
       </nav>

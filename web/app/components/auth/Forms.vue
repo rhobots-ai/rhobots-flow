@@ -1,46 +1,37 @@
 <template>
-  <div class="w-full max-w-md">
-    <!-- Logo -->
-    <div class="text-center mb-6">
-      <img
-          :src="isDark ? '/images/icon-dark.svg' : '/images/icon-light.svg'"
-          alt="Logo"
-          class="h-8 mx-auto"
-      />
-    </div>
-
+  <div class="w-full">
     <!-- Tabs -->
-    <div class="flex border-b border-gray-200 dark:border-gray-700 mb-6">
+    <div class="flex border-b border-white/20 mb-8">
       <button
-          class="px-4 py-2 text-sm font-medium transition-colors relative"
-          :class="activeTab === 'signin' ? 'text-primary-600 dark:text-primary-400' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'"
+          class="flex-1 px-4 py-3 text-sm font-medium transition-all duration-300 relative text-center"
+          :class="activeTab === 'signin' ? 'text-white' : 'text-white/60 hover:text-white/80'"
           @click="activeTab = 'signin'"
       >
         Sign In
         <div
-            class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600 dark:bg-primary-400 transform origin-left transition-transform"
+            class="absolute bottom-0 left-0 right-0 h-0.5 bg-white transform origin-left transition-transform duration-300"
             :class="activeTab === 'signin' ? 'scale-x-100' : 'scale-x-0'"
         />
       </button>
       <button
-          class="px-4 py-2 text-sm font-medium transition-colors relative"
-          :class="activeTab === 'signup' ? 'text-primary-600 dark:text-primary-400' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'"
+          class="flex-1 px-4 py-3 text-sm font-medium transition-all duration-300 relative text-center"
+          :class="activeTab === 'signup' ? 'text-white' : 'text-white/60 hover:text-white/80'"
           @click="activeTab = 'signup'"
       >
         Sign Up
         <div
-            class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600 dark:bg-primary-400 transform origin-left transition-transform"
+            class="absolute bottom-0 left-0 right-0 h-0.5 bg-white transform origin-left transition-transform duration-300"
             :class="activeTab === 'signup' ? 'scale-x-100' : 'scale-x-0'"
         />
       </button>
     </div>
 
     <!-- Sign In Form -->
-    <form v-if="activeTab === 'signin'" @submit.prevent="handleSignIn" class="space-y-4">
+    <form v-if="activeTab === 'signin'" @submit.prevent="handleSignIn" class="space-y-6">
       <!-- Email -->
       <div>
-        <label for="signin-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Email
+        <label for="signin-email" class="block text-sm font-medium text-white/90 mb-2">
+          Email Address
         </label>
         <input
             id="signin-email"
@@ -48,21 +39,22 @@
             v-model="signInForm.email"
             type="email"
             required
-            class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:ring-primary-500"
-            :class="{ 'border-red-300 focus:border-red-500 focus:ring-red-500': formErrors.email }"
+            class="w-full px-4 py-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:bg-white/15 focus:border-white/40 focus:ring-0 focus:outline-none transition-all duration-300"
+            :class="{ 'border-red-400 bg-red-500/10': formErrors.email }"
+            placeholder="Enter your email"
         />
-        <p v-if="formErrors.email" class="mt-1 text-xs text-red-500">{{ formErrors.email }}</p>
+        <p v-if="formErrors.email" class="mt-2 text-xs text-red-300">{{ formErrors.email }}</p>
       </div>
 
       <!-- Password -->
       <div>
-        <div class="flex items-center justify-between mb-1">
-          <label for="signin-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <div class="flex items-center justify-between mb-2">
+          <label for="signin-password" class="block text-sm font-medium text-white/90">
             Password
           </label>
           <button
               type="button"
-              class="text-xs text-primary-600 dark:text-primary-400 hover:underline"
+              class="text-xs text-white/70 hover:text-white transition-colors underline underline-offset-2"
               @click="showForgotPassword = true"
           >
             Forgot password?
@@ -75,19 +67,20 @@
               v-model="signInForm.password"
               :type="showPassword ? 'text' : 'password'"
               required
-              class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:ring-primary-500 pr-10"
-              :class="{ 'border-red-300 focus:border-red-500 focus:ring-red-500': formErrors.password }"
+              class="w-full px-4 py-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:bg-white/15 focus:border-white/40 focus:ring-0 focus:outline-none transition-all duration-300 pr-12"
+              :class="{ 'border-red-400 bg-red-500/10': formErrors.password }"
+              placeholder="Enter your password"
           />
           <button
               type="button"
-              class="absolute inset-y-0 right-0 pr-3 flex items-center"
+              class="absolute inset-y-0 right-0 pr-4 flex items-center text-white/60 hover:text-white transition-colors"
               @click="showPassword = !showPassword"
           >
-            <Eye v-if="showPassword" class="h-5 w-5 text-gray-400"/>
-            <EyeOff v-else class="h-5 w-5 text-gray-400"/>
+            <Eye v-if="showPassword" class="h-5 w-5"/>
+            <EyeOff v-else class="h-5 w-5"/>
           </button>
         </div>
-        <p v-if="formErrors.password" class="mt-1 text-xs text-red-500">{{ formErrors.password }}</p>
+        <p v-if="formErrors.password" class="mt-2 text-xs text-red-300">{{ formErrors.password }}</p>
       </div>
 
       <!-- Remember Me -->
@@ -96,28 +89,28 @@
             id="remember-me"
             v-model="signInForm.rememberMe"
             type="checkbox"
-            class="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-primary-600 dark:text-primary-400 focus:ring-primary-500"
+            class="h-4 w-4 rounded border-white/20 bg-white/10 text-white focus:ring-white/20 focus:ring-offset-0"
         />
-        <label for="remember-me" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
-          Remember me
+        <label for="remember-me" class="ml-3 block text-sm text-white/80">
+          Remember me for 30 days
         </label>
       </div>
 
       <!-- Error Message -->
-      <div v-if="authError" class="p-3 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-sm">
+      <div v-if="authError" class="p-4 rounded-xl bg-red-500/10 backdrop-blur-sm border border-red-400/20 text-red-300 text-sm">
         {{ authError }}
       </div>
 
       <!-- Signup Success Message -->
-      <div v-if="signUpSuccess" class="p-3 rounded-lg bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-sm">
-        <div class="flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <div v-if="signUpSuccess" class="p-4 rounded-xl bg-green-500/10 backdrop-blur-sm border border-green-400/20 text-green-300 text-sm">
+        <div class="flex items-start gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
             <polyline points="22 4 12 14.01 9 11.01"></polyline>
           </svg>
           <div>
             <p class="font-medium">Account created successfully!</p>
-            <p class="text-xs mt-1">Please check your email to verify your account before signing in.</p>
+            <p class="text-xs mt-1 text-green-300/80">Please check your email to verify your account before signing in.</p>
           </div>
         </div>
       </div>
@@ -125,20 +118,20 @@
       <!-- Submit Button -->
       <button
           type="submit"
-          class="w-full px-4 py-2 rounded-lg bg-primary-600 text-white text-sm font-medium hover:bg-primary-700 transition-colors flex items-center justify-center"
+          class="w-full px-6 py-3 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 text-white font-medium hover:bg-white/30 hover:border-white/40 transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
           :disabled="isLoading"
       >
-        <Loader2 v-if="isLoading" class="h-4 w-4 mr-2 animate-spin"/>
-        Sign In
+        <Loader2 v-if="isLoading" class="h-5 w-5 mr-2 animate-spin"/>
+        {{ isLoading ? 'Signing In...' : 'Sign In' }}
       </button>
 
       <!-- Social Login Divider -->
-      <div class="relative my-6">
+      <div class="relative my-8">
         <div class="absolute inset-0 flex items-center">
-          <div class="w-full border-t border-gray-200 dark:border-gray-700"></div>
+          <div class="w-full border-t border-white/20"></div>
         </div>
         <div class="relative flex justify-center text-sm">
-          <span class="px-2 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">Or continue with</span>
+          <span class="px-4 bg-white/5 backdrop-blur-sm text-white/70 rounded-full">Or continue with</span>
         </div>
       </div>
 
@@ -149,10 +142,10 @@
     </form>
 
     <!-- Sign Up Form -->
-    <form v-if="activeTab === 'signup'" @submit.prevent="handleSignUp" class="space-y-4">
+    <form v-if="activeTab === 'signup'" @submit.prevent="handleSignUp" class="space-y-6">
       <!-- Full Name -->
       <div>
-        <label for="signup-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label for="signup-name" class="block text-sm font-medium text-white/90 mb-2">
           Full Name
         </label>
         <input
@@ -160,31 +153,33 @@
             v-model="signUpForm.name"
             type="text"
             required
-            class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:ring-primary-500"
-            :class="{ 'border-red-300 focus:border-red-500 focus:ring-red-500': formErrors.name }"
+            class="w-full px-4 py-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:bg-white/15 focus:border-white/40 focus:ring-0 focus:outline-none transition-all duration-300"
+            :class="{ 'border-red-400 bg-red-500/10': formErrors.name }"
+            placeholder="Enter your full name"
         />
-        <p v-if="formErrors.name" class="mt-1 text-xs text-red-500">{{ formErrors.name }}</p>
+        <p v-if="formErrors.name" class="mt-2 text-xs text-red-300">{{ formErrors.name }}</p>
       </div>
 
       <!-- Email -->
       <div>
-        <label for="signup-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Email
+        <label for="signup-email" class="block text-sm font-medium text-white/90 mb-2">
+          Email Address
         </label>
         <input
             id="signup-email"
             v-model="signUpForm.email"
             type="email"
             required
-            class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:ring-primary-500"
-            :class="{ 'border-red-300 focus:border-red-500 focus:ring-red-500': formErrors.email }"
+            class="w-full px-4 py-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:bg-white/15 focus:border-white/40 focus:ring-0 focus:outline-none transition-all duration-300"
+            :class="{ 'border-red-400 bg-red-500/10': formErrors.email }"
+            placeholder="Enter your email address"
         />
-        <p v-if="formErrors.email" class="mt-1 text-xs text-red-500">{{ formErrors.email }}</p>
+        <p v-if="formErrors.email" class="mt-2 text-xs text-red-300">{{ formErrors.email }}</p>
       </div>
 
       <!-- Password -->
       <div>
-        <label for="signup-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label for="signup-password" class="block text-sm font-medium text-white/90 mb-2">
           Password
         </label>
         <div class="relative">
@@ -193,83 +188,84 @@
               v-model="signUpForm.password"
               :type="showPassword ? 'text' : 'password'"
               required
-              class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:ring-primary-500 pr-10"
-              :class="{ 'border-red-300 focus:border-red-500 focus:ring-red-500': formErrors.password }"
+              class="w-full px-4 py-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:bg-white/15 focus:border-white/40 focus:ring-0 focus:outline-none transition-all duration-300 pr-12"
+              :class="{ 'border-red-400 bg-red-500/10': formErrors.password }"
+              placeholder="Create a strong password"
           />
           <button
               type="button"
-              class="absolute inset-y-0 right-0 pr-3 flex items-center"
+              class="absolute inset-y-0 right-0 pr-4 flex items-center text-white/60 hover:text-white transition-colors"
               @click="showPassword = !showPassword"
           >
-            <Eye v-if="showPassword" class="h-5 w-5 text-gray-400"/>
-            <EyeOff v-else class="h-5 w-5 text-gray-400"/>
+            <Eye v-if="showPassword" class="h-5 w-5"/>
+            <EyeOff v-else class="h-5 w-5"/>
           </button>
         </div>
-        <p v-if="formErrors.password" class="mt-1 text-xs text-red-500">{{ formErrors.password }}</p>
+        <p v-if="formErrors.password" class="mt-2 text-xs text-red-300">{{ formErrors.password }}</p>
       </div>
 
       <!-- Password Strength Indicator -->
-      <div v-if="signUpForm.password">
-        <div class="flex items-center gap-2 mb-1">
-          <div class="h-1 flex-1 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+      <div v-if="signUpForm.password" class="space-y-3">
+        <div class="flex items-center gap-3">
+          <div class="h-2 flex-1 rounded-full bg-white/20 overflow-hidden">
             <div
-                class="h-full transition-all duration-300"
+                class="h-full transition-all duration-500 rounded-full"
                 :class="[
-                passwordStrength === 'weak' ? 'w-1/3 bg-red-500' :
-                passwordStrength === 'medium' ? 'w-2/3 bg-yellow-500' :
-                'w-full bg-green-500'
+                passwordStrength === 'weak' ? 'w-1/3 bg-red-400' :
+                passwordStrength === 'medium' ? 'w-2/3 bg-yellow-400' :
+                'w-full bg-green-400'
               ]"
             ></div>
           </div>
-          <span class="text-xs" :class="[
-            passwordStrength === 'weak' ? 'text-red-500' :
-            passwordStrength === 'medium' ? 'text-yellow-500' :
-            'text-green-500'
+          <span class="text-sm font-medium" :class="[
+            passwordStrength === 'weak' ? 'text-red-300' :
+            passwordStrength === 'medium' ? 'text-yellow-300' :
+            'text-green-300'
           ]">
             {{ passwordStrength === 'weak' ? 'Weak' : passwordStrength === 'medium' ? 'Medium' : 'Strong' }}
           </span>
         </div>
-        <ul class="text-xs space-y-1 text-gray-500 dark:text-gray-400">
-          <li class="flex items-center gap-1">
-            <Check v-if="passwordCriteria.length" class="h-3 w-3 text-green-500"/>
-            <X v-else class="h-3 w-3 text-red-500"/>
+        <ul class="text-xs space-y-2 text-white/70">
+          <li class="flex items-center gap-2">
+            <Check v-if="passwordCriteria.length" class="h-3 w-3 text-green-400"/>
+            <X v-else class="h-3 w-3 text-red-400"/>
             At least 8 characters
           </li>
-          <li class="flex items-center gap-1">
-            <Check v-if="passwordCriteria.uppercase" class="h-3 w-3 text-green-500"/>
-            <X v-else class="h-3 w-3 text-red-500"/>
+          <li class="flex items-center gap-2">
+            <Check v-if="passwordCriteria.uppercase" class="h-3 w-3 text-green-400"/>
+            <X v-else class="h-3 w-3 text-red-400"/>
             Contains uppercase letter
           </li>
-          <li class="flex items-center gap-1">
-            <Check v-if="passwordCriteria.number" class="h-3 w-3 text-green-500"/>
-            <X v-else class="h-3 w-3 text-red-500"/>
+          <li class="flex items-center gap-2">
+            <Check v-if="passwordCriteria.number" class="h-3 w-3 text-green-400"/>
+            <X v-else class="h-3 w-3 text-red-400"/>
             Contains number
           </li>
         </ul>
       </div>
 
       <!-- Error Message -->
-      <div v-if="authError" class="p-3 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-sm">
+      <div v-if="authError" class="p-4 rounded-xl bg-red-500/10 backdrop-blur-sm border border-red-400/20 text-red-300 text-sm">
         {{ authError }}
       </div>
 
       <!-- Submit Button -->
       <button
           type="submit"
-          class="w-full px-4 py-2 rounded-lg bg-primary-600 text-white text-sm font-medium hover:bg-primary-700 transition-colors flex items-center justify-center"
+          class="w-full px-6 py-3 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 text-white font-medium hover:bg-white/30 hover:border-white/40 transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
           :disabled="isLoading"
       >
-        <Loader2 v-if="isLoading" class="h-4 w-4 mr-2 animate-spin"/>
-        Create Account
+        <Loader2 v-if="isLoading" class="h-5 w-5 mr-2 animate-spin"/>
+        {{ isLoading ? 'Creating Account...' : 'Create Account' }}
       </button>
 
       <!-- Social Login Divider -->
-      <div class="relative my-6">
+      <div class="relative my-8">
         <div class="absolute inset-0 flex items-center">
-          <div class="w-full border-t border-gray-200 dark:border-gray-700"></div>
+          <div class="w-full border-t border-white/20"></div>
         </div>
         <div class="relative flex justify-center text-sm">
-          <span class="px-2 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">Or continue with</span>
+          <span class="px-4 bg-white/5 backdrop-blur-sm text-white/70 rounded-full">Or continue with</span>
         </div>
       </div>
 
@@ -279,11 +275,11 @@
       </div>
 
       <!-- Terms Agreement -->
-      <p class="text-xs text-center text-gray-500 dark:text-gray-400">
+      <p class="text-xs text-center text-white/60 leading-relaxed">
         By signing up, you agree to our
-        <NuxtLink to="/terms" class="text-primary-600 dark:text-primary-400 hover:underline">Terms of Service</NuxtLink>
+        <NuxtLink to="/terms" class="text-white/80 hover:text-white underline underline-offset-2">Terms of Service</NuxtLink>
         and
-        <NuxtLink to="/privacy" class="text-primary-600 dark:text-primary-400 hover:underline">Privacy Policy</NuxtLink>
+        <NuxtLink to="/privacy" class="text-white/80 hover:text-white underline underline-offset-2">Privacy Policy</NuxtLink>
       </p>
     </form>
   </div>
@@ -314,56 +310,60 @@
               leave-from="opacity-100 scale-100"
               leave-to="opacity-0 scale-95"
           >
-            <DialogPanel class="w-full max-w-md transform overflow-hidden rounded-xl bg-white dark:bg-gray-900 p-6 shadow-xl transition-all">
-              <div class="flex justify-between items-center mb-4">
-                <DialogTitle as="h3" class="text-lg font-medium text-gray-900 dark:text-gray-100">
+            <DialogPanel class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white/10 backdrop-blur-2xl border border-white/20 p-8 shadow-2xl transition-all">
+              <div class="flex justify-between items-center mb-6">
+                <DialogTitle as="h3" class="text-xl font-semibold text-white">
                   Reset Password
                 </DialogTitle>
                 <button
                     type="button"
-                    class="text-gray-400 hover:text-gray-500"
+                    class="text-white/60 hover:text-white transition-colors"
                     @click="showForgotPassword = false"
                 >
-                  <X class="h-5 w-5"/>
+                  <X class="h-6 w-6"/>
                 </button>
               </div>
 
-              <form @submit.prevent="handleForgotPassword" class="space-y-4">
-                <p class="text-sm text-gray-500 dark:text-gray-400">
-                  Enter your email address and we'll send you a link to reset your password.
+              <form @submit.prevent="handleForgotPassword" class="space-y-6">
+                <p class="text-sm text-white/80 leading-relaxed">
+                  Enter your email address and we'll send you a secure link to reset your password.
                 </p>
 
                 <!-- Email -->
                 <div>
-                  <label for="reset-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Email
+                  <label for="reset-email" class="block text-sm font-medium text-white/90 mb-2">
+                    Email Address
                   </label>
                   <input
                       id="reset-email"
                       v-model="forgotPasswordEmail"
                       type="email"
                       required
-                      class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:ring-primary-500"
+                      class="w-full px-4 py-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:bg-white/15 focus:border-white/40 focus:ring-0 focus:outline-none transition-all duration-300"
+                      placeholder="Enter your email address"
                   />
                 </div>
 
                 <!-- Success Message -->
-                <div v-if="resetEmailSent" class="p-3 rounded-lg bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-sm">
-                  Password reset link sent! Please check your email.
+                <div v-if="resetEmailSent" class="p-4 rounded-xl bg-green-500/10 backdrop-blur-sm border border-green-400/20 text-green-300 text-sm">
+                  <div class="flex items-center gap-2">
+                    <Check class="h-4 w-4"/>
+                    <span>Password reset link sent! Please check your email.</span>
+                  </div>
                 </div>
 
                 <!-- Submit Button -->
                 <div class="flex justify-end gap-3">
                   <button
                       type="button"
-                      class="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                      class="px-5 py-2.5 rounded-xl text-white/70 text-sm font-medium hover:text-white hover:bg-white/10 transition-all duration-300"
                       @click="showForgotPassword = false"
                   >
                     Cancel
                   </button>
                   <button
                       type="submit"
-                      class="px-4 py-2 rounded-lg bg-primary-600 text-white text-sm font-medium hover:bg-primary-700 transition-colors flex items-center"
+                      class="px-5 py-2.5 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 text-white text-sm font-medium hover:bg-white/30 hover:border-white/40 transition-all duration-300 flex items-center shadow-lg"
                       :disabled="isLoading || resetEmailSent"
                   >
                     <Loader2 v-if="isLoading" class="h-4 w-4 mr-2 animate-spin"/>

@@ -208,7 +208,7 @@ class ProjectSetup:
                     continue
                     
                 for file in files:
-                    if file.endswith(('.py', '.vue', '.js', '.ts', '.json', '.yml', '.yaml', '.sh', '.sql', '.md')):
+                    if file.endswith(('.py', '.vue', '.js', '.ts', '.json', '.yml', '.yaml', '.sh', '.sql', '.md')) or file.startswith('.env'):
                         file_path = Path(root) / file
                         try:
                             with open(file_path, 'r', encoding='utf-8') as f:

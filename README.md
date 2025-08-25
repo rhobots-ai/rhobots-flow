@@ -1,6 +1,26 @@
-## App Template (Monorepo)
+## Autobots (Monorepo)
 
 Starter template for a full‑stack app: Django backend + Vue 3 (Vite + Tailwind) frontend. Designed to be copied and adapted without modifying the underlying tooling and infra.
+
+## 🚀 Quick Setup
+
+**First time using this template?** Run the setup script to customize it for your project:
+
+```bash
+# Make setup script executable (if needed)
+chmod +x setup.sh
+
+# Run the interactive setup
+./setup.sh
+```
+
+The setup script will:
+- Ask for your project name, database name, bucket name, etc.
+- Replace all template placeholders with your values
+- Create a backup of original files
+- Update all configuration files automatically
+
+**Manual setup alternative:** See the [Manual Setup](#manual-setup) section below.
 
 ### Highlights
 - **Backend**: Django 5 + DRF, Celery-ready, Redis, Postgres, S3-compatible storage (MinIO), Spectacular (OpenAPI)
@@ -66,6 +86,8 @@ pnpm run infra:dev:prune
 Environment variables are wired in `docker-compose.dev.yml`. Defaults are provided; override via a `.env` file or shell.
 
 ---
+
+## Manual Setup
 
 ### Rename checklist (after copying the repo)
 Goal: Rename `app_template` (snake_case) and `app-template` (kebab-case) to your app’s name. Choose your new names first:

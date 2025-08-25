@@ -449,15 +449,27 @@ watch(() => props.initialTab, (newTab) => {
   }
 })
 
-// Watch for dark mode
 onMounted(() => {
-  // Check for saved theme preference or system preference
-  const savedTheme = localStorage.getItem('theme')
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-
-  isDark.value = savedTheme === 'dark' || (!savedTheme && prefersDark)
-
+  // Set callback URL
   callbackURL.value = 'http://localhost:3000/auth'
+  
+  // Update isDark based on current document class
+  isDark.value = document.documentElement.classList.contains('dark')
+  
+  // Watch for theme changes
+  const observer = new MutationObserver(() => {
+    isDark.value = document.documentElement.classList.contains('dark')
+  })
+  
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  })
+  
+  // Cleanup observer on unmount
+  onUnmounted(() => {
+    observer.disconnect()
+  })
 })
 
 // Auth client

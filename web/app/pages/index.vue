@@ -32,6 +32,24 @@ definePageMeta({
 
 // Handle redirects based on auth state
 onMounted(() => {
+  // Initialize theme since we're not using a layout
+  const savedTheme = localStorage.getItem('theme')
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+  const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark)
+  
+  if (isDark) {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
+
+  // Initialize color palette
+  const { setColorPalette } = useTheme()
+  const savedPalette = localStorage.getItem('colorPalette')
+  if (savedPalette) {
+    setColorPalette(savedPalette)
+  }
+
   // Wait for user store to be loaded before redirecting
   const redirect = () => {
     if (isLoaded.value) {

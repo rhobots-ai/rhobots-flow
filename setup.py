@@ -299,6 +299,17 @@ class ProjectSetup:
             if cleanup == 'y':
                 self.cleanup_setup_files()
                 print("✅ Setup script removed")
+            
+            # Ask about backup folder cleanup
+            cleanup_backup = input("🗂️  Remove backup folder? (y/N): ").strip().lower()
+            if cleanup_backup == 'y':
+                if Path(backup_dir).exists():
+                    shutil.rmtree(backup_dir)
+                    print("✅ Backup folder removed")
+                else:
+                    print("ℹ️  Backup folder already removed")
+
+            
                 
         except KeyboardInterrupt:
             print("\n❌ Setup cancelled by user.")

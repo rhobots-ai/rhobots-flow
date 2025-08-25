@@ -3,34 +3,34 @@
     <ClientOnly>
       <button
           ref="menuRef"
-          class="w-full flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          class="w-full flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 hover:bg-white/20 hover:border-white/30 transition-all duration-300 shadow-lg"
           @click="isOpen = !isOpen"
       >
-        <div class="relative h-8 w-8 rounded-full overflow-hidden bg-primary-100 dark:bg-primary-900 flex items-center justify-center ring-2 ring-white dark:ring-gray-900">
+        <div class="relative h-8 w-8 rounded-full overflow-hidden bg-white/20 backdrop-blur-sm flex items-center justify-center ring-2 ring-white/30">
           <img
               v-if="profile?.imageUrl"
               :src="profile.imageUrl"
               :alt="fullName"
               class="h-full w-full object-cover rounded-full"
           />
-          <User v-else class="h-4 w-4 text-primary-600 dark:text-primary-400"/>
+          <User v-else class="h-4 w-4 text-white"/>
         </div>
         
         <div class="flex-1 text-left">
-          <div>{{ fullName }}</div>
+          <div class="text-white font-medium">{{ fullName }}</div>
           <div class="inline-flex items-center">
-            <span v-if="isPro" class="px-2 py-0.5 rounded-full text-xs font-medium bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-400 inline-flex items-center gap-1">
+            <span v-if="isPro" class="px-2 py-0.5 rounded-full text-xs font-medium bg-white/20 backdrop-blur-sm border border-white/30 text-white inline-flex items-center gap-1">
               <Sparkles class="h-3 w-3" />
               Pro
             </span>
-            <span v-else class="px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 inline-flex items-center gap-1">
+            <span v-else class="px-2 py-0.5 rounded-full text-xs font-medium bg-white/10 backdrop-blur-sm border border-white/20 text-white/80 inline-flex items-center gap-1">
               Free
             </span>
           </div>
         </div>
 
         <ChevronUp
-            class="h-4 w-4 text-gray-500 dark:text-gray-400 transition-transform"
+            class="h-4 w-4 text-white/80 transition-transform"
             :class="{ 'rotate-180': !isOpen }"
         />
       </button>
@@ -39,14 +39,14 @@
     <!-- Dropdown Menu -->
     <div
         v-show="isOpen"
-        class="absolute bottom-full left-0 right-0 mb-2 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 shadow-lg overflow-hidden"
+        class="absolute bottom-full left-0 right-0 mb-2 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-xl shadow-2xl overflow-hidden"
     >
       <div class="py-1 space-y-1">
         <!-- Account Section -->
         <div>
           <NuxtLink
               to="/account"
-              class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+              class="flex items-center gap-2 px-4 py-2 text-sm text-white/90 hover:bg-white/10 hover:text-white transition-all duration-300"
               @click="handleClose"
           >
             <Settings class="h-4 w-4"/>
@@ -55,10 +55,10 @@
         </div>
 
         <!-- Settings Section -->
-        <div class="border-t border-gray-200 dark:border-gray-700 pt-1">
+        <div class="border-t border-white/20 pt-1">
           <LayoutThemeToggle :is-dark="isDark" @update:is-dark="$emit('update:isDark', $event)" />
           <button
-              class="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-50 dark:hover:bg-gray-800"
+              class="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-300 hover:bg-white/10 hover:text-red-200 transition-all duration-300"
               @click="handleLogout"
           >
             <LogOut class="h-4 w-4"/>

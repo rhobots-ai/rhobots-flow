@@ -1,26 +1,15 @@
 <template>
   <div class="min-h-screen relative overflow-hidden flex items-center justify-center">
     <!-- Video Background -->
-    <video
-        ref="videoRef"
-        class="absolute inset-0 w-full h-full object-cover"
-        autoplay
-        muted
-        loop
-        playsinline
-        :class="{ 'opacity-0': !videoLoaded }"
-        @loadeddata="onVideoLoaded"
-        @error="onVideoError"
-    >
+    <video ref="videoRef" class="absolute inset-0 w-full h-full object-cover" autoplay muted loop playsinline
+      :class="{ 'opacity-0': !videoLoaded }" @loadeddata="onVideoLoaded" @error="onVideoError">
       <source src="https://videos.pexels.com/video-files/8084496/8084496-uhd_2560_1440_25fps.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
 
     <!-- Fallback Background -->
-    <div 
-        class="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-700 to-indigo-800"
-        :class="{ 'opacity-0': videoLoaded, 'opacity-100': !videoLoaded }"
-    ></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-700 to-indigo-800"
+      :class="{ 'opacity-0': videoLoaded, 'opacity-100': !videoLoaded }"></div>
 
     <!-- Dark Overlay for Better Contrast -->
     <div class="absolute inset-0 bg-black/40 dark:bg-black/60"></div>
@@ -35,23 +24,22 @@
     </div>
 
     <!-- Theme Toggle -->
-    <button
-        @click="toggleTheme"
-        class="absolute top-6 right-6 z-30 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all duration-300 shadow-lg hover:shadow-xl"
-        :title="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-    >
-      <Sun v-if="isDark" class="h-5 w-5"/>
-      <Moon v-else class="h-5 w-5"/>
+    <button @click="toggleTheme"
+      class="absolute top-6 right-6 z-30 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all duration-300 shadow-lg hover:shadow-xl"
+      :title="isDark ? 'Switch to light mode' : 'Switch to dark mode'">
+      <Sun v-if="isDark" class="h-5 w-5" />
+      <Moon v-else class="h-5 w-5" />
     </button>
 
     <!-- Main Content -->
     <div class="relative z-20 w-full max-w-lg mx-auto px-6 py-6">
       <!-- Logo/Brand Section -->
       <div class="text-center mb-8">
-        <div class="inline-flex items-center justify-center w-20 h-20 bg-white/10 backdrop-blur-md rounded-3xl mb-6 border border-white/20 shadow-2xl">
-          <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-          </svg>
+        <div
+          class="inline-flex items-center justify-center w-20 h-20 bg-white/10 backdrop-blur-md rounded-3xl mb-6 border border-white/20 shadow-2xl">
+          <NuxtLink to="/home" class="flex items-center">
+            <img src="/images/icon-dark.svg" alt="Logo" class="h-12" />
+          </NuxtLink>
         </div>
         <h1 class="text-5xl font-bold text-white mb-3 tracking-tight">
           Welcome Back
@@ -62,14 +50,15 @@
       </div>
 
       <!-- Login Card -->
-      <div class="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl p-8 transition-all duration-300 hover:bg-white/15">
+      <div
+        class="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl p-8 transition-all duration-300 hover:bg-white/15">
         <AuthLogin />
       </div>
 
       <!-- Bottom Links -->
       <div class="text-center mt-8">
         <p class="text-white/70 text-sm">
-          Don't have an account? 
+          Don't have an account?
           <a href="#" class="text-white font-medium hover:text-white/80 transition-colors underline underline-offset-2">
             Sign up here
           </a>
@@ -78,20 +67,18 @@
     </div>
 
     <!-- Video Controls (Optional) -->
-    <button
-        @click="toggleVideo"
-        class="absolute bottom-6 right-6 z-30 p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all duration-300"
-        title="Toggle video playback"
-    >
-      <Pause v-if="isVideoPlaying" class="h-4 w-4"/>
-      <Play v-else class="h-4 w-4"/>
+    <button @click="toggleVideo"
+      class="absolute bottom-6 right-6 z-30 p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all duration-300"
+      title="Toggle video playback">
+      <Pause v-if="isVideoPlaying" class="h-4 w-4" />
+      <Play v-else class="h-4 w-4" />
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
+import { Moon, Pause, Play, Sun } from 'lucide-vue-next'
 import { storeToRefs } from "pinia"
-import { Sun, Moon, Play, Pause } from 'lucide-vue-next'
 
 const userStore = useUserStore()
 const { isLoggedIn } = storeToRefs(userStore)
@@ -162,7 +149,7 @@ onMounted(() => {
   if (isLoggedIn.value) {
     navigateTo('/home')
   }
-  
+
   // Watch for login state changes
   watch(() => isLoggedIn.value, (newIsLoggedIn) => {
     if (newIsLoggedIn) {
@@ -238,18 +225,23 @@ video {
 }
 
 @keyframes float-particle {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px) translateX(0px);
     opacity: 0.3;
   }
+
   25% {
     transform: translateY(-20px) translateX(10px);
     opacity: 0.8;
   }
+
   50% {
     transform: translateY(-40px) translateX(-5px);
     opacity: 0.5;
   }
+
   75% {
     transform: translateY(-20px) translateX(-10px);
     opacity: 0.9;
@@ -283,25 +275,25 @@ button:hover {
     font-size: 2.5rem;
     line-height: 1.2;
   }
-  
+
   .text-xl {
     font-size: 1.125rem;
   }
-  
+
   .w-20.h-20 {
     width: 4rem;
     height: 4rem;
   }
-  
+
   .w-10.h-10 {
     width: 2rem;
     height: 2rem;
   }
-  
+
   .p-8 {
     padding: 1.5rem;
   }
-  
+
   .max-w-lg {
     max-width: 20rem;
   }
@@ -311,11 +303,11 @@ button:hover {
   .text-5xl {
     font-size: 2rem;
   }
-  
+
   .p-8 {
     padding: 1rem;
   }
-  
+
   .px-6 {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -336,7 +328,7 @@ video {
   .particle {
     animation: none;
   }
-  
+
   * {
     transition: none;
   }
@@ -348,7 +340,7 @@ video {
     background-color: rgba(255, 255, 255, 0.9);
     color: #000;
   }
-  
+
   .text-white {
     color: #fff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);

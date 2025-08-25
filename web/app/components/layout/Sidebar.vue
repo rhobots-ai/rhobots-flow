@@ -4,7 +4,7 @@
     :class="isSidebarOpen ? 'translate-x-0' : '-translate-x-full'">
     <div class="flex flex-col h-full overflow-hidden">
       <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700">
-        <NuxtLink to="/" class="flex items-center">
+        <NuxtLink to="/home" class="flex items-center">
           <div class="p-3">
             <img :src="isDark ? '/images/icon-dark.svg' : '/images/icon-light.svg'" alt="Logo" class="h-6" />
           </div>
@@ -17,8 +17,8 @@
 
       <nav class="flex flex-col h-[calc(100%-10rem)] mt-4">
         <div class="px-4">
-          <NuxtLink to="/" class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-            :class="$route.path === '/' ? 'bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'"
+          <NuxtLink to="/home" class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+            :class="$route.path === '/home' ? 'bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'"
             @click="handleClose">
             <Home class="h-5 w-5" />
             Home

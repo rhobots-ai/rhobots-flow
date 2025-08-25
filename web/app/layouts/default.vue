@@ -22,14 +22,14 @@
               @click="isSidebarOpen = !isSidebarOpen">
               <PanelLeft class="h-5 w-5 text-gray-600 dark:text-gray-400" />
             </button>
-            <NuxtLink to="/" class="flex items-center">
+            <NuxtLink to="/home" class="flex items-center">
               <img :src="isDark ? '/images/logo-text-dark.svg' : '/images/logo-text-light.svg'" alt="Logo"
                 class="h-6" />
             </NuxtLink>
           </div>
-          <NuxtLink v-show="!isSidebarOpen" to="/"
+          <NuxtLink v-show="!isSidebarOpen" to="/home"
             class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-            :class="$route.path === '/' ? 'bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'">
+            :class="$route.path === '/home' ? 'bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'">
             <SquarePen class="h-5 w-5" />
           </NuxtLink>
         </div>

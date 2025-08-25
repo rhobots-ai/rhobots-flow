@@ -65,7 +65,7 @@ const userStore = useUserStore()
 const {isLoggedIn} = storeToRefs(userStore)
 
 const handleAuthSuccess = () => {
-  navigateTo('/')
+  navigateTo('/home')
 }
 
 onMounted(() => {
@@ -77,7 +77,7 @@ onMounted(() => {
 
   watch(() => isLoggedIn.value, (currentIsSignedIn) => {
     if (currentIsSignedIn) {
-      navigateTo('/')
+      navigateTo('/home')
     }
   }, {immediate: true})
 })

@@ -25,7 +25,7 @@ const {isLoggedIn} = storeToRefs(userStore)
 onMounted(async () => {
   watch(() => isLoggedIn.value, (newIsLoggedIn) => {
     if (newIsLoggedIn) {
-      navigateTo('/')
+      navigateTo('/home')
     }
   }, {immediate: true})
 })

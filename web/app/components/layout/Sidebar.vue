@@ -20,8 +20,8 @@
           <NuxtLink to="/" class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
             :class="$route.path === '/' ? 'bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'"
             @click="handleClose">
-            <SquarePen class="h-5 w-5" />
-            Create New
+            <Home class="h-5 w-5" />
+            Home
           </NuxtLink>
 
           <!-- Sample Link -->
@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import { useWindowSize } from '@vueuse/core'
-import { Layout, PanelLeftClose, SquarePen } from 'lucide-vue-next'
+import { Layout, PanelLeftClose, Home } from 'lucide-vue-next'
 import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
 import { useUserStore } from '~/stores/user'

@@ -4,7 +4,7 @@
  * we define minimal types for our usage.
  */
 
-declare module '@novnc/novnc/core/rfb' {
+declare module '@novnc/novnc/lib/rfb.js' {
   interface RFBOptions {
     scaleViewport?: boolean;
     resizeSession?: boolean;

@@ -267,7 +267,7 @@ const connectVNC = async () => {
   try {
     console.log('Establishing VNC connection...')
     
-    const { default: RFB } = await import('@novnc/novnc/core/rfb')
+    const { default: RFB } = await import('@novnc/novnc/lib/rfb.js')
     const vncCanvas = document.getElementById('vnc-canvas')
     
     if (!vncCanvas) {

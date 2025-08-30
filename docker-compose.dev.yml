@@ -3,6 +3,7 @@ services:
     build:
       dockerfile: ./backend/Dockerfile.dev
       context: .
+    image: rhobots-flow-backend:latest
     volumes:
       - ./backend:/app
     command: ["dev"]
@@ -43,9 +44,7 @@ services:
       retries: 3
 
   celery:
-    build:
-      dockerfile: ./backend/Dockerfile.dev
-      context: .
+    image: rhobots-flow-backend:latest
     command: ["celery"]
     environment:
       <<: *backend-env
@@ -55,9 +54,7 @@ services:
     restart: always
 
   beat:
-    build:
-      dockerfile: ./backend/Dockerfile.dev
-      context: .
+    image: rhobots-flow-backend:latest
     command: ["beat"]
     environment:
       <<: *backend-env
@@ -67,6 +64,7 @@ services:
     restart: always
 
   web:
+    image: rhobots-flow-web:latest
     build:
       dockerfile: ./web/Dockerfile.dev
       context: .
@@ -78,6 +76,7 @@ services:
         - NUXT_PUBLIC_API_BASE_URL=${NUXT_PUBLIC_API_BASE_URL:-localhost:8000}
     volumes:
       - ./web:/app/web
+      - /app/web/node_modules
     ports:
       - "3000:3000"
     restart: always
@@ -186,6 +185,7 @@ services:
     build:
       context: .
       dockerfile: ./backend/Dockerfile.playwright
+    command: ["tail", "-f", "/dev/null"]
     ports:
       - "7900:7900"  # VNC WebSocket Port (for noVNC)
       - "9222:9222"  # Chrome DevTools Protocol Port (for Playwright)

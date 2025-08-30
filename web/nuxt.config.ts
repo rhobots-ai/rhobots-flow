@@ -9,6 +9,9 @@ export default defineNuxtConfig({
     plugins: [
       tailwindcss(),
     ],
+    optimizeDeps: {
+      exclude: ['@novnc/novnc']
+    },
     server: {
       proxy: {
         // Proxy VNC WebSocket connections to the playwright-vnc container

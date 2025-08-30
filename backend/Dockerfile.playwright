@@ -28,8 +28,9 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # This command installs the necessary browser binaries inside the container
 RUN playwright install --with-deps chromium
 
-# Create non-root user 'pwuser' with a home directory (if missing)
-RUN useradd -m -s /bin/bash pwuser || true && mkdir -p /home/pwuser && chown -R pwuser:pwuser /home/pwuser
+# Create a non-root user 'pwuser' and its home directory.
+# We ensure the user and group exist with specific IDs to avoid conflicts.
+RUN groupadd -g 1001 pwuser && useradd -u 1001 -g 1001 -m -s /bin/bash pwuser
 
 # Set the working directory
 WORKDIR /home/pwuser

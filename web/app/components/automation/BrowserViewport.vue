@@ -216,6 +216,7 @@ import {
 } from 'lucide-vue-next'
 import type { AutomationTask, AutomationStep } from '~/types/automation'
 import { StepAction, StepType } from '~/types/automation'
+import type RFB from '@novnc/novnc/lib/rfb.js';
 
 interface Props {
   task: AutomationTask
@@ -244,10 +245,7 @@ const viewport = ref({ width: 0, height: 0 })
 const executionTime = ref(0)
 const simulatedUrl = ref<string>('')
 const canInteract = ref(false)
-const vncClient = ref<{ 
-  disconnect: () => void;
-  addEventListener: (event: string, callback: (e?: any) => void) => void;
-} | null>(null)
+const vncClient = ref<RFB | null>(null)
 const automationSocket = ref<WebSocket | null>(null)
 
 // Computed
@@ -333,7 +331,7 @@ const connectVNC = async () => {
     console.log('Establishing VNC connection...')
     
     // Dynamic import of noVNC to avoid SSR issues
-    const { default: RFB } = await import('@novnc/novnc/core/rfb') as { default: any }
+    const { default: RFB } = await import('@novnc/novnc/lib/rfb.js')
     
     const vncCanvas = document.getElementById('vnc-canvas')
     if (!vncCanvas) {
@@ -354,10 +352,10 @@ const connectVNC = async () => {
       resizeSession: false,
       showDotCursor: true,
       background: '#000000'
-    }) as any
+    })
     
     // Set up VNC event handlers
-    const client = vncClient.value as any
+    const client = vncClient.value
     client.addEventListener('connect', () => {
       console.log('VNC connected successfully')
       currentUrl.value = 'https://angularformadd.netlify.app/'
@@ -367,7 +365,7 @@ const connectVNC = async () => {
       console.log('VNC disconnected')
     })
     
-    client.addEventListener('securityfailure', (e: any) => {
+    client.addEventListener('securityfailure', (e: CustomEvent) => {
       console.error('VNC security failure:', e.detail)
       throw new Error('VNC authentication failed')
     })
@@ -669,7 +667,7 @@ onUnmounted(() => {
   // Clean up connections
   if (vncClient.value) {
     try {
-      (vncClient.value as any).disconnect()
+      vncClient.value.disconnect()
     } catch (error) {
       console.warn('Error disconnecting VNC:', error)
     }

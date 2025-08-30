@@ -1,4 +1,4 @@
-## App Template (Monorepo)
+## Rhobots Flow (Monorepo)
 
 Starter template for a full‑stack app: Django backend + Vue 3 (Vite + Tailwind) frontend. Designed to be copied and adapted without modifying the underlying tooling and infra.
 
@@ -32,7 +32,7 @@ The setup script will:
 ### Monorepo structure
 - `backend/` — Django app, dev Dockerfile, entrypoint
 - `web/` — Vue app with Vite + Tailwind
-- `postgres/` — DB bootstrap (`auth`, `app_template`)
+- `postgres/` — DB bootstrap (`auth`, `rhobots_flow`)
 - `docker-compose.dev.yml` — full dev stack
 - `scripts/` — helper scripts (`init-db-user.sh`, `nuke.sh`)
 
@@ -90,43 +90,11 @@ Environment variables are wired in `docker-compose.dev.yml`. Defaults are provid
 ## Manual Setup
 
 ### Rename checklist (after copying the repo)
-Goal: Rename `app_template` (snake_case) and `app-template` (kebab-case) to your app’s name. Choose your new names first:
-- New Python/package/db name (snake_case): `your_app`
-- New image/bucket names (kebab-case): `your-app`
-
-Update these occurrences:
-- Package name and workspace root
-  - `package.json` → `name: "app_template"`
-- Database names
-  - `postgres/init/01-create_database.sql` → `CREATE DATABASE app_template;`
-  - `docker-compose.dev.yml` → `DB_NAME: ${DB_NAME:-app_template}`
-- Docker images and buckets
-  - `docker-compose.dev.yml` →
-    - `image: app-template-backend:latest`
-    - `image: app-template-web:latest`
-    - MinIO bucket: `app-template`
-  - `web/build.sh` → `DOCKER_IMAGE=${DOCKER_IMAGE:-rhobotsai/app-template-web:latest}`
-- S3 bucket envs
-  - `docker-compose.dev.yml` → `AWS_STORAGE_BUCKET_NAME: app-template`
-- Auth service bucket
-  - `docker-compose.dev.yml` → auth env `AWS_STORAGE_BUCKET_NAME: app-template`
-
-You may also want to update human-readable strings (org, email) in:
-- `scripts/init-db-user.sh` → name/email
-- `package.json` → `author`
-
-Search commands (macOS/Linux):
-```bash
-# Preview changes
-rg -n "app_template|app-template"
-
-# Snake_case rename (dry run first)
-grep -rl "app_template" . | xargs sed -i '' -e 's/app_template/your_app/g' # macOS
-# Linux: sed -i 's/app_template/your_app/g'
+# Linux: sed -i 's/rhobots_flow/your_app/g'
 
 # Kebab-case rename
-grep -rl "app-template" . | xargs sed -i '' -e 's/app-template/your-app/g' # macOS
-# Linux: sed -i 's/app-template/your-app/g'
+grep -rl "rhobots-flow" . | xargs sed -i '' -e 's/rhobots-flow/your-app/g' # macOS
+# Linux: sed -i 's/rhobots-flow/your-app/g'
 ```
 
 Backend Django project/module rename: If you change the Django project module name under `backend/`, also update imports and `DJANGO_SETTINGS_MODULE` where relevant. Current project module is under `backend/config` and apps under `backend/*/apps.py`.

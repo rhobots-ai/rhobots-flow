@@ -268,7 +268,7 @@ if APP_ENV == 'PROD':
             'file': {
                 'level': 'ERROR',
                 'class': 'logging.FileHandler',
-                'filename': '/var/log/app_template_backend_errors.log',
+                'filename': '/var/log/rhobots_flow_backend_errors.log',
             },
         },
         'loggers': {

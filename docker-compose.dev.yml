@@ -3,7 +3,7 @@ services:
     build:
       dockerfile: ./backend/Dockerfile.dev
       context: .
-    image: app-template-backend:latest
+    image: rhobots-flow-backend:latest
     volumes:
       - ./backend:/app
     command: ["dev"]
@@ -24,12 +24,12 @@ services:
       DB_HOST: ${DB_HOST:-postgres}
       DB_USER: ${DB_USER:-postgres}
       DB_PASSWORD: ${DB_PASSWORD:-postgres}
-      DB_NAME: ${DB_NAME:-app_template}
+      DB_NAME: ${DB_NAME:-rhobots_flow}
       AWS_S3_ENDPOINT_URL: ${AWS_S3_ENDPOINT_URL:-http://minio:9000}
       AWS_S3_PUBLIC_ENDPOINT_URL: ${AWS_S3_PUBLIC_ENDPOINT_URL:-http://localhost:9900}
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-minio}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-miniosecret}
-      AWS_STORAGE_BUCKET_NAME: ${AWS_STORAGE_BUCKET_NAME:-app-template}
+      AWS_STORAGE_BUCKET_NAME: ${AWS_STORAGE_BUCKET_NAME:-rhobots-flow}
       AWS_REGION: ${AWS_REGION:-ap-south-1}
       CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND:-django-db}
       CELERY_CACHE_BACKEND: ${CELERY_CACHE_BACKEND:-django-cache}
@@ -42,7 +42,7 @@ services:
       retries: 3
 
   celery:
-    image: app-template-backend:latest
+    image: rhobots-flow-backend:latest
     command: ["celery"]
     environment:
       <<: *backend-env
@@ -52,7 +52,7 @@ services:
     restart: always
 
   beat:
-    image: app-template-backend:latest
+    image: rhobots-flow-backend:latest
     command: ["beat"]
     environment:
       <<: *backend-env
@@ -62,7 +62,7 @@ services:
     restart: always
 
   web:
-    image: app-template-web:latest
+    image: rhobots-flow-web:latest
     build:
       dockerfile: ./web/Dockerfile.dev
       context: .
@@ -105,7 +105,7 @@ services:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-minio}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-miniosecret}
       AWS_REGION: ${AWS_REGION:-ap-south-1}
-      AWS_STORAGE_BUCKET_NAME: ${AWS_STORAGE_BUCKET_NAME:-app-template}
+      AWS_STORAGE_BUCKET_NAME: ${AWS_STORAGE_BUCKET_NAME:-rhobots-flow}
       AWS_SENDER_EMAIL: ${AWS_SENDER_EMAIL:-}
       WEBHOOK_SECRET_KEY: ${WEBHOOK_SECRET_KEY:-mywebhooksecretkey}
       WEBHOOK_EP: ${WEBHOOK_EP:-http://backend:8000/api/auth/webhook/}
@@ -142,8 +142,8 @@ services:
     entrypoint: >
       /bin/sh -c "
         until (mc alias set myminio http://minio:9000 minio miniosecret 2>/dev/null) do echo '...' && sleep 1; done;
-        mc mb --ignore-existing myminio/app-template;
-        mc anonymous set download myminio/app-template;
+        mc mb --ignore-existing myminio/rhobots-flow;
+        mc anonymous set download myminio/rhobots-flow;
         exit 0;
       "
 

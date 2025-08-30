@@ -40,6 +40,6 @@ definePageMeta({
 })
 
 useHead({
-  title: 'Simple Test Page - App Template'
+  title: 'Simple Test Page - Rhobots Flow'
 })
 </script>

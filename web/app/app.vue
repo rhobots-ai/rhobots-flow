@@ -47,26 +47,26 @@ onMounted(async () => {
 });
 
 useHead({
-  title: 'App Template',
+  title: 'Rhobots Flow',
   meta: [
     {
       name: 'description',
-      content: 'App Template'
+      content: 'Rhobots Flow'
     }
   ]
 })
 
 useSeoMeta({
-  title: 'App Template',
-  description: 'App Template',
-  ogTitle: 'App Template',
-  ogDescription: 'App Template',
+  title: 'Rhobots Flow',
+  description: 'Rhobots Flow',
+  ogTitle: 'Rhobots Flow',
+  ogDescription: 'Rhobots Flow',
   ogImage: 'https://rhobots.ai/images/og-image.png',
   ogUrl: 'https://rhobots.ai',
   ogType: 'website',
   twitterCard: 'summary_large_image',
-  twitterTitle: 'App Template',
-  twitterDescription: 'App Template',
+  twitterTitle: 'Rhobots Flow',
+  twitterDescription: 'Rhobots Flow',
   twitterImage: 'https://rhobots.ai/images/og-image.png',
   robots: 'index, follow',
 });

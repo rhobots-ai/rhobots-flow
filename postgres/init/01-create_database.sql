@@ -1,2 +1,2 @@
-CREATE DATABASE app_template;
+CREATE DATABASE rhobots_flow;
 CREATE DATABASE auth;

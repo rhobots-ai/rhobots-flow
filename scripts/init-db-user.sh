@@ -8,7 +8,7 @@ PASSWORD='backend'
 curl -s --output /dev/null --request POST \
   --header 'Content-Type: application/json' \
   --data "{
-    \"name\": \"App Template\",
+    \"name\": \"Rhobots Flow\",
     \"email\": \"$EMAIL\",
     \"password\": \"$PASSWORD\"
   }" \

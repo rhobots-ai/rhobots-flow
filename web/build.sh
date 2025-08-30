@@ -4,7 +4,7 @@
 # Configurable Defaults
 # ------------------------
 
-DOCKER_IMAGE=${DOCKER_IMAGE:-app-template-web:latest}
+DOCKER_IMAGE=${DOCKER_IMAGE:-rhobots-flow-web:latest}
 DOCKERFILE=${DOCKERFILE:-web/Dockerfile.dev}
 
 NUXT_PUBLIC_AUTH_BASE_URL=${NUXT_PUBLIC_AUTH_BASE_URL:-http://localhost:10000}

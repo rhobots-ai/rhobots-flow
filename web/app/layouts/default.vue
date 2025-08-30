@@ -24,7 +24,7 @@
             </button>
             <NuxtLink to="/home" class="flex items-center">
               <span class="text-xl font-bold text-gray-900 dark:text-white">
-                App Template
+                Rhobots Flow
               </span>
             </NuxtLink>
           </div>

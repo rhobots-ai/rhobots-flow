@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# App Template Setup Script
+# Rhobots Flow Setup Script
 # This script helps developers customize the template for their project
 
 set -e
 
-echo "🚀 App Template Setup"
+echo "🚀 Rhobots Flow Setup"
 echo "===================="
 
 # Check if Python 3 is available

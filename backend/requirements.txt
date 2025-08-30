@@ -19,3 +19,8 @@ psycopg2==2.9.10
 PyJWT==2.8.0
 redis==6.4.0
 requests==2.31.0
+
+# Interactive Browser Automation Dependencies
+channels[daphne]==4.1.0
+channels-redis==4.2.0
+playwright==1.48.0

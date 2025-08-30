@@ -1,0 +1,45 @@
+# Use a pre-built image with Chrome and a VNC server. This is more stable.
+FROM browserless/chrome:latest
+
+# Switch to root to install system dependencies
+USER root
+
+# Install Python, pip, and other essentials
+# This multi-step command is designed to be resilient to apt mirror issues.
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get update && \
+    apt-get install -y --fix-missing --no-install-recommends \
+    python3 \
+    python3-pip \
+    python3-venv \
+    && apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create a virtual environment for Python packages to avoid conflicts
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Install Playwright and its browser dependencies
+# Using a virtual env ensures our packages are isolated.
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir playwright channels channels-redis
+
+# This command installs the necessary browser binaries inside the container
+RUN playwright install --with-deps chromium
+
+# Create non-root user 'pwuser' with a home directory (if missing)
+RUN useradd -m -s /bin/bash pwuser || true && mkdir -p /home/pwuser && chown -R pwuser:pwuser /home/pwuser
+
+# Set the working directory
+WORKDIR /home/pwuser
+
+# Switch to the non-root user
+USER pwuser
+
+# Expose ports for Playwright's Chrome DevTools Protocol and the VNC websocket
+EXPOSE 9222 7900
+
+# Override the default Chrome flags to enable remote debugging.
+# This is necessary for Playwright to connect to the browser.
+ENV CHROME_FLAGS="--headless=new --remote-debugging-port=9222 --remote-debugging-address=0.0.0.0 --no-sandbox"

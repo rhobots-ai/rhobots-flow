@@ -17,7 +17,9 @@ import {
   Mail,
   Calendar,
   Folder,
-  Star
+  Star,
+  Workflow,
+  Monitor
 } from 'lucide-vue-next'
 
 export const useMenu = () => {
@@ -46,6 +48,22 @@ export const useMenu = () => {
             label: 'Home',
             path: '/home',
             icon: Home,
+            requiresAuth: true,
+            roles: ['admin', 'user']
+          },
+          {
+            id: 'automation',
+            label: 'Automation Studio',
+            path: '/automation',
+            icon: Workflow,
+            requiresAuth: true,
+            roles: ['admin', 'user']
+          },
+          {
+            id: 'automation-live',
+            label: 'Live Browser Automation',
+            path: '/automation-live',
+            icon: Monitor,
             requiresAuth: true,
             roles: ['admin', 'user']
           }

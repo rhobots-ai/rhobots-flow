@@ -3,13 +3,14 @@ services:
     build:
       dockerfile: ./backend/Dockerfile.dev
       context: .
-    image: rhobots-flow-backend:latest
     volumes:
       - ./backend:/app
     command: ["dev"]
     depends_on: &backend-depends-on
       postgres:
         condition: service_healthy
+      playwright-vnc:
+        condition: service_started
     ports:
       - "8000:8000"
     environment: &backend-env
@@ -42,7 +43,9 @@ services:
       retries: 3
 
   celery:
-    image: rhobots-flow-backend:latest
+    build:
+      dockerfile: ./backend/Dockerfile.dev
+      context: .
     command: ["celery"]
     environment:
       <<: *backend-env
@@ -52,7 +55,9 @@ services:
     restart: always
 
   beat:
-    image: rhobots-flow-backend:latest
+    build:
+      dockerfile: ./backend/Dockerfile.dev
+      context: .
     command: ["beat"]
     environment:
       <<: *backend-env
@@ -62,7 +67,6 @@ services:
     restart: always
 
   web:
-    image: rhobots-flow-web:latest
     build:
       dockerfile: ./web/Dockerfile.dev
       context: .
@@ -176,6 +180,28 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres/init:/docker-entrypoint-initdb.d
       - ./postgres/scripts:/scripts
+
+  # NEW SERVICE: Headless browser with VNC streaming for interactive automation
+  playwright-vnc:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile.playwright
+    ports:
+      - "7900:7900"  # VNC WebSocket Port (for noVNC)
+      - "9222:9222"  # Chrome DevTools Protocol Port (for Playwright)
+    shm_size: '2gb'  # Recommended for browser stability
+    restart: always
+    environment:
+      - DISPLAY=:99
+      - VNC_COL_DEPTH=24
+      - VNC_RESOLUTION=1920x1080
+      - VNC_PW=automation
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9222/json/version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 volumes:
   postgres_data:
     driver: local

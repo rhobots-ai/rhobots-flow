@@ -5,14 +5,14 @@ if [ "$1" = "web" ]; then
   echo "🔄 Running Django migrations..."
   python manage.py migrate --noinput
 
-  echo "🚀 Starting Gunicorn..."
-  exec gunicorn config.wsgi:application --bind 0.0.0.0:8000
+  echo "🚀 Starting Daphne (ASGI)..."
+  exec daphne -b 0.0.0.0 -p 8000 config.asgi:application
 elif [ "$1" = "dev" ]; then
     echo "🔄 Running Django migrations..."
     python manage.py migrate --noinput
 
-    echo "🚀 Starting Django server..."
-    exec python manage.py runserver 0.0.0.0:8000
+    echo "🚀 Starting Daphne (ASGI) dev server..."
+    exec daphne -b 0.0.0.0 -p 8000 config.asgi:application
 elif [ "$1" = "celery" ]; then
   echo "📦 Starting Celery worker..."
   exec celery -A config worker --loglevel=INFO

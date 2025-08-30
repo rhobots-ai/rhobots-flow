@@ -70,6 +70,8 @@ RHOBOTS_AUTH_EP = env('RHOBOTS_AUTH_EP')
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",  # Must be first for Channels
+    "channels",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -319,3 +321,24 @@ CELERY_RESULT_EXTENDED = True
 CELERY_BROKER_URL = env('CELERY_BROKER_URL')
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 CELERY_RESULT_EXPIRES = 2592000
+
+# =====================================
+# CHANNELS CONFIGURATION FOR WEBSOCKETS
+# =====================================
+
+# ASGI Application for handling both HTTP and WebSocket
+ASGI_APPLICATION = "config.asgi.application"
+
+# Channel Layers Configuration for WebSocket communication
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("redis", 6379)],
+        },
+    },
+}
+
+# Interactive Browser Automation Settings
+PLAYWRIGHT_BROWSER_CDP_ENDPOINT = 'http://playwright-vnc:9222'
+PLAYWRIGHT_VNC_URL = 'ws://localhost:7900'

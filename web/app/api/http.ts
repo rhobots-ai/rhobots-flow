@@ -1,5 +1,6 @@
 import {useFetch} from 'nuxt/app'
 import {useBaseUrl} from "~/composables/useBaseUrl";
+import { useUserStore } from '~/stores/user'
 
 const API_PATH = '/api'
 

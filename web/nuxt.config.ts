@@ -9,6 +9,24 @@ export default defineNuxtConfig({
     plugins: [
       tailwindcss(),
     ],
+    server: {
+      proxy: {
+        // Proxy VNC WebSocket connections to the playwright-vnc container
+        '/vnc': {
+          target: 'ws://playwright-vnc:7900',
+          ws: true,
+          changeOrigin: true,
+          secure: false
+        },
+        // Proxy WebSocket connections to Django backend
+        '/ws': {
+          target: 'ws://backend:8000',
+          ws: true,
+          changeOrigin: true,
+          secure: false
+        }
+      }
+    }
   },
   modules: [
     '@nuxt/eslint',

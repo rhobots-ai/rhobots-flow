@@ -74,7 +74,7 @@ export const useAutomationStore = defineStore('automation', {
       this.isLoading = true
       try {
         // TODO: Replace with actual API call
-        const response = await $fetch('/api/automation/tasks') as { data: AutomationTask[] }
+        const response = await $fetch('/api/system/automations/tasks') as { data: AutomationTask[] }
         this.tasks = response.data || []
       } catch (error) {
         console.error('Failed to fetch tasks:', error)
@@ -89,7 +89,7 @@ export const useAutomationStore = defineStore('automation', {
       this.isLoading = true
       try {
         // TODO: Replace with actual API call
-        const response = await $fetch('/api/automation/tasks', {
+        const response = await $fetch('/api/system/automations/tasks', {
           method: 'POST',
           body: taskData
         }) as { data: AutomationTask }
@@ -112,7 +112,7 @@ export const useAutomationStore = defineStore('automation', {
       this.isLoading = true
       try {
         // TODO: Replace with actual API call
-        const response = await $fetch(`/api/automation/tasks/${taskId}`, {
+        const response = await $fetch(`/api/system/automations/tasks/${taskId}`, {
           method: 'PATCH',
           body: updates
         }) as { data: AutomationTask }
@@ -148,7 +148,7 @@ export const useAutomationStore = defineStore('automation', {
       this.isLoading = true
       try {
         // TODO: Replace with actual API call
-        await $fetch(`/api/automation/tasks/${taskId}`, {
+        await $fetch(`/api/system/automations/tasks/${taskId}`, {
           method: 'DELETE'
         })
         
@@ -216,7 +216,7 @@ export const useAutomationStore = defineStore('automation', {
           return data
         } else {
           // TODO: Replace with actual API call for other tasks
-          const response = await $fetch(`/api/automation/tasks/${taskId}/run`, {
+          const response = await $fetch(`/api/system/automations/tasks/${taskId}/run`, {
             method: 'POST',
             body: { sessionId: this.currentSessionId }
           }) as { runId: string }
@@ -247,7 +247,7 @@ export const useAutomationStore = defineStore('automation', {
           }
         } else {
           // TODO: Replace with actual API call
-          await $fetch(`/api/automation/tasks/${taskId}/stop`, {
+          await $fetch(`/api/system/automations/tasks/${taskId}/stop`, {
             method: 'POST'
           })
         }
@@ -264,7 +264,7 @@ export const useAutomationStore = defineStore('automation', {
     // Run History
     async fetchRunHistory(taskId?: string) {
       try {
-        const url = taskId ? `/api/automation/runs?taskId=${taskId}` : '/api/automation/runs'
+        const url = taskId ? `/api/system/automations/runs?taskId=${taskId}` : '/api/system/automations/runs'
         const response = await $fetch(url) as { data: RunHistory[] }
         this.runHistory = response.data || []
       } catch (error) {
@@ -294,7 +294,7 @@ export const useAutomationStore = defineStore('automation', {
     async pollRunStatus(taskId: string, runId: string) {
       const poll = async () => {
         try {
-          const response = await $fetch(`/api/automation/runs/${runId}`) as { data: RunHistory }
+          const response = await $fetch(`/api/system/automations/runs/${runId}`) as { data: RunHistory }
           const run = response.data
           
           if (run.status === RunStatus.COMPLETED || run.status === RunStatus.FAILED) {

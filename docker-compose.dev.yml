@@ -22,7 +22,7 @@ services:
       ALLOWED_HOSTS: ${ALLOWED_HOSTS:-*,}
       CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-http://localhost:3000,}
       HOST_NAME: ${HOST_NAME:-http://localhost:8000}
-      RHOBOTS_AUTH_EP: ${RHOBOTS_AUTH_EP:-http://localhost:10000}
+      RHOBOTS_AUTH_EP: ${RHOBOTS_AUTH_EP:-http://auth:10000}
       DB_HOST: ${DB_HOST:-postgres}
       DB_USER: ${DB_USER:-postgres}
       DB_PASSWORD: ${DB_PASSWORD:-postgres}

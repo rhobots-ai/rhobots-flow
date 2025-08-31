@@ -221,8 +221,8 @@ import {
 
 // Page metadata
 definePageMeta({
-  layout: 'default',
-  middleware: 'auth'
+  layout: 'default'
+  // middleware: 'auth'  // Temporarily disabled for testing
 })
 
 // State

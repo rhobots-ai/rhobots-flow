@@ -14,6 +14,12 @@ export default defineNuxtConfig({
     },
     server: {
       proxy: {
+        // Proxy API requests to Django backend
+        '/api': {
+          target: 'http://backend:8000',
+          changeOrigin: true,
+          secure: false
+        },
         // Proxy VNC WebSocket connections to the playwright-vnc container
         '/vnc': {
           target: 'ws://playwright-vnc:7900',

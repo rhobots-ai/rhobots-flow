@@ -1,6 +1,8 @@
 import jwt
 from jwt.exceptions import InvalidTokenError, ExpiredSignatureError
 import requests
+from requests.exceptions import RequestException
+from urllib.parse import urlparse
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
 from jwt.utils import base64url_decode
 
@@ -15,9 +17,34 @@ RHOBOTS_AUTH_SIGNIN_URL = f"{RHOBOTS_AUTH_EP}/api/auth/sign-in/email"
 RHOBOTS_AUTH_AUDIENCE = 'http://localhost:10000'
 
 def get_jwks():
-    response = requests.get(RHOBOTS_AUTH_JWKS_URL)
-    response.raise_for_status()
-    return response.json()
+    """
+    Fetch JWKS with a resilient fallback for Docker environments.
+    Primary URL is built from RHOBOTS_AUTH_EP. If it points to localhost (unreachable from containers),
+    we fallback to the docker-compose service name 'auth'.
+    """
+    urls = [RHOBOTS_AUTH_JWKS_URL]
+
+    try:
+        parsed = urlparse(RHOBOTS_AUTH_EP)
+        if parsed.hostname in {"localhost", "127.0.0.1", "0.0.0.0", None}:
+            # Fallback to docker service name
+            urls.append("http://auth:10000/api/auth/jwks")
+    except Exception:
+        # Best-effort; ignore parse issues
+        urls.append("http://auth:10000/api/auth/jwks")
+
+    last_exc = None
+    for u in urls:
+        try:
+            resp = requests.get(u, timeout=5)
+            resp.raise_for_status()
+            return resp.json()
+        except RequestException as e:
+            last_exc = e
+            continue
+
+    # If all attempts failed, raise a consolidated error
+    raise Exception(f"Unable to fetch JWKS from any endpoint. Last error: {last_exc}")
 
 def get_signing_key(jwks, token):
     unverified_header = jwt.get_unverified_header(token)

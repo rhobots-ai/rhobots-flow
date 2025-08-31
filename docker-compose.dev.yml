@@ -185,7 +185,6 @@ services:
     build:
       context: .
       dockerfile: ./backend/Dockerfile.playwright
-    command: ["tail", "-f", "/dev/null"]
     ports:
       - "7900:7900"  # VNC WebSocket Port (for noVNC)
       - "9222:9222"  # Chrome DevTools Protocol Port (for Playwright)

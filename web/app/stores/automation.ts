@@ -7,6 +7,8 @@ import type {
 import { TaskStatus, RunStatus, StepType, StepAction } from '~/types/automation'
 import { HttpClient } from '~/api/http'
 
+const ENABLE_RUNS_API = false
+
 interface AutomationState {
   tasks: AutomationTask[]
   selectedTask: AutomationTask | null
@@ -73,9 +75,10 @@ export const useAutomationStore = defineStore('automation', {
     async fetchTasks() {
       this.isLoading = true
       try {
-        // TODO: Replace with actual API call
-        const response = await $fetch('/api/system/automations/tasks') as { data: AutomationTask[] }
-        this.tasks = response.data || []
+        const http = new HttpClient('/api')
+        const { data, error } = await http.get<{ data: AutomationTask[] }>('/system/automations/tasks')
+        if (error) throw error
+        this.tasks = (data as unknown as { data: AutomationTask[] })?.data || []
       } catch (error) {
         console.error('Failed to fetch tasks:', error)
         // Set mock data for development
@@ -88,13 +91,13 @@ export const useAutomationStore = defineStore('automation', {
     async createTask(taskData: CreateTaskData): Promise<AutomationTask> {
       this.isLoading = true
       try {
-        // TODO: Replace with actual API call
-        const response = await $fetch('/api/system/automations/tasks', {
-          method: 'POST',
-          body: taskData
-        }) as { data: AutomationTask }
-        
-        const newTask = response.data
+        const http = new HttpClient('/api')
+        const { data, error } = await http.post<{ data: AutomationTask }>('/system/automations/tasks', taskData)
+        if (error) throw error
+
+        const newTask = (data as unknown as { data: AutomationTask })?.data
+        if (!newTask) throw new Error('Invalid response while creating task')
+
         this.tasks.push(newTask)
         return newTask
       } catch (error) {
@@ -111,15 +114,13 @@ export const useAutomationStore = defineStore('automation', {
     async updateTask(taskId: string, updates: Partial<AutomationTask>) {
       this.isLoading = true
       try {
-        // TODO: Replace with actual API call
-        const response = await $fetch(`/api/system/automations/tasks/${taskId}`, {
-          method: 'PATCH',
-          body: updates
-        }) as { data: AutomationTask }
-        
-        const updatedTask = response.data
+        const http = new HttpClient('/api')
+        const { data, error } = await http.patch<{ data: AutomationTask }>(`/system/automations/tasks/${taskId}`, updates)
+        if (error) throw error
+
+        const updatedTask = (data as unknown as { data: AutomationTask })?.data
         const index = this.tasks.findIndex(task => task.id === taskId)
-        if (index !== -1) {
+        if (updatedTask && index !== -1) {
           this.tasks[index] = updatedTask
           if (this.selectedTask?.id === taskId) {
             this.selectedTask = updatedTask
@@ -147,10 +148,9 @@ export const useAutomationStore = defineStore('automation', {
     async deleteTask(taskId: string) {
       this.isLoading = true
       try {
-        // TODO: Replace with actual API call
-        await $fetch(`/api/system/automations/tasks/${taskId}`, {
-          method: 'DELETE'
-        })
+        const http = new HttpClient('/api')
+        const { error } = await http.delete(`/system/automations/tasks/${taskId}`)
+        if (error) throw error
         
         this.tasks = this.tasks.filter(task => task.id !== taskId)
         if (this.selectedTask?.id === taskId) {
@@ -195,10 +195,11 @@ export const useAutomationStore = defineStore('automation', {
         if (taskId === 'task_test') {
           // For test task, use the live automation endpoint with auth headers
           const http = new HttpClient('/api')
-          const { data } = await http.post<{ status: string }>(
+          const { data, error } = await http.post<{ status: string }>(
             '/system/automations/start/',
             { sessionId: this.currentSessionId }
           )
+          if (error) throw error
 
           // Update task status
           await this.updateTask(taskId, { status: TaskStatus.RUNNING })
@@ -215,19 +216,35 @@ export const useAutomationStore = defineStore('automation', {
           
           return data
         } else {
-          // TODO: Replace with actual API call for other tasks
-          const response = await $fetch(`/api/system/automations/tasks/${taskId}/run`, {
-            method: 'POST',
-            body: { sessionId: this.currentSessionId }
-          }) as { runId: string }
+          // If runs API is not implemented on backend, simulate behavior
+          if (!ENABLE_RUNS_API) {
+            await this.updateTask(taskId, { status: TaskStatus.RUNNING })
+            setTimeout(async () => {
+              this.isRunning = false
+              this.currentSessionId = null
+              await this.updateTask(taskId, { 
+                status: TaskStatus.COMPLETED,
+                lastRun: new Date().toISOString()
+              })
+            }, 5000)
+            return { runId: `run_${Date.now()}` } as unknown as { runId: string }
+          }
+
+          // Actual API call (requires backend support)
+          const http = new HttpClient('/api')
+          const { data, error } = await http.post<{ runId: string }>(
+            `/system/automations/tasks/${taskId}/run`,
+            { sessionId: this.currentSessionId }
+          )
+          if (error) throw error
 
           // Update task status
           await this.updateTask(taskId, { status: TaskStatus.RUNNING })
 
           // Start polling for run status
-          this.pollRunStatus(taskId, response.runId)
+          this.pollRunStatus(taskId, (data as unknown as { runId: string }).runId)
           
-          return response
+          return data
         }
       } catch (error) {
         console.error('Failed to start task:', error)
@@ -246,10 +263,10 @@ export const useAutomationStore = defineStore('automation', {
             await http.post('/system/automations/stop/', { sessionId: this.currentSessionId })
           }
         } else {
-          // TODO: Replace with actual API call
-          await $fetch(`/api/system/automations/tasks/${taskId}/stop`, {
-            method: 'POST'
-          })
+          if (ENABLE_RUNS_API) {
+            const http = new HttpClient('/api')
+            await http.post(`/system/automations/tasks/${taskId}/stop`, {})
+          }
         }
         
         this.isRunning = false
@@ -264,9 +281,15 @@ export const useAutomationStore = defineStore('automation', {
     // Run History
     async fetchRunHistory(taskId?: string) {
       try {
-        const url = taskId ? `/api/system/automations/runs?taskId=${taskId}` : '/api/system/automations/runs'
-        const response = await $fetch(url) as { data: RunHistory[] }
-        this.runHistory = response.data || []
+        if (!ENABLE_RUNS_API) {
+          this.runHistory = this.getMockRunHistory(taskId)
+          return
+        }
+        const http = new HttpClient('/api')
+        const endpoint = taskId ? `/system/automations/runs?taskId=${taskId}` : '/system/automations/runs'
+        const { data, error } = await http.get<{ data: RunHistory[] }>(endpoint, undefined, undefined, true)
+        if (error) throw error
+        this.runHistory = (data as unknown as { data: RunHistory[] })?.data || []
       } catch (error) {
         console.error('Failed to fetch run history:', error)
         // Set mock data for development
@@ -292,12 +315,16 @@ export const useAutomationStore = defineStore('automation', {
 
     // Utility Methods
     async pollRunStatus(taskId: string, runId: string) {
+      if (!ENABLE_RUNS_API) return
+
       const poll = async () => {
         try {
-          const response = await $fetch(`/api/system/automations/runs/${runId}`) as { data: RunHistory }
-          const run = response.data
+          const http = new HttpClient('/api')
+          const { data, error } = await http.get<{ data: RunHistory }>(`/system/automations/runs/${runId}`)
+          if (error) throw error
+          const run = (data as unknown as { data: RunHistory })?.data
           
-          if (run.status === RunStatus.COMPLETED || run.status === RunStatus.FAILED) {
+          if (run && (run.status === RunStatus.COMPLETED || run.status === RunStatus.FAILED)) {
             this.isRunning = false
             this.currentSessionId = null
             

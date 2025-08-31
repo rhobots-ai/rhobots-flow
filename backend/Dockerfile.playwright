@@ -4,29 +4,30 @@ FROM browserless/chrome:latest
 # Switch to root to install system dependencies
 USER root
 
+# Avoid interactive prompts during apt-get install (tzdata etc.)
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Etc/UTC
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # Install Python, pip, and other essentials
 # This multi-step command is designed to be resilient to apt mirror issues.
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
-    apt-get update && \
-    apt-get install -y --fix-missing --no-install-recommends \
+    apt-get update -o Acquire::Retries=3 && \
+    apt-get install -o Acquire::Retries=3 -y --fix-missing --no-install-recommends \
+    xvfb \
+    tigervnc-standalone-server \
     python3 \
-    python3-pip \
-    python3-venv \
+    curl \
+    ca-certificates \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Create a virtual environment for Python packages to avoid conflicts
-RUN python3 -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
+# Fetch noVNC static assets (serve via websockify)
+RUN mkdir -p /opt/novnc && curl -fsSL https://github.com/novnc/noVNC/archive/refs/tags/v1.5.0.tar.gz | tar xz --strip-components=1 -C /opt/novnc
 
-# Install Playwright and its browser dependencies
-# Using a virtual env ensures our packages are isolated.
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir playwright channels channels-redis
 
-# This command installs the necessary browser binaries inside the container
-RUN playwright install --with-deps chromium
+
 
 # Create a non-root user 'pwuser' and its home directory.
 # We ensure the user and group exist with specific IDs to avoid conflicts.
@@ -34,6 +35,10 @@ RUN groupadd -g 1001 pwuser && useradd -u 1001 -g 1001 -m -s /bin/bash pwuser
 
 # Set the working directory
 WORKDIR /home/pwuser
+
+# Copy and use the entrypoint that starts Xvfb, Chrome (non-headless), x11vnc, and noVNC
+COPY ./backend/playwright_entrypoint.sh /usr/local/bin/playwright-entrypoint.sh
+RUN chmod +x /usr/local/bin/playwright-entrypoint.sh
 
 # Switch to the non-root user
 USER pwuser
@@ -44,3 +49,6 @@ EXPOSE 9222 7900
 # Override the default Chrome flags to enable remote debugging.
 # This is necessary for Playwright to connect to the browser.
 ENV CHROME_FLAGS="--headless=new --remote-debugging-port=9222 --remote-debugging-address=0.0.0.0 --no-sandbox"
+
+
+CMD ["/usr/local/bin/playwright-entrypoint.sh"]

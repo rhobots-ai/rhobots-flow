@@ -3,7 +3,6 @@ services:
     build:
       dockerfile: ./backend/Dockerfile.dev
       context: .
-    image: rhobots-flow-backend:latest
     volumes:
       - ./backend:/app
     command: ["dev"]
@@ -44,7 +43,9 @@ services:
       retries: 3
 
   celery:
-    image: rhobots-flow-backend:latest
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile.dev
     command: ["celery"]
     environment:
       <<: *backend-env
@@ -54,7 +55,9 @@ services:
     restart: always
 
   beat:
-    image: rhobots-flow-backend:latest
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile.dev
     command: ["beat"]
     environment:
       <<: *backend-env
@@ -64,7 +67,6 @@ services:
     restart: always
 
   web:
-    image: rhobots-flow-web:latest
     build:
       dockerfile: ./web/Dockerfile.dev
       context: .
@@ -185,7 +187,8 @@ services:
     build:
       context: .
       dockerfile: ./backend/Dockerfile.playwright
-    command: ["tail", "-f", "/dev/null"]
+    # UPDATED: Use the start-services.sh script as the command
+    command: ["/usr/local/bin/start-services.sh"]
     ports:
       - "7900:7900"  # VNC WebSocket Port (for noVNC)
       - "9222:9222"  # Chrome DevTools Protocol Port (for Playwright)
@@ -195,7 +198,6 @@ services:
       - DISPLAY=:99
       - VNC_COL_DEPTH=24
       - VNC_RESOLUTION=1920x1080
-      - VNC_PW=automation
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9222/json/version"]
       interval: 30s

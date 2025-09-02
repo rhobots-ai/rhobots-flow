@@ -28,7 +28,9 @@ RUN set -eux; \
            python3-pip \
            python3-venv \
            x11vnc \
-           novnc; then \
+           novnc \
+           openbox \
+           curl; then \
         break; \
       fi; \
       echo "apt install failed on attempt ${attempt}, retrying..."; \

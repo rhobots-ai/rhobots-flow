@@ -361,13 +361,29 @@ const connectVNC = async () => {
       currentUrl.value = 'https://angularformadd.netlify.app/'
     })
     
-    client.addEventListener('disconnect', () => {
-      console.log('VNC disconnected')
+    client.addEventListener('disconnect', (e: CustomEvent) => {
+      console.log('VNC disconnected:', e.detail)
     })
     
     client.addEventListener('securityfailure', (e: CustomEvent) => {
       console.error('VNC security failure:', e.detail)
       throw new Error('VNC authentication failed')
+    })
+
+    client.addEventListener('desktopname', (e: CustomEvent) => {
+      console.log('VNC desktop name:', e.detail.name)
+    })
+
+    client.addEventListener('capabilities', (e: CustomEvent) => {
+      console.log('VNC server capabilities:', e.detail)
+    })
+
+    client.addEventListener('bell', () => {
+      console.log('VNC bell received')
+    })
+
+    client.addEventListener('clipboard', (e: CustomEvent) => {
+      console.log('VNC clipboard:', e.detail.text)
     })
     
     // Wait for connection to establish

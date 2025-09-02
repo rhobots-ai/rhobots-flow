@@ -291,14 +291,22 @@ const connectVNC = async () => {
       errorMessage.value = ''
     })
     
-    vncClient.value.addEventListener('disconnect', () => {
-      console.log('VNC disconnected')
+    vncClient.value.addEventListener('disconnect', (e: any) => {
+      console.log('VNC disconnected:', e.detail)
       isConnected.value = false
     })
     
     vncClient.value.addEventListener('securityfailure', (e: any) => {
       console.error('VNC security failure:', e.detail)
       throw new Error('VNC authentication failed')
+    })
+
+    vncClient.value.addEventListener('desktopname', (e: any) => {
+      console.log('VNC desktop name:', e.detail.name)
+    })
+
+    vncClient.value.addEventListener('capabilities', (e: any) => {
+      console.log('VNC server capabilities:', e.detail)
     })
     
   } catch (error: any) {

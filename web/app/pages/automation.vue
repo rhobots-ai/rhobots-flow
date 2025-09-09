@@ -1,17 +1,17 @@
 <template>
   <div>
-    <!-- Render the original MainDashboard component -->
-    <MainDashboard />
+    <!-- Render the original Home component -->
+    <Home />
   </div>
 </template>
 
 <script setup>
 // Import the copied original component via the @auto alias
-import MainDashboard from '@auto/components/MainDashboard.vue'
+import Home from '@auto/components/Home.vue'
 
 // Page metadata
 definePageMeta({
-  title: 'Automation Dashboard',
+  title: 'Automation Home',
   layout: 'default'
 })
 </script>

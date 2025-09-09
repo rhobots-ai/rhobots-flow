@@ -2,6 +2,7 @@
 import { defineNuxtConfig } from 'nuxt/config';
 import { fileURLToPath } from 'node:url';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -14,7 +15,7 @@ export default defineNuxtConfig({
     }
   },
   vite: {
-    plugins: [tsconfigPaths()],
+    plugins: [tsconfigPaths(), tailwindcss()],
     resolve: {
       alias: {
         '@auto': fileURLToPath(new URL('./app/automation/src', import.meta.url)),
@@ -29,7 +30,7 @@ export default defineNuxtConfig({
         '/api/automation': {
           target: 'http://localhost:8000',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api\/automation/, '/api')
+          rewrite: (path: string) => path.replace(/^\/api\/automation/, '/api')
         },
         '/api/tasks': {
           target: 'http://localhost:8000',
@@ -52,7 +53,7 @@ export default defineNuxtConfig({
           target: 'http://localhost:8000',
           ws: true,
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/ws\/automation/, '/ws')
+          rewrite: (path: string) => path.replace(/^\/ws\/automation/, '/ws')
         }
       }
     },

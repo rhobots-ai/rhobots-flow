@@ -54,18 +54,18 @@
     <div class="text-center">
       <h2 class="text-2xl font-bold text-zinc-900 mb-6">Quick Actions</h2>
       <div class="flex justify-center space-x-4 mb-4">
-        <router-link
-          to="/builder"
+        <NuxtLink
+          to="/test/builder"
           class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
         >
           Create New Task
-        </router-link>
-        <router-link
+        </NuxtLink>
+        <NuxtLink
           to="/tasks"
           class="bg-zinc-100 hover:bg-zinc-200 text-zinc-900 px-8 py-3 rounded-lg font-semibold transition-colors border border-zinc-200"
         >
           View All Tasks
-        </router-link>
+        </NuxtLink>
       </div>
       <!-- Test Actions -->
       <div class="flex justify-center space-x-4">
@@ -131,12 +131,12 @@ const testResult = ref(null)
 
 const checkSystemStatus = async () => {
   try {
-    const response = await axios.get('/api/health')
+    const response = await axios.get('/api/health/')
     systemStatus.value = {
       backend: true,
       database: true,
       vnc: true,
-      timezone: response.data.timezone
+      timezone: response.data.timezone || 'UTC'
     }
   } catch (error) {
     systemStatus.value = {
@@ -152,7 +152,7 @@ const testBrowser = async () => {
   browserTesting.value = true
   testResult.value = null
   try {
-    const response = await axios.get('/api/test-browser')
+    const response = await axios.get('/api/test-browser/')
     testResult.value = response.data
   } catch (error) {
     testResult.value = { status: 'error', message: 'Failed to test browser: ' + error.message }

@@ -23,13 +23,36 @@ export default defineNuxtConfig({
     server: {
       proxy: {
         '/api': {
-          target: `${process.env.NUXT_PUBLIC_API_SCHEME || 'http'}://${process.env.NUXT_PUBLIC_API_BASE_URL || 'localhost:8000'}`,
+          target: `${process.env.NUXT_PUBLIC_API_SCHEME || 'http'}://${process.env.NUXT_PUBLIC_API_BASE_URL || 'localhost:8004'}`,
+          changeOrigin: true
+        },
+        '/api/automation': {
+          target: 'http://localhost:8000',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api\/automation/, '/api')
+        },
+        '/api/tasks': {
+          target: 'http://localhost:8000',
+          changeOrigin: true
+        },
+        '/api/sessions': {
+          target: 'http://localhost:8001',
+          changeOrigin: true
+        },
+        '/api/files': {
+          target: 'http://localhost:8000',
           changeOrigin: true
         },
         '/ws': {
-          target: `${process.env.NUXT_PUBLIC_API_SCHEME || 'http'}://${process.env.NUXT_PUBLIC_API_BASE_URL || 'localhost:8000'}`,
+          target: `${process.env.NUXT_PUBLIC_API_SCHEME || 'http'}://${process.env.NUXT_PUBLIC_API_BASE_URL || 'localhost:8004'}`,
           ws: true,
           changeOrigin: true
+        },
+        '/ws/automation': {
+          target: 'http://localhost:8000',
+          ws: true,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/ws\/automation/, '/ws')
         }
       }
     },

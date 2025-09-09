@@ -1,0 +1,49 @@
+FROM mcr.microsoft.com/playwright/python:v1.40.0-jammy
+
+USER root
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/New_York
+ENV DISPLAY=:1
+
+# Install VNC and desktop components (using the working auto-flow approach)
+RUN apt-get clean && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+    xvfb \
+    fluxbox \
+    x11vnc \
+    supervisor \
+    git \
+    python3 \
+    netcat-openbsd \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install noVNC (same as auto-flow)
+RUN cd /opt && \
+    git clone --depth 1 https://github.com/novnc/noVNC.git && \
+    cd noVNC && \
+    git clone --depth 1 https://github.com/novnc/websockify.git utils/websockify
+
+# Install Python dependencies
+COPY backend/requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt && \
+    pip install --no-cache-dir redis psutil httpx websockify
+
+# Create directories
+RUN mkdir -p /var/log/supervisor /app/uploads /app/screenshots
+
+# Copy application and session manager
+COPY backend/ /app/
+COPY session_manager.py /app/session_manager.py
+
+# Copy supervisor configuration (we'll create a combined one)
+COPY supervisord.vnc.conf /etc/supervisor/conf.d/supervisord.conf
+
+WORKDIR /app
+
+# Expose ports: VNC, noVNC, FastAPI, Session Manager
+EXPOSE 5901 7900 8002 8003
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

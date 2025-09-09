@@ -17,7 +17,9 @@ import {
   Mail,
   Calendar,
   Folder,
-  Star
+  Star,
+  MonitorPlay,
+  PlayCircle
 } from 'lucide-vue-next'
 
 export const useMenu = () => {
@@ -74,6 +76,26 @@ export const useMenu = () => {
             label: 'Tasks',
             path: '/tasks',
             icon: FileText,
+            requiresAuth: true
+          }
+        ]
+      },
+      {
+        id: 'automation',
+        label: 'Automation',
+        items: [
+          {
+            id: 'automation-dashboard',
+            label: 'Dashboard',
+            path: '/automation',
+            icon: MonitorPlay,
+            requiresAuth: true
+          },
+          {
+            id: 'automation-studio',
+            label: 'Studio',
+            path: '/automation/studio',
+            icon: PlayCircle,
             requiresAuth: true
           }
         ]

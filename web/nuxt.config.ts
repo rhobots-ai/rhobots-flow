@@ -8,12 +8,6 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   css: [fileURLToPath(new URL('./app/assets/css/main.css', import.meta.url))],
-  postcss: {
-    plugins: {
-      '@tailwindcss/postcss': {},
-      autoprefixer: {}
-    }
-  },
   vite: {
     plugins: [tsconfigPaths(), tailwindcss()],
     resolve: {

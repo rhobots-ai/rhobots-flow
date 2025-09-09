@@ -2,42 +2,42 @@
   <div class="px-4 py-6 sm:px-0">
     <!-- Hero Section -->
     <div class="text-center mb-12">
-      <h1 class="text-4xl font-bold text-zinc-900 mb-4">
+      <h1 class="text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">
         Browser Automation Studio
       </h1>
-      <p class="text-xl text-zinc-600 max-w-3xl mx-auto">
+      <p class="text-xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto">
         Create, manage, and execute browser automation tasks with real-time visual feedback through VNC integration.
       </p>
     </div>
 
     <!-- Feature Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-      <div class="bg-white rounded-lg p-6 border border-zinc-200 shadow-sm">
+      <div class="bg-white dark:bg-zinc-900 rounded-lg p-6 border border-zinc-200 dark:border-zinc-800 shadow-sm">
         <div class="text-blue-600 mb-4">
           <Monitor class="w-12 h-12" />
         </div>
-        <h3 class="text-xl font-semibold text-zinc-900 mb-2">Visual Automation</h3>
-        <p class="text-zinc-600">
+        <h3 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Visual Automation</h3>
+        <p class="text-zinc-600 dark:text-zinc-400">
           Watch your automation tasks execute in real-time through our integrated VNC viewer.
         </p>
       </div>
 
-      <div class="bg-white rounded-lg p-6 border border-zinc-200 shadow-sm">
+      <div class="bg-white dark:bg-zinc-900 rounded-lg p-6 border border-zinc-200 dark:border-zinc-800 shadow-sm">
         <div class="text-green-600 mb-4">
           <Settings class="w-12 h-12" />
         </div>
-        <h3 class="text-xl font-semibold text-zinc-900 mb-2">Task Builder</h3>
-        <p class="text-zinc-600">
+        <h3 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Task Builder</h3>
+        <p class="text-zinc-600 dark:text-zinc-400">
           Create complex automation workflows with our intuitive step-by-step builder.
         </p>
       </div>
 
-      <div class="bg-white rounded-lg p-6 border border-zinc-200 shadow-sm">
+      <div class="bg-white dark:bg-zinc-900 rounded-lg p-6 border border-zinc-200 dark:border-zinc-800 shadow-sm">
         <div class="text-purple-600 mb-4">
           <FileText class="w-12 h-12" />
         </div>
-        <h3 class="text-xl font-semibold text-zinc-900 mb-2">File Integration</h3>
-        <p class="text-zinc-600">
+        <h3 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-2">File Integration</h3>
+        <p class="text-zinc-600 dark:text-zinc-400">
           Upload Excel, CSV, and other files to provide data for your automation tasks.
         </p>
       </div>
@@ -45,7 +45,7 @@
 
     <!-- Quick Actions -->
     <div class="text-center">
-      <h2 class="text-2xl font-bold text-zinc-900 mb-6">Quick Actions</h2>
+      <h2 class="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-6">Quick Actions</h2>
       <div class="flex justify-center space-x-4 mb-4">
         <NuxtLink
           to="/test/builder"
@@ -55,7 +55,7 @@
         </NuxtLink>
         <NuxtLink
           to="/tasks"
-          class="bg-zinc-100 hover:bg-zinc-200 text-zinc-900 px-8 py-3 rounded-lg font-semibold transition-colors border border-zinc-200"
+          class="bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-100 px-8 py-3 rounded-lg font-semibold transition-colors border border-zinc-200 dark:border-zinc-700"
         >
           View All Tasks
         </NuxtLink>
@@ -79,36 +79,36 @@
       </div>
 
       <!-- Test Results -->
-      <div v-if="testResult" class="mt-4 p-4 rounded-lg max-w-md mx-auto" :class="testResult.status === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">
+      <div v-if="testResult" class="mt-4 p-4 rounded-lg max-w-md mx-auto" :class="testResult.status === 'success' ? 'bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-rose-950 dark:text-rose-300'">
         <p>{{ testResult.message }}</p>
       </div>
     </div>
 
     <!-- System Status -->
-    <div class="mt-12 bg-white rounded-lg p-6 border border-zinc-200 shadow-sm">
-      <h3 class="text-lg font-semibold text-zinc-900 mb-4">System Status</h3>
+    <div class="mt-12 bg-white dark:bg-zinc-900 rounded-lg p-6 border border-zinc-200 dark:border-zinc-800 shadow-sm">
+      <h3 class="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-4">System Status</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="text-center">
           <div class="text-2xl font-bold" :class="systemStatus.backend ? 'text-green-600' : 'text-red-600'">
             {{ systemStatus.backend ? '✓' : '✗' }}
           </div>
-          <div class="text-sm text-zinc-600">Backend</div>
+          <div class="text-sm text-zinc-600 dark:text-zinc-400">Backend</div>
         </div>
         <div class="text-center">
           <div class="text-2xl font-bold" :class="systemStatus.database ? 'text-green-600' : 'text-red-600'">
             {{ systemStatus.database ? '✓' : '✗' }}
           </div>
-          <div class="text-sm text-zinc-600">Database</div>
+          <div class="text-sm text-zinc-600 dark:text-zinc-400">Database</div>
         </div>
         <div class="text-center">
           <div class="text-2xl font-bold" :class="systemStatus.vnc ? 'text-green-600' : 'text-red-600'">
             {{ systemStatus.vnc ? '✓' : '✗' }}
           </div>
-          <div class="text-sm text-zinc-600">VNC Server</div>
+          <div class="text-sm text-zinc-600 dark:text-zinc-400">VNC Server</div>
         </div>
         <div class="text-center">
           <div class="text-2xl font-bold text-blue-600">{{ systemStatus.timezone || 'Unknown' }}</div>
-          <div class="text-sm text-zinc-600">Timezone</div>
+          <div class="text-sm text-zinc-600 dark:text-zinc-400">Timezone</div>
         </div>
       </div>
     </div>

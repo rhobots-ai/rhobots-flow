@@ -127,6 +127,7 @@ watch(isViewOnly, (newVal) => {
 
 // Handle WebSocket messages
 watch(() => props.sessionId, (newVal) => {
+  if (!import.meta.client) return
   if (newVal) {
     const ws = new WebSocket(`/ws/${newVal}`)
     ws.onmessage = (event) => {

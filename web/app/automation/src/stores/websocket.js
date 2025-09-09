@@ -1,20 +1,25 @@
 import { defineStore } from 'pinia'
 
+// Keep WebSocket instances out of Pinia state to avoid SSR serialization issues
+const connectionsMap = new Map()
+
 export const useWebSocketStore = defineStore('websocket', {
   state: () => ({
-    connections: new Map(),
     vncConnection: null
   }),
   
   actions: {
     connect(sessionId) {
+      if (!import.meta.client) return null
+
       // Prevent duplicate connections
-      if (this.connections.has(sessionId)) {
-        return this.connections.get(sessionId)
+      if (connectionsMap.has(sessionId)) {
+        return connectionsMap.get(sessionId)
       }
       
+      // Use relative path to leverage Vite proxy in dev
       const ws = new WebSocket(`/ws/${sessionId}`)
-      this.connections.set(sessionId, ws)
+      connectionsMap.set(sessionId, ws)
       
       ws.onopen = () => {
         console.log(`WebSocket connected for session: ${sessionId}`)
@@ -22,7 +27,7 @@ export const useWebSocketStore = defineStore('websocket', {
       
       ws.onclose = () => {
         console.log(`WebSocket disconnected for session: ${sessionId}`)
-        this.connections.delete(sessionId)
+        connectionsMap.delete(sessionId)
       }
       
       ws.onerror = (error) => {
@@ -33,31 +38,35 @@ export const useWebSocketStore = defineStore('websocket', {
     },
     
     disconnect(sessionId) {
-      const ws = this.connections.get(sessionId)
+      if (!import.meta.client) return
+      const ws = connectionsMap.get(sessionId)
       if (ws) {
         ws.close()
-        this.connections.delete(sessionId)
+        connectionsMap.delete(sessionId)
       }
     },
     
     disconnectAll() {
-      this.connections.forEach(ws => {
+      if (!import.meta.client) return
+      connectionsMap.forEach(ws => {
         if (ws.readyState === WebSocket.OPEN) {
           ws.close()
         }
       })
-      this.connections.clear()
+      connectionsMap.clear()
     },
     
     sendMessage(sessionId, message) {
-      const ws = this.connections.get(sessionId)
+      if (!import.meta.client) return
+      const ws = connectionsMap.get(sessionId)
       if (ws && ws.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify(message))
       }
     },
     
     getConnectionStatus(sessionId) {
-      const ws = this.connections.get(sessionId)
+      if (!import.meta.client) return 'disconnected'
+      const ws = connectionsMap.get(sessionId)
       if (!ws) return 'disconnected'
       
       switch (ws.readyState) {
@@ -76,13 +85,15 @@ export const useWebSocketStore = defineStore('websocket', {
   },
   
   getters: {
-    isConnected: (state) => (sessionId) => {
-      const ws = state.connections.get(sessionId)
+    isConnected: () => (sessionId) => {
+      if (!import.meta.client) return false
+      const ws = connectionsMap.get(sessionId)
       return ws && ws.readyState === WebSocket.OPEN
     },
     
-    activeConnections: (state) => {
-      return Array.from(state.connections.keys())
+    activeConnections: () => {
+      if (!import.meta.client) return []
+      return Array.from(connectionsMap.keys())
     }
   }
 })

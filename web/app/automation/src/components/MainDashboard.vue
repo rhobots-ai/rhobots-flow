@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-screen bg-zinc-50 text-zinc-900">
+  <div class="min-h-screen bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
     <!-- App Header -->
-    <header class="h-14 border-b border-zinc-200 flex items-center justify-between px-5 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/70">
+    <header class="h-14 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between px-5 bg-white/80 dark:bg-zinc-900/80 backdrop-blur supports-[backdrop-filter]:bg-white/70 supports-[backdrop-filter]:dark:bg-zinc-900/70">
       <div class="text-base font-semibold tracking-tight">Automation Tasks</div>
       <div class="flex items-center gap-3">
         <span class="inline-flex items-center gap-2 text-xs" :class="isRunning ? 'text-green-700' : 'text-zinc-500'">
@@ -40,15 +40,15 @@
 
     <div class="flex h-[calc(100vh-56px)]">
       <!-- Left Sidebar: Task navigator -->
-      <aside class="w-80 border-r border-zinc-200 p-4 overflow-y-auto bg-white hidden md:block">
+      <aside class="w-80 border-r border-zinc-200 dark:border-zinc-800 p-4 overflow-y-auto bg-white dark:bg-zinc-900 hidden md:block">
         <div class="mb-3">
-          <input v-model="taskSearch" placeholder="Search tasks..." class="w-full bg-white border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition" />
+          <input v-model="taskSearch" placeholder="Search tasks..." class="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition" />
         </div>
         <div class="space-y-3">
           <button
             v-for="task in filteredTasks"
             :key="task.id"
-            class="w-full text-left p-3 rounded-xl bg-white border border-zinc-200 shadow-sm hover:shadow transition"
+            class="w-full text-left p-3 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow transition"
             :class="{ 'ring-2 ring-blue-600': task.id === selectedTaskId }"
             @click="selectTask(task.id)"
           >
@@ -62,12 +62,12 @@
       </aside>
 
       <!-- Setup/Steps Panel -->
-      <aside class="w-[360px] border-r border-zinc-200 p-4 space-y-4 bg-zinc-50 hidden lg:block">
+      <aside class="w-[360px] border-r border-zinc-200 dark:border-zinc-800 p-4 space-y-4 bg-zinc-50 dark:bg-zinc-900 hidden lg:block">
         
         <section>
-          <div class="text-xs font-semibold text-zinc-700 mb-2">Data File</div>
+          <div class="text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Data File</div>
           <div 
-            class="rounded-xl border border-dashed border-zinc-300 bg-white p-6 text-center shadow-sm cursor-pointer hover:border-blue-500 transition-colors"
+            class="rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-6 text-center shadow-sm cursor-pointer hover:border-blue-500 transition-colors"
             :class="{ 'border-blue-500 bg-blue-50': isDragging }"
             @dragover.prevent="isDragging = true"
             @dragleave.prevent="isDragging = false"
@@ -77,30 +77,30 @@
             <input type="file" ref="fileInput" @change="handleFileUpload" accept=".csv,.xlsx,.xls" class="hidden" />
             
             <div v-if="!fileState.uploaded">
-              <div class="mx-auto mb-2 w-12 h-12 rounded-full bg-zinc-50 border border-zinc-200 flex items-center justify-center">
+              <div class="mx-auto mb-2 w-12 h-12 rounded-full bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center">
                   <svg class="w-5 h-5 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
               </div>
-              <div class="text-sm text-zinc-700">Drop CSV/Excel or <span class="text-blue-600 font-medium">browse</span></div>
+              <div class="text-sm text-zinc-700 dark:text-zinc-300">Drop CSV/Excel or <span class="text-blue-600 font-medium">browse</span></div>
               <div class="text-[10px] text-zinc-500 mt-1">Requires: start_location, end_location, price</div>
             </div>
             <div v-if="fileState.uploaded && fileState.validating">
               <div class="mx-auto mb-2 w-12 h-12 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center">
                   <svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"/></svg>
               </div>
-              <div class="text-sm text-zinc-700">Validating file...</div>
+              <div class="text-sm text-zinc-700 dark:text-zinc-300">Validating file...</div>
             </div>
             <div v-if="fileState.uploaded && fileState.valid">
               <div class="mx-auto mb-2 w-12 h-12 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center">
                   <svg class="w-5 h-5 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"/></svg>
               </div>
-              <div class="text-sm text-zinc-700">File uploaded and validated!</div>
+              <div class="text-sm text-zinc-700 dark:text-zinc-300">File uploaded and validated!</div>
               <div class="text-xs text-zinc-500 mt-1">Total rows: {{ fileState.totalRows }}</div>
             </div>
             <div v-if="fileState.uploaded && fileState.error">
               <div class="mx-auto mb-2 w-12 h-12 rounded-full bg-rose-100 border border-rose-200 flex items-center justify-center">
                   <svg class="w-5 h-5 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg>
               </div>
-              <div class="text-sm text-zinc-700">{{ fileState.errorMessage }}</div>
+              <div class="text-sm text-zinc-700 dark:text-zinc-300">{{ fileState.errorMessage }}</div>
             </div>
           </div>
         </section>
@@ -108,11 +108,11 @@
         <!-- Automation Steps -->
         <section>
           <div class="flex items-center justify-between mb-2">
-            <div class="text-xs font-semibold text-zinc-700">Automation Steps</div>
-            <button class="text-xs px-2.5 py-1.5 rounded-lg bg-white border border-zinc-300 shadow-sm hover:shadow">Edit Steps</button>
+            <div class="text-xs font-semibold text-zinc-700 dark:text-zinc-300">Automation Steps</div>
+            <button class="text-xs px-2.5 py-1.5 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 shadow-sm hover:shadow">Edit Steps</button>
           </div>
           <div class="space-y-2">
-            <div v-for="(step, idx) in currentSteps" :key="idx" class="flex items-center gap-2 bg-white border border-zinc-200 rounded-lg p-2.5 shadow-sm">
+            <div v-for="(step, idx) in currentSteps" :key="idx" class="flex items-center gap-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-2.5 shadow-sm">
               <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-semibold" :class="stepClass(idx)">
                 <template v-if="idx + 1 < currentStep">
                   <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
@@ -129,23 +129,23 @@
         </section>
 
         <!-- Run Settings -->
-        <section class="pt-2 border-t border-zinc-200">
-          <div class="text-xs font-semibold text-zinc-700 mb-2">Run Settings</div>
-          <div class="space-y-3 text-sm text-zinc-700">
+        <section class="pt-2 border-t border-zinc-200 dark:border-zinc-800">
+          <div class="text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Run Settings</div>
+          <div class="space-y-3 text-sm text-zinc-700 dark:text-zinc-300">
             <label class="flex items-center gap-2"><input type="checkbox" class="accent-blue-600" v-model="headless"/> Headless mode</label>
             <label class="flex items-center gap-2"><input type="checkbox" class="accent-blue-600" v-model="takeScreens"/> Take screenshots</label>
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <div class="text-xs text-zinc-500">Timeout (seconds)</div>
-                <input v-model.number="timeout" class="w-full bg-white border border-zinc-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+                <div class="text-xs text-zinc-500 dark:text-zinc-400">Timeout (seconds)</div>
+                <input v-model.number="timeout" class="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-600" />
               </div>
               <div>
-                <div class="text-xs text-zinc-500">Retry Attempts</div>
-                <input v-model.number="retries" class="w-full bg-white border border-zinc-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+                <div class="text-xs text-zinc-500 dark:text-zinc-400">Retry Attempts</div>
+                <input v-model.number="retries" class="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-600" />
               </div>
               <div class="col-span-2">
-                <div class="text-xs text-zinc-500">Wait Between Steps (ms)</div>
-                <input v-model.number="waitBetween" class="w-full bg-white border border-zinc-300 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+                <div class="text-xs text-zinc-500 dark:text-zinc-400">Wait Between Steps (ms)</div>
+                <input v-model.number="waitBetween" class="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-600" />
               </div>
             </div>
           </div>
@@ -155,18 +155,18 @@
       <!-- Center: Browser viewport with toolbar -->
       <section class="flex-1 flex flex-col">
         <!-- Browser toolbar -->
-        <div class="px-5 py-3 border-b border-zinc-200 bg-white">
+        <div class="px-5 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
           <div class="max-w-5xl">
-            <div class="bg-white border border-zinc-200 rounded-xl overflow-hidden shadow-sm">
-              <div class="flex items-center gap-2 px-3 py-2.5 border-b border-zinc-200">
+            <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-sm">
+              <div class="flex items-center gap-2 px-3 py-2.5 border-b border-zinc-200 dark:border-zinc-800">
                 <div class="flex items-center gap-1">
                   <span class="w-3 h-3 rounded-full bg-red-500"></span>
                   <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
                   <span class="w-3 h-3 rounded-full bg-green-500"></span>
                 </div>
-                <input v-model="addressBar" class="flex-1 bg-zinc-50 rounded-md px-3 py-1.5 text-sm border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-blue-600" />
-                <button class="px-2.5 py-1.5 rounded-md bg-zinc-50 border border-zinc-300 text-xs hover:shadow" @click="reload">⟳</button>
-                <button class="px-2.5 py-1.5 rounded-md bg-zinc-50 border border-zinc-300 text-xs hover:shadow" @click="toggleFullscreen">⤢</button>
+                <input v-model="addressBar" class="flex-1 bg-zinc-50 dark:bg-zinc-800 rounded-md px-3 py-1.5 text-sm border border-zinc-300 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+                <button class="px-2.5 py-1.5 rounded-md bg-zinc-50 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-xs hover:shadow" @click="reload">⟳</button>
+                <button class="px-2.5 py-1.5 rounded-md bg-zinc-50 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-xs hover:shadow" @click="toggleFullscreen">⤢</button>
               </div>
               <div class="h-[640px] bg-black">
                 <MultiSessionBrowserViewport
@@ -185,11 +185,11 @@
         </div>
 
         <!-- Bottom run history panel -->
-        <div class="px-5 py-3 border-t border-zinc-200 bg-white">
+        <div class="px-5 py-3 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
           <div class="max-w-5xl mx-auto">
             <div class="flex items-center justify-between">
-              <div class="text-sm font-medium text-zinc-900">Run History</div>
-              <button class="text-xs px-2 py-1 rounded-md bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 text-zinc-700" @click="loadExecutions">Refresh</button>
+              <div class="text-sm font-medium text-zinc-900 dark:text-zinc-200">Run History</div>
+              <button class="text-xs px-2 py-1 rounded-md bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300" @click="loadExecutions">Refresh</button>
             </div>
             <div v-if="executions.length === 0" class="text-xs text-zinc-500 mt-2">No runs yet.</div>
             <div v-else class="mt-2 divide-y divide-zinc-200">
@@ -201,7 +201,7 @@
                   <span v-if="exec.end_time">End: {{ new Date(exec.end_time).toLocaleString() }}</span>
                   <span v-if="exec.error_message" class="text-rose-600">Error: {{ exec.error_message }}</span>
                 </div>
-                <div class="text-[10px] text-zinc-500">Exec ID: {{ exec.id }}</div>
+                <div class="text-[10px] text-zinc-500 dark:text-zinc-400">Exec ID: {{ exec.id }}</div>
               </div>
             </div>
           </div>
@@ -212,16 +212,16 @@
     <!-- Upload result modal -->
     <div v-if="showUploadDialog" class="fixed inset-0 z-50 flex items-center justify-center">
       <div class="fixed inset-0 bg-black/40" @click="closeDialog"></div>
-      <div class="relative bg-white rounded-lg shadow-xl w-full max-w-md p-6">
-        <h3 class="text-lg font-medium text-zinc-900">{{ uploadDialog.title }}</h3>
-        <p class="mt-2 text-sm text-zinc-700">{{ uploadDialog.message }}</p>
+      <div class="relative bg-white dark:bg-zinc-900 rounded-lg shadow-xl w-full max-w-md p-6">
+        <h3 class="text-lg font-medium text-zinc-900 dark:text-zinc-200">{{ uploadDialog.title }}</h3>
+        <p class="mt-2 text-sm text-zinc-700 dark:text-zinc-300">{{ uploadDialog.message }}</p>
         <div class="mt-6 flex justify-end gap-2">
           <template v-if="uploadDialog.type === 'success'">
             <button class="px-3.5 py-1.5 text-sm rounded-md bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm" @click="() => { startAutomation(); closeDialog(); }">Start Automation</button>
-            <button class="px-3.5 py-1.5 text-sm rounded-md bg-zinc-200 hover:bg-zinc-300 text-zinc-900 shadow-sm" @click="closeDialog">Close</button>
+            <button class="px-3.5 py-1.5 text-sm rounded-md bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-200 shadow-sm" @click="closeDialog">Close</button>
           </template>
           <template v-else>
-            <button class="px-3.5 py-1.5 text-sm rounded-md bg-zinc-200 hover:bg-zinc-300 text-zinc-900 shadow-sm" @click="closeDialog">Close</button>
+            <button class="px-3.5 py-1.5 text-sm rounded-md bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-200 shadow-sm" @click="closeDialog">Close</button>
           </template>
         </div>
       </div>

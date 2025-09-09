@@ -1,7 +1,7 @@
 <template>
-  <div class="automation-workspace min-h-screen bg-zinc-50">
+  <div class="automation-workspace min-h-screen bg-zinc-50 dark:bg-zinc-950">
     <!-- Tab Navigation -->
-    <div class="bg-white border-b border-zinc-200 shadow-sm">
+    <div class="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 shadow-sm">
       <div class="px-6 py-4">
         <div class="flex items-center justify-between">
           <div class="flex space-x-1">
@@ -11,8 +11,8 @@
               :class="[
                 'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
                 activeTab === tab.id
-                  ? 'bg-blue-100 text-blue-700 border border-blue-200'
-                  : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100'
+                  ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800'
               ]"
               @click="setActiveTab(tab.id)"
             >
@@ -34,7 +34,7 @@
             <div class="flex items-center justify-center h-full">
               <div class="text-center">
                 <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-2" />
-                <p class="text-zinc-600">Loading Dashboard...</p>
+                <p class="text-zinc-600 dark:text-zinc-400">Loading Dashboard...</p>
               </div>
             </div>
           </template>
@@ -49,7 +49,7 @@
             <div class="flex items-center justify-center h-full">
               <div class="text-center">
                 <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-2" />
-                <p class="text-zinc-600">Loading Workspace...</p>
+                <p class="text-zinc-600 dark:text-zinc-400">Loading Workspace...</p>
               </div>
             </div>
           </template>
@@ -64,7 +64,7 @@
             <div class="flex items-center justify-center h-full">
               <div class="text-center">
                 <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-2" />
-                <p class="text-zinc-600">Loading TigerVNC Test...</p>
+                <p class="text-zinc-600 dark:text-zinc-400">Loading TigerVNC Test...</p>
               </div>
             </div>
           </template>
@@ -79,7 +79,7 @@
             <div class="flex items-center justify-center h-full">
               <div class="text-center">
                 <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-2" />
-                <p class="text-zinc-600">Loading Multi-Session Test...</p>
+                <p class="text-zinc-600 dark:text-zinc-400">Loading Multi-Session Test...</p>
               </div>
             </div>
           </template>
@@ -94,7 +94,7 @@
             <div class="flex items-center justify-center h-full">
               <div class="text-center">
                 <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-2" />
-                <p class="text-zinc-600">Loading Task Builder...</p>
+                <p class="text-zinc-600 dark:text-zinc-400">Loading Task Builder...</p>
               </div>
             </div>
           </template>
@@ -117,7 +117,7 @@
             <div class="flex items-center justify-center h-full">
               <div class="text-center">
                 <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-2" />
-                <p class="text-zinc-600">Loading Task Runner...</p>
+                <p class="text-zinc-600 dark:text-zinc-400">Loading Task Runner...</p>
               </div>
             </div>
           </template>

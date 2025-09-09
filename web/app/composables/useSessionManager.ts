@@ -27,6 +27,23 @@ interface ResourceStats {
   max_sessions: number
 }
 
+function hasDetailData(error: unknown): error is { data?: { detail?: unknown } } {
+  return typeof error === 'object' && error !== null && 'data' in error
+}
+
+function getErrorMessage(error: unknown, fallbackMessage: string): string {
+  if (hasDetailData(error) && typeof error.data?.detail === 'string') {
+    return error.data.detail
+  }
+  if (error instanceof Error && typeof error.message === 'string' && error.message.length > 0) {
+    return error.message
+  }
+  if (typeof error === 'string' && error.length > 0) {
+    return error
+  }
+  return fallbackMessage
+}
+
 export const useSessionManager = () => {
   const createSession = async (userId: string, taskId?: number): Promise<SessionInfo> => {
     try {
@@ -38,9 +55,9 @@ export const useSessionManager = () => {
         }
       })
       return response
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to create session:', error)
-      throw new Error(error.data?.detail || 'Failed to create VNC session')
+      throw new Error(getErrorMessage(error, 'Failed to create VNC session'))
     }
   }
 
@@ -48,9 +65,9 @@ export const useSessionManager = () => {
     try {
       const response = await $fetch<SessionInfo>(`/api/sessions/${sessionId}`)
       return response
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to get session info:', error)
-      throw new Error(error.data?.detail || 'Failed to get session information')
+      throw new Error(getErrorMessage(error, 'Failed to get session information'))
     }
   }
 
@@ -59,9 +76,9 @@ export const useSessionManager = () => {
       await $fetch(`/api/sessions/${sessionId}`, {
         method: 'DELETE'
       })
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to destroy session:', error)
-      throw new Error(error.data?.detail || 'Failed to destroy session')
+      throw new Error(getErrorMessage(error, 'Failed to destroy session'))
     }
   }
 
@@ -69,9 +86,9 @@ export const useSessionManager = () => {
     try {
       const response = await $fetch<SessionInfo[]>('/api/sessions/')
       return response
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to list sessions:', error)
-      throw new Error(error.data?.detail || 'Failed to list sessions')
+      throw new Error(getErrorMessage(error, 'Failed to list sessions'))
     }
   }
 
@@ -79,9 +96,9 @@ export const useSessionManager = () => {
     try {
       const response = await $fetch<QueueStatus>('/api/sessions/queue/status')
       return response
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to get queue status:', error)
-      throw new Error(error.data?.detail || 'Failed to get queue status')
+      throw new Error(getErrorMessage(error, 'Failed to get queue status'))
     }
   }
 
@@ -89,9 +106,9 @@ export const useSessionManager = () => {
     try {
       const response = await $fetch<ResourceStats>('/api/sessions/stats')
       return response
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to get resource stats:', error)
-      throw new Error(error.data?.detail || 'Failed to get resource stats')
+      throw new Error(getErrorMessage(error, 'Failed to get resource stats'))
     }
   }
 
@@ -102,9 +119,9 @@ export const useSessionManager = () => {
         body: { url }
       })
       return response
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to test browser:', error)
-      throw new Error(error.data?.detail || 'Failed to test browser')
+      throw new Error(getErrorMessage(error, 'Failed to test browser'))
     }
   }
 

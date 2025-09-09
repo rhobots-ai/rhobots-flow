@@ -1,10 +1,10 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-gray-50 to-primary-50/30 dark:from-gray-900 dark:to-gray-800">
+  <div class="min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-zinc-50 to-primary-50/30 dark:from-zinc-900 dark:to-zinc-800">
     <div class="w-full max-w-2xl mx-auto text-center">
-      <h1 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+      <h1 class="text-3xl md:text-5xl font-bold text-zinc-900 dark:text-white mb-4">
         🎉 Success!
       </h1>
-      <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+      <p class="text-xl text-zinc-600 dark:text-zinc-300 mb-8">
         Your Nuxt app is working correctly! The <code>&lt;NuxtPage&gt;</code> component is rendering pages as expected.
       </p>
       
@@ -21,11 +21,11 @@
           </NuxtLink>
         </div>
         
-        <div class="mt-8 p-4 bg-white/50 dark:bg-gray-900/50 rounded-lg border border-gray-200/50 dark:border-gray-700/50">
-          <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+        <div class="mt-8 p-4 bg-white/50 dark:bg-zinc-900/50 rounded-lg border border-zinc-200/50 dark:border-zinc-700/50">
+          <h2 class="text-lg font-semibold text-zinc-900 dark:text-white mb-2">
             Navigation Test
           </h2>
-          <p class="text-sm text-gray-600 dark:text-gray-400">
+          <p class="text-sm text-zinc-600 dark:text-zinc-400">
             All the links above should work without any console warnings about <code>&lt;NuxtPage&gt;</code>
           </p>
         </div>

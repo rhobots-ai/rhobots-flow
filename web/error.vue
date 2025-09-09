@@ -1,10 +1,10 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-primary-50/30 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-6">
+  <div class="min-h-screen bg-gradient-to-br from-zinc-50 to-primary-50/30 dark:from-zinc-900 dark:to-zinc-800 flex items-center justify-center p-6">
     <div class="max-w-md w-full">
       <!-- Error Card -->
       <div class="relative">
         <div class="absolute inset-0 bg-gradient-to-r from-primary-500 to-purple-500 rounded-2xl opacity-10"></div>
-        <div class="relative p-8 rounded-2xl bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 shadow-xl">
+        <div class="relative p-8 rounded-2xl bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm border border-zinc-200/50 dark:border-zinc-700/50 shadow-xl">
           <!-- Error Icon -->
           <div class="mx-auto w-24 h-24 mb-6">
             <div class="relative">
@@ -17,15 +17,15 @@
 
           <!-- Error Content -->
           <div class="text-center">
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            <h1 class="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">
               {{ error?.statusCode === 404 ? 'Page Not Found' : 'Something Went Wrong' }}
             </h1>
-            <p class="text-gray-600 dark:text-gray-300 mb-6">
+            <p class="text-zinc-600 dark:text-zinc-300 mb-6">
               {{ error?.message || 'We couldn\'t find the page you were looking for or an unexpected error occurred.' }}
             </p>
 
             <!-- Error Code -->
-            <div class="inline-block px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-sm font-mono mb-6">
+            <div class="inline-block px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 text-sm font-mono mb-6">
               Error {{ error?.statusCode || 500 }}
             </div>
 

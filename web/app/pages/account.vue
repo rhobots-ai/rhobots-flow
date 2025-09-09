@@ -2,8 +2,8 @@
   <div class="p-6">
     <div v-if="profile" class="max-w-2xl mx-auto">
       <div class="mb-8">
-        <h1 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Account Settings</h1>
-        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Manage your account preferences and personal information</p>
+        <h1 class="text-2xl font-semibold text-zinc-900 dark:text-zinc-100">Account Settings</h1>
+        <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Manage your account preferences and personal information</p>
       </div>
 
       <!-- Account Label -->
@@ -16,15 +16,15 @@
       </div>
 
       <!-- Profile Section -->
-      <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm divide-y divide-gray-200 dark:divide-gray-700">
+      <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 shadow-sm divide-y divide-zinc-200 dark:divide-zinc-700">
         <div class="p-6">
-          <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-6">Profile Information</h2>
+          <h2 class="text-lg font-medium text-zinc-900 dark:text-zinc-100 mb-6">Profile Information</h2>
 
           <div class="flex items-start gap-6">
             <!-- Profile Picture -->
             <div class="flex flex-col items-center gap-2">
               <div class="relative group">
-                <div class="h-20 w-20 rounded-full bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center ring-4 ring-white dark:ring-gray-900">
+                <div class="h-20 w-20 rounded-full bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center ring-4 ring-white dark:ring-zinc-900">
                   <img
                       v-if="profile?.imageUrl"
                       :src="profile.imageUrl"
@@ -48,7 +48,7 @@
                 />
               </div>
               <button
-                  class="text-xs text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+                  class="text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
                   @click="triggerFileInput"
               >
                 Change photo
@@ -58,26 +58,26 @@
             <!-- Profile Form -->
             <form class="flex-1 space-y-4" @submit.prevent="saveProfile">
               <div>
-                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label for="name" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
                   Full Name
                 </label>
                 <input
                     id="name"
                     v-model="fullName"
                     type="text"
-                    class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:ring-primary-500"
+                    class="w-full rounded-lg border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:border-primary-500 focus:ring-primary-500"
                 />
               </div>
 
               <div>
-                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label for="email" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
                   Email Address
                 </label>
                 <input
                     id="email"
                     v-model="profile.email"
                     type="email"
-                    class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:ring-primary-500"
+                    class="w-full rounded-lg border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:border-primary-500 focus:ring-primary-500"
                 />
               </div>
 
@@ -96,7 +96,7 @@
         <!-- Password Section -->
         <div class="p-6">
           <div class="flex items-center justify-between">
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Password</h2>
+            <h2 class="text-lg font-medium text-zinc-900 dark:text-zinc-100">Password</h2>
             <button
                 class="px-4 py-2 rounded-lg text-primary-600 text-sm font-medium transition-colors"
                 @click="showPasswordDialog = true"
@@ -133,45 +133,45 @@
                   leave-from="opacity-100 scale-100"
                   leave-to="opacity-0 scale-95"
               >
-                <DialogPanel class="w-full max-w-md transform overflow-hidden rounded-lg bg-white dark:bg-gray-900 p-6 shadow-xl transition-all">
-                  <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100 mb-4">
+                <DialogPanel class="w-full max-w-md transform overflow-hidden rounded-lg bg-white dark:bg-zinc-900 p-6 shadow-xl transition-all">
+                  <DialogTitle as="h3" class="text-lg font-medium leading-6 text-zinc-900 dark:text-zinc-100 mb-4">
                     Change Password
                   </DialogTitle>
 
                   <form @submit.prevent="changePassword" class="space-y-4">
                     <div>
-                      <label for="current-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      <label for="current-password" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
                         Current Password
                       </label>
                       <input
                           id="current-password"
                           v-model="passwordForm.current"
                           type="password"
-                          class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:ring-primary-500"
+                          class="w-full rounded-lg border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:border-primary-500 focus:ring-primary-500"
                       />
                     </div>
 
                     <div>
-                      <label for="new-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      <label for="new-password" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
                         New Password
                       </label>
                       <input
                           id="new-password"
                           v-model="passwordForm.new"
                           type="password"
-                          class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:ring-primary-500"
+                          class="w-full rounded-lg border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:border-primary-500 focus:ring-primary-500"
                       />
                     </div>
 
                     <div>
-                      <label for="confirm-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      <label for="confirm-password" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
                         Confirm New Password
                       </label>
                       <input
                           id="confirm-password"
                           v-model="passwordForm.confirm"
                           type="password"
-                          class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:ring-primary-500"
+                          class="w-full rounded-lg border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:border-primary-500 focus:ring-primary-500"
                       />
                     </div>
 
@@ -195,7 +195,7 @@
                     <div class="flex justify-end gap-3 mt-6">
                       <button
                           type="button"
-                          class="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                          class="px-4 py-2 rounded-lg text-zinc-700 dark:text-zinc-300 text-sm font-medium hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
                           @click="showPasswordDialog = false"
                       >
                         Cancel

@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-primary-50/30 dark:from-gray-900 dark:to-gray-800">
+  <div class="min-h-screen bg-gradient-to-br from-zinc-50 to-primary-50/30 dark:from-zinc-900 dark:to-zinc-800">
     <slot/>
   </div>
 </template>

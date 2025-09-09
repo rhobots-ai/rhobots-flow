@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-primary-50/30 dark:from-gray-900 dark:to-gray-800">
+  <div class="min-h-screen bg-gradient-to-br from-zinc-50 to-primary-50/30 dark:from-zinc-900 dark:to-zinc-800">
 
     <!-- Sidebar -->
     <LayoutSidebar ref="sideBarRef" :is-sidebar-open="isSidebarOpen" :is-dark="isDark" @update:is-dark="isDark = $event"
@@ -10,7 +10,7 @@
       <div v-if="isSidebarOpen && isMobile" class="fixed z-10 inset-0 bg-black/25"></div>
       <!-- App Bar -->
       <div
-        class="fixed top-0 right-0 z-10 transition-[width] duration-500 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200/60 dark:border-gray-700/60"
+        class="fixed top-0 right-0 z-10 transition-[width] duration-500 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm border-b border-zinc-200/60 dark:border-zinc-700/60"
         :class="{
           'w-[calc(100vw-16rem)]': isSidebarOpen,
           'w-full': !isSidebarOpen
@@ -18,19 +18,19 @@
         <div class="flex items-center justify-between h-12 px-4">
           <div class="flex items-center gap-3">
             <button v-show="!isSidebarOpen"
-              class="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              class="p-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               @click="isSidebarOpen = !isSidebarOpen">
-              <PanelLeft class="h-5 w-5 text-gray-600 dark:text-gray-400" />
+              <PanelLeft class="h-5 w-5 text-zinc-600 dark:text-zinc-400" />
             </button>
             <NuxtLink to="/home" class="flex items-center">
-              <span class="text-xl font-bold text-gray-900 dark:text-white">
+              <span class="text-xl font-bold text-zinc-900 dark:text-white">
                 Rhobots Flow
               </span>
             </NuxtLink>
           </div>
           <NuxtLink v-show="!isSidebarOpen" to="/home"
             class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-            :class="$route.path === '/home' ? 'bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'">
+            :class="$route.path === '/home' ? 'bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-400' : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800'">
             <SquarePen class="h-5 w-5" />
           </NuxtLink>
         </div>

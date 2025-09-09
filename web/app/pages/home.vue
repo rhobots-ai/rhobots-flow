@@ -3,10 +3,10 @@
     <div class="w-full max-w-2xl mx-auto">
       <!-- Welcome Message -->
       <div class="text-center mb-8">
-        <h1 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+        <h1 class="text-3xl md:text-5xl font-bold text-zinc-900 dark:text-white mb-4">
           Welcome to Rhobots Flow
         </h1>
-        <p class="mt-6 text-xl md:text-4xl text-gray-600 dark:text-gray-300">
+        <p class="mt-6 text-xl md:text-4xl text-zinc-600 dark:text-zinc-300">
           This is a template for a Rhobots app.
         </p>
         <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
@@ -30,7 +30,7 @@
 
       <!-- Welcome message for logged-in users -->
       <div v-if="userStore.profile" class="text-center">
-        <p class="text-lg text-gray-600 dark:text-gray-300">
+        <p class="text-lg text-zinc-600 dark:text-zinc-300">
           Welcome back, {{ userStore.fullName || userStore.profile.email }}!
         </p>
       </div>

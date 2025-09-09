@@ -24,18 +24,18 @@
               leave-from="opacity-100 scale-100"
               leave-to="opacity-0 scale-95"
           >
-            <DialogPanel class="w-full max-w-md transform overflow-hidden rounded-lg bg-white dark:bg-gray-900 p-6 shadow-xl transition-all">
+            <DialogPanel class="w-full max-w-md transform overflow-hidden rounded-lg bg-white dark:bg-zinc-900 p-6 shadow-xl transition-all">
               <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full" :class="typeClasses.iconBg">
                 <component :is="typeClasses.icon" class="h-6 w-6" :class="typeClasses.iconColor"/>
               </div>
 
               <div class="mt-3 text-center">
-                <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
+                <DialogTitle as="h3" class="text-lg font-medium leading-6 text-zinc-900 dark:text-zinc-100">
                   {{ title }}
                 </DialogTitle>
 
                 <div class="mt-2">
-                  <p class="text-sm text-gray-500 dark:text-gray-400">
+                  <p class="text-sm text-zinc-500 dark:text-zinc-400">
                     {{ message }}
                   </p>
                 </div>

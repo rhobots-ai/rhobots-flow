@@ -5,10 +5,10 @@
       
       <!-- Page Header -->
       <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100">
+        <h1 class="text-3xl font-bold text-zinc-900 dark:text-zinc-100">
           UI Components Sample
         </h1>
-        <p class="mt-2 text-lg text-gray-600 dark:text-gray-400">
+        <p class="mt-2 text-lg text-zinc-600 dark:text-zinc-400">
           A comprehensive reference of UI components and patterns used in this application
         </p>
       </div>
@@ -23,7 +23,7 @@
             :class="[
               activeTab === tab.id
                 ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300',
+                : 'border-transparent text-zinc-500 hover:text-zinc-700 hover:border-zinc-300 dark:text-zinc-400 dark:hover:text-zinc-300',
               'whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm'
             ]"
           >
@@ -37,28 +37,28 @@
         
         <!-- Typography Section -->
         <section v-show="activeTab === 'typography'" class="space-y-6">
-          <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Typography</h2>
+          <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
+            <h2 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Typography</h2>
             <div class="space-y-4">
               <div>
-                <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100">Heading 1 (4xl)</h1>
-                <code class="text-sm text-gray-500">text-4xl font-bold</code>
+                <h1 class="text-4xl font-bold text-zinc-900 dark:text-zinc-100">Heading 1 (4xl)</h1>
+                <code class="text-sm text-zinc-500">text-4xl font-bold</code>
               </div>
               <div>
-                <h2 class="text-3xl font-semibold text-gray-900 dark:text-gray-100">Heading 2 (3xl)</h2>
-                <code class="text-sm text-gray-500">text-3xl font-semibold</code>
+                <h2 class="text-3xl font-semibold text-zinc-900 dark:text-zinc-100">Heading 2 (3xl)</h2>
+                <code class="text-sm text-zinc-500">text-3xl font-semibold</code>
               </div>
               <div>
-                <h3 class="text-2xl font-medium text-gray-900 dark:text-gray-100">Heading 3 (2xl)</h3>
-                <code class="text-sm text-gray-500">text-2xl font-medium</code>
+                <h3 class="text-2xl font-medium text-zinc-900 dark:text-zinc-100">Heading 3 (2xl)</h3>
+                <code class="text-sm text-zinc-500">text-2xl font-medium</code>
               </div>
               <div>
-                <p class="text-base text-gray-700 dark:text-gray-300">Body text (base) - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <code class="text-sm text-gray-500">text-base text-gray-700</code>
+                <p class="text-base text-zinc-700 dark:text-zinc-300">Body text (base) - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <code class="text-sm text-zinc-500">text-base text-zinc-700</code>
               </div>
               <div>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Small text - Secondary information</p>
-                <code class="text-sm text-gray-500">text-sm text-gray-500</code>
+                <p class="text-sm text-zinc-500 dark:text-zinc-400">Small text - Secondary information</p>
+                <code class="text-sm text-zinc-500">text-sm text-zinc-500</code>
               </div>
             </div>
           </div>
@@ -66,13 +66,13 @@
 
         <!-- Buttons Section -->
         <section v-show="activeTab === 'buttons'" class="space-y-6">
-          <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Buttons</h2>
+          <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
+            <h2 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Buttons</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               
               <!-- Primary Buttons -->
               <div class="space-y-3">
-                <h3 class="font-medium text-gray-900 dark:text-gray-100">Primary Buttons</h3>
+                <h3 class="font-medium text-zinc-900 dark:text-zinc-100">Primary Buttons</h3>
                 <div class="flex flex-wrap gap-3">
                   <button class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
                     Primary
@@ -85,29 +85,29 @@
                     Disabled
                   </button>
                 </div>
-                <code class="text-sm text-gray-500 block">px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700</code>
+                <code class="text-sm text-zinc-500 block">px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700</code>
               </div>
 
               <!-- Secondary Buttons -->
               <div class="space-y-3">
-                <h3 class="font-medium text-gray-900 dark:text-gray-100">Secondary Buttons</h3>
+                <h3 class="font-medium text-zinc-900 dark:text-zinc-100">Secondary Buttons</h3>
                 <div class="flex flex-wrap gap-3">
-                  <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                  <button class="px-4 py-2 border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
                     Secondary
                   </button>
-                  <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center gap-2">
+                  <button class="px-4 py-2 border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors flex items-center gap-2">
                     <Download class="h-4 w-4" />
                     Download
                   </button>
                 </div>
-                <code class="text-sm text-gray-500 block">px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50</code>
+                <code class="text-sm text-zinc-500 block">px-4 py-2 border border-zinc-300 rounded-lg hover:bg-zinc-50</code>
               </div>
 
               <!-- Ghost Buttons -->
               <div class="space-y-3">
-                <h3 class="font-medium text-gray-900 dark:text-gray-100">Ghost Buttons</h3>
+                <h3 class="font-medium text-zinc-900 dark:text-zinc-100">Ghost Buttons</h3>
                 <div class="flex flex-wrap gap-3">
-                  <button class="px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  <button class="px-4 py-2 text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
                     Ghost
                   </button>
                   <button class="px-4 py-2 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex items-center gap-2">
@@ -115,24 +115,24 @@
                     Delete
                   </button>
                 </div>
-                <code class="text-sm text-gray-500 block">px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100</code>
+                <code class="text-sm text-zinc-500 block">px-4 py-2 text-zinc-700 rounded-lg hover:bg-zinc-100</code>
               </div>
 
               <!-- Icon Buttons -->
               <div class="space-y-3">
-                <h3 class="font-medium text-gray-900 dark:text-gray-100">Icon Buttons</h3>
+                <h3 class="font-medium text-zinc-900 dark:text-zinc-100">Icon Buttons</h3>
                 <div class="flex flex-wrap gap-3">
-                  <button class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                    <Settings class="h-5 w-5 text-gray-600 dark:text-gray-400" />
+                  <button class="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+                    <Settings class="h-5 w-5 text-zinc-600 dark:text-zinc-400" />
                   </button>
                   <button class="p-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
                     <Plus class="h-5 w-5" />
                   </button>
-                  <button class="p-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                    <Search class="h-5 w-5 text-gray-600 dark:text-gray-400" />
+                  <button class="p-2 border border-zinc-300 dark:border-zinc-600 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
+                    <Search class="h-5 w-5 text-zinc-600 dark:text-zinc-400" />
                   </button>
                 </div>
-                <code class="text-sm text-gray-500 block">p-2 rounded-lg hover:bg-gray-100</code>
+                <code class="text-sm text-zinc-500 block">p-2 rounded-lg hover:bg-zinc-100</code>
               </div>
             </div>
           </div>
@@ -140,40 +140,40 @@
 
         <!-- Forms Section -->
         <section v-show="activeTab === 'forms'" class="space-y-6">
-          <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Form Elements</h2>
+          <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
+            <h2 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Form Elements</h2>
             <form @submit.prevent class="space-y-6">
               
               <!-- Text Inputs -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                     Text Input
                   </label>
                   <input 
                     type="text" 
                     placeholder="Enter text..."
-                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    class="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   />
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                     Email Input
                   </label>
                   <input 
                     type="email" 
                     placeholder="Enter email..."
-                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    class="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   />
                 </div>
               </div>
 
               <!-- Select Dropdown -->
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                   Select Dropdown
                 </label>
-                <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                <select class="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent">
                   <option>Choose an option...</option>
                   <option>Option 1</option>
                   <option>Option 2</option>
@@ -183,45 +183,45 @@
 
               <!-- Textarea -->
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                   Textarea
                 </label>
                 <textarea 
                   rows="4"
                   placeholder="Enter your message..."
-                  class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  class="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 ></textarea>
               </div>
 
               <!-- Checkboxes and Radio -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                  <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">
                     Checkboxes
                   </label>
                   <div class="space-y-2">
                     <label class="flex items-center">
-                      <input type="checkbox" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
-                      <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Option 1</span>
+                      <input type="checkbox" class="rounded border-zinc-300 text-primary-600 focus:ring-primary-500">
+                      <span class="ml-2 text-sm text-zinc-700 dark:text-zinc-300">Option 1</span>
                     </label>
                     <label class="flex items-center">
-                      <input type="checkbox" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500" checked>
-                      <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Option 2 (checked)</span>
+                      <input type="checkbox" class="rounded border-zinc-300 text-primary-600 focus:ring-primary-500" checked>
+                      <span class="ml-2 text-sm text-zinc-700 dark:text-zinc-300">Option 2 (checked)</span>
                     </label>
                   </div>
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                  <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">
                     Radio Buttons
                   </label>
                   <div class="space-y-2">
                     <label class="flex items-center">
-                      <input type="radio" name="radio-example" class="border-gray-300 text-primary-600 focus:ring-primary-500">
-                      <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Choice 1</span>
+                      <input type="radio" name="radio-example" class="border-zinc-300 text-primary-600 focus:ring-primary-500">
+                      <span class="ml-2 text-sm text-zinc-700 dark:text-zinc-300">Choice 1</span>
                     </label>
                     <label class="flex items-center">
-                      <input type="radio" name="radio-example" class="border-gray-300 text-primary-600 focus:ring-primary-500" checked>
-                      <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Choice 2 (selected)</span>
+                      <input type="radio" name="radio-example" class="border-zinc-300 text-primary-600 focus:ring-primary-500" checked>
+                      <span class="ml-2 text-sm text-zinc-700 dark:text-zinc-300">Choice 2 (selected)</span>
                     </label>
                   </div>
                 </div>
@@ -229,7 +229,7 @@
 
               <!-- Form Actions -->
               <div class="flex justify-end gap-3 pt-4">
-                <button type="button" class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                <button type="button" class="px-4 py-2 border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
                   Cancel
                 </button>
                 <button type="submit" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
@@ -245,9 +245,9 @@
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
             <!-- Basic Card -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-              <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">Basic Card</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">
+            <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
+              <h3 class="text-lg font-medium text-zinc-900 dark:text-zinc-100 mb-2">Basic Card</h3>
+              <p class="text-zinc-600 dark:text-zinc-400 text-sm">
                 A simple card with basic content and padding.
               </p>
               <div class="mt-4">
@@ -258,24 +258,24 @@
             </div>
 
             <!-- Card with Icon -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+            <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
               <div class="flex items-center gap-3 mb-3">
                 <div class="p-2 bg-primary-100 dark:bg-primary-900/50 rounded-lg">
                   <Users class="h-5 w-5 text-primary-600 dark:text-primary-400" />
                 </div>
-                <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">With Icon</h3>
+                <h3 class="text-lg font-medium text-zinc-900 dark:text-zinc-100">With Icon</h3>
               </div>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">
+              <p class="text-zinc-600 dark:text-zinc-400 text-sm">
                 Card with an icon header for better visual hierarchy.
               </p>
             </div>
 
             <!-- Stat Card -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+            <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
               <div class="flex items-center justify-between">
                 <div>
-                  <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Users</p>
-                  <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">1,234</p>
+                  <p class="text-sm font-medium text-zinc-600 dark:text-zinc-400">Total Users</p>
+                  <p class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">1,234</p>
                 </div>
                 <div class="p-3 bg-green-100 dark:bg-green-900/50 rounded-full">
                   <TrendingUp class="h-6 w-6 text-green-600 dark:text-green-400" />
@@ -283,20 +283,20 @@
               </div>
               <div class="mt-4 flex items-center">
                 <span class="text-sm text-green-600 dark:text-green-400 font-medium">+12%</span>
-                <span class="text-sm text-gray-500 dark:text-gray-400 ml-1">from last month</span>
+                <span class="text-sm text-zinc-500 dark:text-zinc-400 ml-1">from last month</span>
               </div>
             </div>
 
             <!-- Action Card -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 overflow-hidden">
               <div class="p-6">
-                <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">Action Card</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                <h3 class="text-lg font-medium text-zinc-900 dark:text-zinc-100 mb-2">Action Card</h3>
+                <p class="text-zinc-600 dark:text-zinc-400 text-sm mb-4">
                   Card with action buttons in the footer.
                 </p>
               </div>
-              <div class="px-6 py-3 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center">
-                <span class="text-sm text-gray-500 dark:text-gray-400">Last updated: 2 hours ago</span>
+              <div class="px-6 py-3 bg-zinc-50 dark:bg-zinc-800 border-t border-zinc-200 dark:border-zinc-700 flex justify-between items-center">
+                <span class="text-sm text-zinc-500 dark:text-zinc-400">Last updated: 2 hours ago</span>
                 <button class="text-primary-600 dark:text-primary-400 text-sm font-medium hover:underline">
                   View details
                 </button>
@@ -396,72 +396,72 @@
         <section v-show="activeTab === 'layout'" class="space-y-6">
           
           <!-- Grid Examples -->
-          <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Grid Layouts</h2>
+          <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
+            <h2 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Grid Layouts</h2>
             
             <div class="space-y-6">
               <div>
-                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">2 Column Grid</h3>
+                <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">2 Column Grid</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 text-center">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">Column 1</span>
+                  <div class="bg-zinc-100 dark:bg-zinc-800 rounded-lg p-4 text-center">
+                    <span class="text-sm text-zinc-600 dark:text-zinc-400">Column 1</span>
                   </div>
-                  <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 text-center">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">Column 2</span>
+                  <div class="bg-zinc-100 dark:bg-zinc-800 rounded-lg p-4 text-center">
+                    <span class="text-sm text-zinc-600 dark:text-zinc-400">Column 2</span>
                   </div>
                 </div>
-                <code class="text-xs text-gray-500 mt-2 block">grid grid-cols-1 md:grid-cols-2 gap-4</code>
+                <code class="text-xs text-zinc-500 mt-2 block">grid grid-cols-1 md:grid-cols-2 gap-4</code>
               </div>
 
               <div>
-                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">3 Column Grid</h3>
+                <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">3 Column Grid</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 text-center">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">Column 1</span>
+                  <div class="bg-zinc-100 dark:bg-zinc-800 rounded-lg p-4 text-center">
+                    <span class="text-sm text-zinc-600 dark:text-zinc-400">Column 1</span>
                   </div>
-                  <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 text-center">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">Column 2</span>
+                  <div class="bg-zinc-100 dark:bg-zinc-800 rounded-lg p-4 text-center">
+                    <span class="text-sm text-zinc-600 dark:text-zinc-400">Column 2</span>
                   </div>
-                  <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 text-center">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">Column 3</span>
+                  <div class="bg-zinc-100 dark:bg-zinc-800 rounded-lg p-4 text-center">
+                    <span class="text-sm text-zinc-600 dark:text-zinc-400">Column 3</span>
                   </div>
                 </div>
-                <code class="text-xs text-gray-500 mt-2 block">grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4</code>
+                <code class="text-xs text-zinc-500 mt-2 block">grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4</code>
               </div>
             </div>
           </div>
 
           <!-- Flex Examples -->
-          <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Flexbox Layouts</h2>
+          <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
+            <h2 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Flexbox Layouts</h2>
             
             <div class="space-y-6">
               <div>
-                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Space Between</h3>
-                <div class="flex justify-between items-center bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
-                  <span class="text-sm text-gray-600 dark:text-gray-400">Left</span>
-                  <span class="text-sm text-gray-600 dark:text-gray-400">Right</span>
+                <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">Space Between</h3>
+                <div class="flex justify-between items-center bg-zinc-50 dark:bg-zinc-800 rounded-lg p-4">
+                  <span class="text-sm text-zinc-600 dark:text-zinc-400">Left</span>
+                  <span class="text-sm text-zinc-600 dark:text-zinc-400">Right</span>
                 </div>
-                <code class="text-xs text-gray-500 mt-2 block">flex justify-between items-center</code>
+                <code class="text-xs text-zinc-500 mt-2 block">flex justify-between items-center</code>
               </div>
 
               <div>
-                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Center Aligned</h3>
-                <div class="flex justify-center items-center bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
-                  <span class="text-sm text-gray-600 dark:text-gray-400">Centered Content</span>
+                <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">Center Aligned</h3>
+                <div class="flex justify-center items-center bg-zinc-50 dark:bg-zinc-800 rounded-lg p-4">
+                  <span class="text-sm text-zinc-600 dark:text-zinc-400">Centered Content</span>
                 </div>
-                <code class="text-xs text-gray-500 mt-2 block">flex justify-center items-center</code>
+                <code class="text-xs text-zinc-500 mt-2 block">flex justify-center items-center</code>
               </div>
 
               <div>
-                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Flex Wrap</h3>
-                <div class="flex flex-wrap gap-2 bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">Flex Wrap</h3>
+                <div class="flex flex-wrap gap-2 bg-zinc-50 dark:bg-zinc-800 rounded-lg p-4">
                   <span class="px-3 py-1 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm">Tag 1</span>
                   <span class="px-3 py-1 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm">Tag 2</span>
                   <span class="px-3 py-1 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm">Tag 3</span>
                   <span class="px-3 py-1 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm">Tag 4</span>
                 </div>
-                <code class="text-xs text-gray-500 mt-2 block">flex flex-wrap gap-2</code>
+                <code class="text-xs text-zinc-500 mt-2 block">flex flex-wrap gap-2</code>
               </div>
             </div>
           </div>
@@ -471,12 +471,12 @@
         <section v-show="activeTab === 'interactive'" class="space-y-6">
           
           <!-- Modal Demo -->
-          <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Interactive Elements</h2>
+          <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
+            <h2 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Interactive Elements</h2>
             
             <div class="space-y-4">
               <div>
-                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Modal Dialog</h3>
+                <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">Modal Dialog</h3>
                 <button 
                   @click="showModal = true"
                   class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
@@ -486,7 +486,7 @@
               </div>
 
               <div>
-                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Toggle Switch</h3>
+                <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">Toggle Switch</h3>
                 <label class="flex items-center cursor-pointer">
                   <input 
                     type="checkbox" 
@@ -497,7 +497,7 @@
                     <div 
                       :class="[
                         'block w-14 h-8 rounded-full transition-colors',
-                        toggleState ? 'bg-primary-600' : 'bg-gray-300 dark:bg-gray-600'
+                        toggleState ? 'bg-primary-600' : 'bg-zinc-300 dark:bg-zinc-600'
                       ]"
                     ></div>
                     <div 
@@ -507,20 +507,20 @@
                       ]"
                     ></div>
                   </div>
-                  <span class="ml-3 text-sm text-gray-700 dark:text-gray-300">
+                  <span class="ml-3 text-sm text-zinc-700 dark:text-zinc-300">
                     {{ toggleState ? 'Enabled' : 'Disabled' }}
                   </span>
                 </label>
               </div>
 
               <div>
-                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Progress Bar</h3>
+                <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">Progress Bar</h3>
                 <div class="space-y-2">
                   <div class="flex justify-between text-sm">
-                    <span class="text-gray-600 dark:text-gray-400">Progress</span>
-                    <span class="text-gray-600 dark:text-gray-400">{{ progress }}%</span>
+                    <span class="text-zinc-600 dark:text-zinc-400">Progress</span>
+                    <span class="text-zinc-600 dark:text-zinc-400">{{ progress }}%</span>
                   </div>
-                  <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                  <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2">
                     <div 
                       class="bg-primary-600 h-2 rounded-full transition-all duration-300"
                       :style="{ width: progress + '%' }"
@@ -536,22 +536,22 @@
               </div>
 
               <div>
-                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Dropdown Menu</h3>
+                <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">Dropdown Menu</h3>
                 <div class="relative inline-block">
                   <button 
                     @click="showDropdown = !showDropdown"
-                    class="flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                    class="flex items-center gap-2 px-4 py-2 border border-zinc-300 dark:border-zinc-600 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
                   >
                     Options
                     <ChevronDown class="h-4 w-4" />
                   </button>
                   <div 
                     v-show="showDropdown"
-                    class="absolute top-full left-0 mt-1 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-10"
+                    class="absolute top-full left-0 mt-1 w-48 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-lg z-10"
                   >
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 first:rounded-t-lg">Option 1</a>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">Option 2</a>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 last:rounded-b-lg">Option 3</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-700 first:rounded-t-lg">Option 1</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-700">Option 2</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-700 last:rounded-b-lg">Option 3</a>
                   </div>
                 </div>
               </div>
@@ -563,12 +563,12 @@
         <section v-show="activeTab === 'colors'" class="space-y-6">
           
           <!-- Color Palette -->
-          <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Color Palette</h2>
+          <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
+            <h2 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Color Palette</h2>
             
             <div class="space-y-6">
               <div>
-                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Primary Colors</h3>
+                <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">Primary Colors</h3>
                 <div class="grid grid-cols-6 gap-2">
                   <div class="space-y-1">
                     <div class="h-12 w-full bg-primary-50 rounded"></div>
@@ -598,53 +598,53 @@
               </div>
 
               <div>
-                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Gray Scale</h3>
+                <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">Gray Scale</h3>
                 <div class="grid grid-cols-6 gap-2">
                   <div class="space-y-1">
-                    <div class="h-12 w-full bg-gray-50 dark:bg-gray-900 rounded border"></div>
+                    <div class="h-12 w-full bg-zinc-50 dark:bg-zinc-900 rounded border"></div>
                     <code class="text-xs">50/900</code>
                   </div>
                   <div class="space-y-1">
-                    <div class="h-12 w-full bg-gray-100 dark:bg-gray-800 rounded"></div>
+                    <div class="h-12 w-full bg-zinc-100 dark:bg-zinc-800 rounded"></div>
                     <code class="text-xs">100/800</code>
                   </div>
                   <div class="space-y-1">
-                    <div class="h-12 w-full bg-gray-200 dark:bg-gray-700 rounded"></div>
+                    <div class="h-12 w-full bg-zinc-200 dark:bg-zinc-700 rounded"></div>
                     <code class="text-xs">200/700</code>
                   </div>
                   <div class="space-y-1">
-                    <div class="h-12 w-full bg-gray-400 dark:bg-gray-500 rounded"></div>
+                    <div class="h-12 w-full bg-zinc-400 dark:bg-zinc-500 rounded"></div>
                     <code class="text-xs">400/500</code>
                   </div>
                   <div class="space-y-1">
-                    <div class="h-12 w-full bg-gray-600 dark:bg-gray-300 rounded"></div>
+                    <div class="h-12 w-full bg-zinc-600 dark:bg-zinc-300 rounded"></div>
                     <code class="text-xs">600/300</code>
                   </div>
                   <div class="space-y-1">
-                    <div class="h-12 w-full bg-gray-800 dark:bg-gray-100 rounded"></div>
+                    <div class="h-12 w-full bg-zinc-800 dark:bg-zinc-100 rounded"></div>
                     <code class="text-xs">800/100</code>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Status Colors</h3>
+                <h3 class="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">Status Colors</h3>
                 <div class="grid grid-cols-4 gap-4">
                   <div class="space-y-2">
                     <div class="h-12 w-full bg-green-500 rounded"></div>
-                    <span class="text-xs text-gray-600 dark:text-gray-400">Success</span>
+                    <span class="text-xs text-zinc-600 dark:text-zinc-400">Success</span>
                   </div>
                   <div class="space-y-2">
                     <div class="h-12 w-full bg-red-500 rounded"></div>
-                    <span class="text-xs text-gray-600 dark:text-gray-400">Error</span>
+                    <span class="text-xs text-zinc-600 dark:text-zinc-400">Error</span>
                   </div>
                   <div class="space-y-2">
                     <div class="h-12 w-full bg-amber-500 rounded"></div>
-                    <span class="text-xs text-gray-600 dark:text-gray-400">Warning</span>
+                    <span class="text-xs text-zinc-600 dark:text-zinc-400">Warning</span>
                   </div>
                   <div class="space-y-2">
                     <div class="h-12 w-full bg-blue-500 rounded"></div>
-                    <span class="text-xs text-gray-600 dark:text-gray-400">Info</span>
+                    <span class="text-xs text-zinc-600 dark:text-zinc-400">Info</span>
                   </div>
                 </div>
               </div>
@@ -652,8 +652,8 @@
           </div>
 
           <!-- Spacing Examples -->
-          <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Spacing Scale</h2>
+          <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
+            <h2 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Spacing Scale</h2>
             <div class="space-y-4">
               <div class="flex items-center gap-4">
                 <code class="text-sm w-12">p-1</code>

@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+  <div class="text-zinc-900 dark:text-zinc-100">
     <!-- App Header -->
     <header class="h-14 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between px-5 bg-white/80 dark:bg-zinc-900/80 backdrop-blur supports-[backdrop-filter]:bg-white/70 supports-[backdrop-filter]:dark:bg-zinc-900/70">
       <div class="text-base font-semibold tracking-tight">Automation Tasks</div>

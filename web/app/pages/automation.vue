@@ -1,17 +1,15 @@
 <template>
   <div>
-    <!-- Render the MainDashboard with integrated tabs -->
-    <AutomationTabsSimple />
+    <MainDashboard />
   </div>
 </template>
 
 <script setup>
-// Import the simpler tabbed automation component to avoid timeout issues
-import AutomationTabsSimple from '~/components/automation/AutomationTabsSimple.vue'
+import MainDashboard from '~/components/automation/MainDashboard.vue'
 
 // Page metadata
 definePageMeta({
-  title: 'Automation Dashboard',
+  title: 'Automation Workspace',
   layout: 'default'
 })
 </script>

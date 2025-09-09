@@ -1,7 +1,7 @@
 <template>
   <div class="p-4 space-y-4">
     <div class="flex items-center justify-between">
-      <h1 class="text-xl font-semibold">Multi Session Test</h1>
+      <h1 class="text-xl font-semibold text-zinc-900 dark:text-zinc-100">Multi Session Test</h1>
       <div class="flex items-center gap-2">
         <button
           class="px-3 py-1.5 rounded bg-emerald-600 text-white hover:bg-emerald-700 text-sm"
@@ -20,10 +20,10 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <!-- Google -->
-      <div class="bg-white border rounded-lg overflow-hidden">
-        <div class="px-3 py-2 border-b flex items-center justify-between">
-          <div class="font-medium text-sm">Google Keep</div>
-          <div class="text-xs text-zinc-500">{{ statuses.google }}</div>
+      <div class="bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg overflow-hidden">
+        <div class="px-3 py-2 border-b border-zinc-300 dark:border-zinc-700 flex items-center justify-between">
+          <div class="font-medium text-sm text-zinc-900 dark:text-zinc-100">Google Keep</div>
+          <div class="text-xs text-zinc-500 dark:text-zinc-400">{{ statuses.google }}</div>
         </div>
         <div class="h-[360px] bg-black">
           <MultiSessionBrowserViewport
@@ -43,10 +43,10 @@
       </div>
 
       <!-- Gmail -->
-      <div class="bg-white border rounded-lg overflow-hidden">
-        <div class="px-3 py-2 border-b flex items-center justify-between">
-          <div class="font-medium text-sm">Outlook Mail</div>
-          <div class="text-xs text-zinc-500">{{ statuses.gmail }}</div>
+      <div class="bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg overflow-hidden">
+        <div class="px-3 py-2 border-b border-zinc-300 dark:border-zinc-700 flex items-center justify-between">
+          <div class="font-medium text-sm text-zinc-900 dark:text-zinc-100">Outlook Mail</div>
+          <div class="text-xs text-zinc-500 dark:text-zinc-400">{{ statuses.gmail }}</div>
         </div>
         <div class="h-[360px] bg-black">
           <MultiSessionBrowserViewport
@@ -66,10 +66,10 @@
       </div>
 
       <!-- YouTube -->
-      <div class="bg-white border rounded-lg overflow-hidden">
-        <div class="px-3 py-2 border-b flex items-center justify-between">
-          <div class="font-medium text-sm">Fast.com</div>
-          <div class="text-xs text-zinc-500">{{ statuses.youtube }}</div>
+      <div class="bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg overflow-hidden">
+        <div class="px-3 py-2 border-b border-zinc-300 dark:border-zinc-700 flex items-center justify-between">
+          <div class="font-medium text-sm text-zinc-900 dark:text-zinc-100">Fast.com</div>
+          <div class="text-xs text-zinc-500 dark:text-zinc-400">{{ statuses.youtube }}</div>
         </div>
         <div class="h-[360px] bg-black">
           <MultiSessionBrowserViewport
@@ -89,10 +89,10 @@
       </div>
 
       <!-- Outlook -->
-      <div class="bg-white border rounded-lg overflow-hidden">
-        <div class="px-3 py-2 border-b flex items-center justify-between">
-          <div class="font-medium text-sm">Rhobots</div>
-          <div class="text-xs text-zinc-500">{{ statuses.outlook }}</div>
+      <div class="bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg overflow-hidden">
+        <div class="px-3 py-2 border-b border-zinc-300 dark:border-zinc-700 flex items-center justify-between">
+          <div class="font-medium text-sm text-zinc-900 dark:text-zinc-100">Rhobots</div>
+          <div class="text-xs text-zinc-500 dark:text-zinc-400">{{ statuses.outlook }}</div>
         </div>
         <div class="h-[360px] bg-black">
           <MultiSessionBrowserViewport
@@ -112,7 +112,7 @@
       </div>
     </div>
 
-    <div class="text-xs text-zinc-500">
+    <div class="text-xs text-zinc-500 dark:text-zinc-400">
       Sessions auto-launch target URLs after connection. Use "Close All" to free resources.
     </div>
   </div>

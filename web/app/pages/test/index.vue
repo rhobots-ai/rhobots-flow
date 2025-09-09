@@ -1,17 +1,14 @@
 <template>
-  <div>
-    <!-- Render TestTigerVNC component -->
-    <TestTigerVNC />
+  <div class="p-6">
+    <TestTabs />
   </div>
 </template>
 
 <script setup>
-// Import the original TestTigerVNC component via the @auto alias
-import TestTigerVNC from '@auto/components/TestTigerVNC.vue'
+import TestTabs from '~/components/automation/TestTabs.vue'
 
-// Page metadata
 definePageMeta({
-  title: 'TigerVNC Test',
-  layout: 'legacy'
+  title: 'Test Suite',
+  layout: 'default'
 })
 </script>

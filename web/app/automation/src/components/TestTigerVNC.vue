@@ -1,22 +1,22 @@
 <template>
   <div class="p-6 space-y-4">
-    <h1 class="text-2xl font-semibold text-zinc-900">TigerVNC Test Harness</h1>
-    <p class="text-zinc-600">Use this page to create/destroy a TigerVNC session and verify noVNC connectivity.</p>
+    <h1 class="text-2xl font-semibold text-zinc-900 dark:text-zinc-100">TigerVNC Test Harness</h1>
+    <p class="text-zinc-600 dark:text-zinc-400">Use this page to create/destroy a TigerVNC session and verify noVNC connectivity.</p>
 
     <!-- Controls -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div>
-        <label class="block text-sm text-zinc-600 mb-1">User ID</label>
+        <label class="block text-sm text-zinc-600 dark:text-zinc-400 mb-1">User ID</label>
         <input v-model="userId"
-               class="w-full border rounded px-3 py-2"
+               class="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 text-zinc-900 dark:text-zinc-100"
                placeholder="test-user-123" />
       </div>
       <div>
-        <label class="block text-sm text-zinc-600 mb-1">Task ID (optional)</label>
+        <label class="block text-sm text-zinc-600 dark:text-zinc-400 mb-1">Task ID (optional)</label>
         <input v-model.number="taskId"
                type="number"
                min="0"
-               class="w-full border rounded px-3 py-2"
+               class="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 text-zinc-900 dark:text-zinc-100"
                placeholder="e.g. 1" />
       </div>
       <div class="flex items-end gap-2">
@@ -34,14 +34,14 @@
     </div>
 
     <!-- Session Info -->
-    <div v-if="sessionDetails" class="bg-white rounded border p-4 text-sm text-zinc-800">
+    <div v-if="sessionDetails" class="bg-white dark:bg-zinc-900 rounded border border-zinc-300 dark:border-zinc-700 p-4 text-sm text-zinc-800 dark:text-zinc-200">
       <div class="font-medium mb-2">Session Details</div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-        <div><span class="text-zinc-500">Session ID:</span> {{ sessionDetails.session_id }}</div>
-        <div><span class="text-zinc-500">Display:</span> :{{ sessionDetails.display }}</div>
-        <div><span class="text-zinc-500">web_port:</span> {{ sessionDetails.web_port }}</div>
-        <div class="md:col-span-3"><span class="text-zinc-500">VNC URL:</span> {{ sessionDetails.vnc_url }}</div>
-        <div class="md:col-span-3"><span class="text-zinc-500">Password:</span> {{ sessionDetails.password }}</div>
+        <div><span class="text-zinc-500 dark:text-zinc-400">Session ID:</span> {{ sessionDetails.session_id }}</div>
+        <div><span class="text-zinc-500 dark:text-zinc-400">Display:</span> :{{ sessionDetails.display }}</div>
+        <div><span class="text-zinc-500 dark:text-zinc-400">web_port:</span> {{ sessionDetails.web_port }}</div>
+        <div class="md:col-span-3"><span class="text-zinc-500 dark:text-zinc-400">VNC URL:</span> {{ sessionDetails.vnc_url }}</div>
+        <div class="md:col-span-3"><span class="text-zinc-500 dark:text-zinc-400">Password:</span> {{ sessionDetails.password }}</div>
       </div>
     </div>
 
@@ -64,8 +64,8 @@
     </div>
 
     <!-- Status -->
-    <div class="text-sm text-zinc-600">
-      <span class="text-zinc-500">Status:</span> {{ statusMessage }}
+    <div class="text-sm text-zinc-600 dark:text-zinc-400">
+      <span class="text-zinc-500 dark:text-zinc-400">Status:</span> {{ statusMessage }}
     </div>
   </div>
 </template>
@@ -107,7 +107,7 @@ const destroySession = async () => {
     if (viewportRef.value) {
       await viewportRef.value.cleanup()
     }
-  } catch (e) {
+  } catch {
     // ignore
   } finally {
     isRunning.value = false
@@ -116,19 +116,6 @@ const destroySession = async () => {
   }
 }
 
-const runChromiumDemo = async () => {
-  try {
-    if (!sessionDetails.value) {
-      statusMessage.value = 'No active session';
-      return;
-    }
-    statusMessage.value = 'Launching Chromium demo...';
-    await axios.post(`/api/test-browser/session/${sessionDetails.value.session_id}`);
-    statusMessage.value = 'Chromium launched. Check the VNC canvas.';
-  } catch (e) {
-    statusMessage.value = `Failed to launch Chromium: ${e?.message || e}`;
-  }
-}
 
 const onSessionCreated = async (session) => {
   sessionDetails.value = session

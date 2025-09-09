@@ -85,28 +85,20 @@ export const useMenu = () => {
         label: 'Automation',
         items: [
           {
-            id: 'automation-dashboard',
-            label: 'Dashboard',
+            id: 'automation-workspace',
+            label: 'Workspace',
             path: '/automation',
             icon: MonitorPlay,
             requiresAuth: true,
             description: 'Main automation workspace with integrated tools'
           },
           {
-            id: 'automation-studio',
-            label: 'Studio',
-            path: '/automation/studio',
+            id: 'automation-test',
+            label: 'Test',
+            path: '/test',
             icon: PlayCircle,
             requiresAuth: true,
-            description: 'Standalone task builder'
-          },
-          {
-            id: 'automation-tasks',
-            label: 'Tasks',
-            path: '/tasks',
-            icon: FileText,
-            requiresAuth: true,
-            description: 'Manage automation tasks'
+            description: 'Test components'
           }
         ]
       },

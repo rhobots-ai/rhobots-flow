@@ -1,21 +1,21 @@
 <template>
   <div class="px-4 py-6 sm:px-0">
     <div class="mb-8">
-      <h1 class="text-2xl font-semibold text-zinc-900">
+      <h1 class="text-2xl font-semibold text-zinc-900 dark:text-zinc-100">
         {{ isEditing ? 'Edit Task' : 'Create New Task' }}
       </h1>
-      <p class="mt-2 text-sm text-zinc-600">
+      <p class="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
         Build your browser automation workflow step by step
       </p>
     </div>
 
     <form @submit.prevent="saveTask" class="space-y-8">
       <!-- Task Details -->
-      <div class="bg-white rounded-lg p-6 border border-zinc-200 shadow-sm">
-        <h2 class="text-lg font-medium text-zinc-900 mb-4">Task Details</h2>
+      <div class="bg-white dark:bg-zinc-900 rounded-lg p-6 border border-zinc-200 dark:border-zinc-800 shadow-sm">
+        <h2 class="text-lg font-medium text-zinc-900 dark:text-zinc-100 mb-4">Task Details</h2>
         <div class="grid grid-cols-1 gap-6">
           <div>
-            <label for="name" class="block text-sm font-medium text-zinc-700">
+            <label for="name" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
               Task Name
             </label>
             <input
@@ -23,19 +23,19 @@
               id="name"
               v-model="task.name"
               required
-              class="mt-1 block w-full rounded-md bg-white border-zinc-300 text-zinc-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+              class="mt-1 block w-full rounded-md bg-white dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               placeholder="Enter task name"
             />
           </div>
           <div>
-            <label for="description" class="block text-sm font-medium text-zinc-700">
+            <label for="description" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
               Description (Optional)
             </label>
             <textarea
               id="description"
               v-model="task.description"
               rows="3"
-              class="mt-1 block w-full rounded-md bg-white border-zinc-300 text-zinc-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+              class="mt-1 block w-full rounded-md bg-white dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
               placeholder="Describe what this task does"
             />
           </div>
@@ -43,9 +43,9 @@
       </div>
 
       <!-- Steps -->
-      <div class="bg-white rounded-lg p-6 border border-zinc-200 shadow-sm">
+      <div class="bg-white dark:bg-zinc-900 rounded-lg p-6 border border-zinc-200 dark:border-zinc-800 shadow-sm">
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-lg font-medium text-zinc-900">Automation Steps</h2>
+          <h2 class="text-lg font-medium text-zinc-900 dark:text-zinc-100">Automation Steps</h2>
           <button
             type="button"
             @click="addStep"
@@ -55,7 +55,7 @@
           </button>
         </div>
 
-        <div v-if="task.steps.length === 0" class="text-center py-8 text-zinc-500">
+        <div v-if="task.steps.length === 0" class="text-center py-8 text-zinc-500 dark:text-zinc-400">
           No steps added yet. Click "Add Step" to get started.
         </div>
 
@@ -63,10 +63,10 @@
           <div
             v-for="(step, index) in task.steps"
             :key="index"
-            class="bg-zinc-50 rounded-lg p-4 border border-zinc-200"
+            class="bg-zinc-50 dark:bg-zinc-800 rounded-lg p-4 border border-zinc-200 dark:border-zinc-700"
           >
             <div class="flex justify-between items-start mb-3">
-              <span class="text-sm font-medium text-zinc-700">Step {{ index + 1 }}</span>
+              <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Step {{ index + 1 }}</span>
               <button type="button" @click="removeStep(index)" class="text-red-600 hover:text-red-700">Remove</button>
             </div>
 

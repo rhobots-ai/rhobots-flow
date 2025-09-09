@@ -4,10 +4,10 @@
     <div class="mb-6">
       <div class="flex justify-between items-center">
         <div>
-          <h1 class="text-2xl font-semibold text-zinc-900">
+          <h1 class="text-2xl font-semibold text-zinc-900 dark:text-zinc-100">
             {{ task?.name || 'Automation Runner' }}
           </h1>
-          <p class="mt-1 text-sm text-zinc-600">
+          <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
             {{ task?.description || 'Execute browser automation tasks' }}
           </p>
         </div>
@@ -63,10 +63,10 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Browser Viewport -->
       <div class="lg:col-span-2">
-        <div class="bg-white rounded-lg border border-zinc-200 shadow-sm">
-          <div class="px-4 py-3 border-b border-zinc-200">
-            <h3 class="text-lg font-medium text-zinc-900">Browser Viewport</h3>
-            <p class="text-sm text-zinc-600">Live view of automation execution</p>
+        <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 shadow-sm">
+          <div class="px-4 py-3 border-b border-zinc-200 dark:border-zinc-800">
+            <h3 class="text-lg font-medium text-zinc-900 dark:text-zinc-100">Browser Viewport</h3>
+            <p class="text-sm text-zinc-600 dark:text-zinc-400">Live view of automation execution</p>
           </div>
           <div class="p-0 h-96 lg:h-[600px] bg-black">
             <BrowserViewport :session-id="sessionId" :is-running="isRunning" @pause="onPause" @resume="onResume" />
@@ -77,31 +77,31 @@
       <!-- Control Panel -->
       <div class="space-y-6">
         <!-- Status Panel -->
-        <div class="bg-white rounded-lg p-6 border border-zinc-200 shadow-sm">
-          <h3 class="text-lg font-medium text-zinc-900 mb-4">Status</h3>
+        <div class="bg-white dark:bg-zinc-900 rounded-lg p-6 border border-zinc-200 dark:border-zinc-800 shadow-sm">
+          <h3 class="text-lg font-medium text-zinc-900 dark:text-zinc-100 mb-4">Status</h3>
           <div class="space-y-3">
             <div class="flex justify-between">
-              <span class="text-sm text-zinc-600">Status:</span>
+              <span class="text-sm text-zinc-600 dark:text-zinc-400">Status:</span>
               <span :class="getStatusColor(status)" class="inline-flex rounded-full px-2 py-0.5 text-xs font-semibold">
                 {{ status }}
               </span>
             </div>
             <div v-if="currentStep > 0" class="flex justify-between">
-              <span class="text-sm text-zinc-600">Progress:</span>
-              <span class="text-sm text-zinc-900">{{ currentStep }} / {{ totalSteps }}</span>
+              <span class="text-sm text-zinc-600 dark:text-zinc-400">Progress:</span>
+              <span class="text-sm text-zinc-900 dark:text-zinc-100">{{ currentStep }} / {{ totalSteps }}</span>
             </div>
-            <div v-if="currentStep > 0" class="w-full bg-zinc-100 rounded-full h-2">
+            <div v-if="currentStep > 0" class="w-full bg-zinc-100 dark:bg-zinc-800 rounded-full h-2">
               <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" :style="{ width: `${(currentStep / totalSteps) * 100}%` }"></div>
             </div>
-            <div v-if="currentMessage" class="text-sm text-zinc-700">
+            <div v-if="currentMessage" class="text-sm text-zinc-700 dark:text-zinc-300">
               {{ currentMessage }}
             </div>
           </div>
         </div>
 
         <!-- Task Steps -->
-        <div v-if="task" class="bg-white rounded-lg p-6 border border-zinc-200 shadow-sm">
-          <h3 class="text-lg font-medium text-zinc-900 mb-4">Steps</h3>
+        <div v-if="task" class="bg-white dark:bg-zinc-900 rounded-lg p-6 border border-zinc-200 dark:border-zinc-800 shadow-sm">
+          <h3 class="text-lg font-medium text-zinc-900 dark:text-zinc-100 mb-4">Steps</h3>
           <div class="space-y-2 max-h-64 overflow-y-auto">
             <div
               v-for="(step, index) in task.steps"
@@ -110,7 +110,7 @@
               :class="{
                 'bg-blue-600 text-white': index + 1 === currentStep && isRunning,
                 'bg-emerald-600 text-white': index + 1 < currentStep,
-                'bg-zinc-100 text-zinc-900': index + 1 > currentStep
+                'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100': index + 1 > currentStep
               }"
             >
               <div class="flex-shrink-0 w-6 h-6 mr-3">
@@ -122,15 +122,15 @@
                 <div v-else-if="index + 1 === currentStep && isRunning" class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
                   <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
                 </div>
-                <div v-else class="w-6 h-6 bg-zinc-300 rounded-full flex items-center justify-center text-xs text-zinc-900">
+                <div v-else class="w-6 h-6 bg-zinc-300 dark:bg-zinc-600 rounded-full flex items-center justify-center text-xs text-zinc-900 dark:text-zinc-100">
                   {{ index + 1 }}
                 </div>
               </div>
               <div class="flex-1 min-w-0">
-                <p class="text-sm font-medium" :class="index + 1 > currentStep ? 'text-zinc-900' : 'text-white'">
+                <p class="text-sm font-medium" :class="index + 1 > currentStep ? 'text-zinc-900 dark:text-zinc-100' : 'text-white'">
                   {{ step.action }}
                 </p>
-                <p v-if="step.description" class="text-xs" :class="index + 1 > currentStep ? 'text-zinc-600' : 'text-white/80'">
+                <p v-if="step.description" class="text-xs" :class="index + 1 > currentStep ? 'text-zinc-600 dark:text-zinc-400' : 'text-white/80'">
                   {{ step.description }}
                 </p>
               </div>
@@ -139,12 +139,12 @@
         </div>
 
         <!-- Screenshots -->
-        <div v-if="screenshots.length > 0" class="bg-white rounded-lg p-6 border border-zinc-200 shadow-sm">
-          <h3 class="text-lg font-medium text-zinc-900 mb-4">Screenshots</h3>
+        <div v-if="screenshots.length > 0" class="bg-white dark:bg-zinc-900 rounded-lg p-6 border border-zinc-200 dark:border-zinc-800 shadow-sm">
+          <h3 class="text-lg font-medium text-zinc-900 dark:text-zinc-100 mb-4">Screenshots</h3>
           <div class="space-y-2 max-h-48 overflow-y-auto">
-            <div v-for="(screenshot, index) in screenshots" :key="index" class="flex items-center p-2 bg-zinc-50 rounded border border-zinc-200">
+            <div v-for="(screenshot, index) in screenshots" :key="index" class="flex items-center p-2 bg-zinc-50 dark:bg-zinc-800 rounded border border-zinc-200 dark:border-zinc-700">
               <img :src="screenshot" :alt="`Step ${index + 1} screenshot`" class="w-12 h-8 object-cover rounded mr-3" />
-              <span class="text-sm text-zinc-900">Step {{ index + 1 }}</span>
+              <span class="text-sm text-zinc-900 dark:text-zinc-100">Step {{ index + 1 }}</span>
             </div>
           </div>
         </div>

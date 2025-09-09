@@ -33,6 +33,7 @@ services:
       - STORAGE_BACKEND=minio
       # Session Management
       - SESSION_MANAGER_URL=http://localhost:8001
+      - ENABLE_MULTI_SESSION=true
       - MAX_SESSIONS=100
       - SESSION_TIMEOUT=30
       - SESSION_TTL_HOURS=2

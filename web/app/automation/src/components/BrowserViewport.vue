@@ -1,6 +1,6 @@
 <template>
   <div class="relative w-full h-full bg-black">
-    <div id="vnc-screen" class="w-full h-full"></div>
+    <div :id="`vnc-screen-${uniqueId}`" class="w-full h-full"></div>
 
     <div v-if="connectionStatus"
          :class="statusClasses"
@@ -32,8 +32,18 @@
   </template>
 
 <script setup>
-import { ref, onUnmounted, watch, computed } from 'vue'
-import RFB from '@novnc/novnc/core/rfb'
+import { ref, onUnmounted, watch, computed, onMounted } from 'vue'
+import { useRuntimeConfig } from '#app'
+import { useSessionManager } from '@/app/composables/useSessionManager'
+
+// Lazy-loaded noVNC (client-only)
+let RFB = null
+const loadRFB = async () => {
+  if (!RFB && import.meta.client) {
+    const mod = await import('@novnc/novnc/core/rfb')
+    RFB = mod.default || mod
+  }
+}
 
 const props = defineProps({
   sessionId: String,
@@ -42,11 +52,13 @@ const props = defineProps({
 
 const emit = defineEmits(['resume'])
 
+const uniqueId = ref((typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : `id-${Date.now()}-${Math.random().toString(36).slice(2)}`)
 const vnc = ref(null)
 const connectionStatus = ref('')
 const isConnecting = ref(false)
 const isPaused = ref(false)
 const scriptCompleted = ref(false)
+const sessionInfo = ref(null)
 
 // Compute view-only: allow interaction when paused or after completion
 const isViewOnly = computed(() => {
@@ -57,44 +69,67 @@ const statusClasses = computed(() => {
   const base = 'px-3 py-1 rounded text-sm font-medium'
   if (connectionStatus.value === 'Connected' || connectionStatus.value === 'Manual Control Active') {
     return `${base} bg-green-500 text-white`
-  } else if (connectionStatus.value === 'Connecting...') {
+  } else if (connectionStatus.value === 'Connecting...' || connectionStatus.value === 'connecting') {
     return `${base} bg-yellow-500 text-white`
   } else {
     return `${base} bg-red-500 text-white`
   }
 })
 
-const connectVNC = async () => {
+const sm = useSessionManager()
+
+const connectVNC = async (session) => {
   try {
+    if (!import.meta.client) return
+    await loadRFB()
+    if (!RFB) return
+
     isConnecting.value = true
     connectionStatus.value = 'Connecting...'
 
-    const response = await fetch('/api/vnc/config')
-    const vncConfig = await response.json()
-    const screen = document.getElementById('vnc-screen')
+    const screen = document.getElementById(`vnc-screen-${uniqueId.value}`)
     if (!screen) return
     if (vnc.value) vnc.value.disconnect()
 
-    vnc.value = new RFB(screen, vncConfig.url, {
+    const url = session?.vnc_url || `ws://localhost:${session.web_port}/websockify`
+    vnc.value = new RFB(screen, url, {
       scaleViewport: true,
-      viewOnly: isViewOnly.value
+      viewOnly: isViewOnly.value,
+      shared: true,
+      resizeSession: true,
+      credentials: { password: session?.password || '' }
     })
 
     vnc.value.addEventListener('connect', () => {
       connectionStatus.value = 'Connected'
       isConnecting.value = false
       vnc.value.viewOnly = isViewOnly.value
-      try { vnc.value.scaleViewport = true } catch {}
+      try { vnc.value.scaleViewport = true } catch (e) { void e }
     })
 
     vnc.value.addEventListener('disconnect', () => {
       connectionStatus.value = 'Disconnected'
       isConnecting.value = false
     })
+
+    vnc.value.addEventListener('credentialsrequired', () => {
+      vnc.value.sendCredentials({ password: session?.password || '' })
+    })
   } catch (error) {
     console.error('VNC connection error:', error)
     connectionStatus.value = 'Connection failed'
     isConnecting.value = false
+  }
+}
+
+const ensureSessionAndConnect = async () => {
+  try {
+    if (!props.sessionId) return
+    // Use automation sessionId as the session manager user_id to reuse the engine-allocated session
+    sessionInfo.value = await sm.createSession(props.sessionId)
+    await connectVNC(sessionInfo.value)
+  } catch (e) {
+    console.warn('Failed to create/reuse VNC session for automation sessionId:', e)
   }
 }
 
@@ -114,7 +149,7 @@ watch(() => props.isRunning, (newVal) => {
   if (newVal) {
     scriptCompleted.value = false
     isPaused.value = false
-    setTimeout(connectVNC, 1000)
+    setTimeout(() => ensureSessionAndConnect(), 1000)
   } else if (!scriptCompleted.value) {
     disconnectVNC()
   }
@@ -125,11 +160,18 @@ watch(isViewOnly, (newVal) => {
   if (vnc.value) vnc.value.viewOnly = newVal
 })
 
-// Handle WebSocket messages
+// Handle WebSocket messages (status)
+const config = useRuntimeConfig()
 watch(() => props.sessionId, (newVal) => {
   if (!import.meta.client) return
   if (newVal) {
-    const ws = new WebSocket(`/ws/${newVal}`)
+    const apiScheme = config.public?.apiScheme || (location.protocol === 'https:' ? 'https' : 'http')
+    const apiBase = config.public?.apiBaseUrl || location.host
+    const wsScheme = apiScheme === 'https' ? 'wss' : 'ws'
+    // Route through Nuxt proxy to automation backend
+    const wsUrl = `${wsScheme}://${apiBase}/ws/automation/${newVal}`
+
+    const ws = new WebSocket(wsUrl)
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data)
       if (data.type === 'status') {
@@ -154,6 +196,12 @@ watch(() => props.sessionId, (newVal) => {
         }
       }
     }
+  }
+})
+
+onMounted(() => {
+  if (props.sessionId && props.isRunning) {
+    ensureSessionAndConnect()
   }
 })
 

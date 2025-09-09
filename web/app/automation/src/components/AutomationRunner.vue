@@ -248,8 +248,8 @@ const stopAutomation = async () => {
 // Connect WebSocket for real-time updates
 const connectWebSocket = () => {
   if (!sessionId.value) return
-  const websocket = wsStore.connect(sessionId.value)
-  websocket.onmessage = (event) => {
+  wsStore.connect(sessionId.value)
+  wsStore.onMessage(sessionId.value, (event) => {
     const data = JSON.parse(event.data)
     switch (data.type) {
       case 'status':
@@ -269,7 +269,7 @@ const connectWebSocket = () => {
         if (data.data?.screenshot) screenshots.value.push(data.data.screenshot)
         break
     }
-  }
+  })
 }
 
 // Get status color

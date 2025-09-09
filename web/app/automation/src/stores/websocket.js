@@ -5,7 +5,7 @@ const connectionsMap = new Map()
 
 export const useWebSocketStore = defineStore('websocket', {
   state: () => ({
-    vncConnection: null
+
   }),
   
   actions: {
@@ -17,8 +17,12 @@ export const useWebSocketStore = defineStore('websocket', {
         return connectionsMap.get(sessionId)
       }
       
-      // Use relative path to leverage Vite proxy in dev
-      const ws = new WebSocket(`/ws/${sessionId}`)
+      // Build absolute WebSocket URL to route via Nuxt proxy to automation backend
+      const apiScheme = (location.protocol === 'https:') ? 'https' : 'http'
+      const wsScheme = apiScheme === 'https' ? 'wss' : 'ws'
+      const wsUrl = `${wsScheme}://${location.host}/ws/automation/${sessionId}`
+
+      const ws = new WebSocket(wsUrl)
       connectionsMap.set(sessionId, ws)
       
       ws.onopen = () => {
@@ -61,6 +65,14 @@ export const useWebSocketStore = defineStore('websocket', {
       const ws = connectionsMap.get(sessionId)
       if (ws && ws.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify(message))
+      }
+    },
+    
+    onMessage(sessionId, callback) {
+      if (!import.meta.client) return
+      const ws = connectionsMap.get(sessionId)
+      if (ws) {
+        ws.onmessage = callback
       }
     },
     

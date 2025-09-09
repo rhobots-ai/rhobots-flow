@@ -63,7 +63,15 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
-import RFB from '@novnc/novnc/core/rfb'
+
+// Lazy-loaded noVNC (client-only)
+let RFB = null
+const loadRFB = async () => {
+  if (!RFB && import.meta.client) {
+    const mod = await import('@novnc/novnc/core/rfb')
+    RFB = mod.default || mod
+  }
+}
 
 // Use the session manager composable
 const sessionManager = useSessionManager ? useSessionManager() : {
@@ -128,8 +136,8 @@ const totalInQueue = ref(0)
 const resourceStats = ref(null)
 const resourcePollInterval = ref(null)
 
-// Session management API
-class SessionManager {
+// Session management API (unused, kept for reference)
+class _SessionManager {
   constructor(apiUrl = '/api/sessions') {
     this.apiUrl = apiUrl
     this.retryCount = 0
@@ -258,6 +266,10 @@ const requestNewSession = async () => {
 
 const connectToVNC = async (session) => {
   try {
+    if (!import.meta.client) return
+    await loadRFB()
+    if (!RFB) return
+
     connectionMessage.value = 'Connecting to display...'
     connectionStatus.value = 'connecting'
     
@@ -304,7 +316,9 @@ const connectToVNC = async (session) => {
           canvas.tabIndex = 0
           canvas.focus()
         }
-      } catch (_) {}
+      } catch {
+        // Ignore errors setting VNC properties
+      }
       startResourcePolling()
     })
     

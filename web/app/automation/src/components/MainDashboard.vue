@@ -360,8 +360,8 @@ watch(selectedTaskId, () => {
 
 const connectWebSocket = () => {
   if (!sessionId.value) return
-  const websocket = wsStore.connect(sessionId.value)
-  websocket.onmessage = (event) => {
+  wsStore.connect(sessionId.value)
+  wsStore.onMessage(sessionId.value, (event) => {
     const data = JSON.parse(event.data)
     if (data.type === 'status') {
       status.value = data.status
@@ -377,7 +377,7 @@ const connectWebSocket = () => {
     if (data.type === 'step_complete') {
       if (data.data?.step) currentStep.value = data.data.step
     }
-  }
+  })
 }
 
 const startAutomation = async () => {

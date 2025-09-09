@@ -2,19 +2,14 @@
 import { defineNuxtConfig } from 'nuxt/config';
 import { fileURLToPath } from 'node:url';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   css: [fileURLToPath(new URL('./app/assets/css/main.css', import.meta.url))],
-  postcss: {
-    plugins: {
-      '@tailwindcss/postcss': {},
-      autoprefixer: {}
-    }
-  },
   vite: {
-    plugins: [tsconfigPaths()],
+    plugins: [tsconfigPaths(), tailwindcss()],
     resolve: {
       alias: {
         '@auto': fileURLToPath(new URL('./app/automation/src', import.meta.url)),

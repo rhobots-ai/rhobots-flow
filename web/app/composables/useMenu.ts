@@ -89,14 +89,24 @@ export const useMenu = () => {
             label: 'Dashboard',
             path: '/automation',
             icon: MonitorPlay,
-            requiresAuth: true
+            requiresAuth: true,
+            description: 'Main automation workspace with integrated tools'
           },
           {
             id: 'automation-studio',
             label: 'Studio',
             path: '/automation/studio',
             icon: PlayCircle,
-            requiresAuth: true
+            requiresAuth: true,
+            description: 'Standalone task builder'
+          },
+          {
+            id: 'automation-tasks',
+            label: 'Tasks',
+            path: '/tasks',
+            icon: FileText,
+            requiresAuth: true,
+            description: 'Manage automation tasks'
           }
         ]
       },

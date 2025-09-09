@@ -15,7 +15,7 @@ from app.models.database import init_db, AsyncSessionLocal
 from app.models.task import Task
 from sqlalchemy import select
 from app.services.automation import AutomationEngine
-from app.api import tasks, automation, files, websocket, sessions, test_browser
+from app.api import tasks, automation, files, websocket, sessions, test_browser, health
 
 
 # Configure logging
@@ -76,15 +76,9 @@ app.include_router(files.router, prefix="/api/files", tags=["files"])
 app.include_router(sessions.router, prefix="/api/sessions", tags=["sessions"])
 app.include_router(test_browser.router, prefix="/api/test-browser", tags=["test-browser"])
 app.include_router(websocket.router, prefix="/ws", tags=["websocket"])
+app.include_router(health.router, prefix="/api", tags=["health"])
 
-@app.get("/api/health")
-async def health_check():
-    return {
-        "status": "healthy",
-        "timezone": settings.timezone,
-        "vnc_host": settings.vnc_host,
-        "timestamp": datetime.now().isoformat()
-    }
+# Health endpoint moved to health.py router
 
 @app.get("/api/vnc/config")
 async def get_vnc_config(request: Request):

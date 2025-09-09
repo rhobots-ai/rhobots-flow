@@ -5,8 +5,9 @@ export default defineNuxtPlugin(() => {
   const scheme = (config.public.apiScheme || 'http') as string
   const host = (config.public.apiBaseUrl || 'localhost:8000') as string
 
-  // Build baseURL like http://localhost:8000
-  const baseURL = `${scheme}://${host}`
+  // Build baseURL like http://localhost:8000 in production, but use relative in dev to leverage Vite proxy
+  const isDev = import.meta.dev
+  const baseURL = isDev ? '' : `${scheme}://${host}`
 
   // Set global axios defaults so copied components using axios work without changes
   axios.defaults.baseURL = baseURL
@@ -16,7 +17,6 @@ export default defineNuxtPlugin(() => {
 
   if (import.meta.client) {
     // Optional: simple debug log
-    // eslint-disable-next-line no-console
-    console.debug('[axios] baseURL set to', baseURL)
+    console.debug('[axios] baseURL set to', baseURL || '(relative)')
   }
 })

@@ -65,6 +65,32 @@
 import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
 import RFB from '@novnc/novnc/core/rfb'
 
+// Use the session manager composable
+const sessionManager = useSessionManager ? useSessionManager() : {
+  createSession: async (userId, taskId) => {
+    const response = await $fetch('/api/sessions/create', {
+      method: 'POST',
+      body: { user_id: userId, task_id: taskId }
+    })
+    return response
+  },
+  getSessionInfo: async (sessionId) => {
+    const response = await $fetch(`/api/sessions/${sessionId}`)
+    return response
+  },
+  destroySession: async (sessionId) => {
+    await $fetch(`/api/sessions/${sessionId}`, { method: 'DELETE' })
+  },
+  getQueueStatus: async () => {
+    const response = await $fetch('/api/sessions/queue/status')
+    return response
+  },
+  getResourceStats: async () => {
+    const response = await $fetch('/api/sessions/stats')
+    return response
+  }
+}
+
 const props = defineProps({
   userId: {
     type: String,
@@ -158,8 +184,6 @@ class SessionManager {
     return await response.json()
   }
 }
-
-const sessionManager = new SessionManager()
 
 /**
  * Interaction policy:

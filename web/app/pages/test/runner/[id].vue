@@ -9,4 +9,10 @@
 // Import the copied original component via the @auto alias
 import AutomationRunner from '@auto/components/AutomationRunner.vue'
 const route = useRoute()
+
+// Page metadata
+definePageMeta({
+  title: 'Task Runner',
+  layout: 'legacy'
+})
 </script>

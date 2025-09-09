@@ -57,7 +57,7 @@ services:
         condition: service_healthy
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "nc -z localhost 8002 && nc -z localhost 8003"]
+      test: ["CMD-SHELL", "nc -z localhost 8000 && nc -z localhost 8001"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -201,13 +201,26 @@ services:
   minio_init:
     image: minio/minio
     depends_on:
-      - minio
+      minio:
+        condition: service_healthy
     restart: "no"
+    volumes:
+      - minio_data:/data
     entrypoint: >
       /bin/sh -c "
-        until (mc alias set myminio http://minio:9000 minio miniosecret 2>/dev/null) do echo '...' && sleep 1; done;
-        mc mb --ignore-existing myminio/rhobots-flow;
+        echo 'Starting MinIO initialization...';
+        until (mc alias set myminio http://minio:9000 minio miniosecret 2>/dev/null) do echo 'Waiting for MinIO to be ready...' && sleep 2; done;
+        echo 'MinIO connection established';
+        if mc stat myminio/rhobots-flow >/dev/null 2>&1; then
+          echo 'Bucket rhobots-flow already exists, skipping creation';
+        else
+          echo 'Creating bucket rhobots-flow...';
+          mc mb myminio/rhobots-flow;
+          echo 'Bucket created successfully';
+        fi;
+        echo 'Setting bucket permissions...';
         mc anonymous set download myminio/rhobots-flow;
+        echo 'MinIO initialization completed successfully';
         exit 0;
       "
 

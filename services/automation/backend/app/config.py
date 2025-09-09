@@ -43,7 +43,7 @@ class Settings(BaseSettings):
 
     # Multi-session settings
     enable_multi_session: bool = Field(default=False, validation_alias=AliasChoices('enable_multi_session', 'ENABLE_MULTI_SESSION'))
-    session_manager_url: str = Field(default="http://localhost:8001", validation_alias=AliasChoices('session_manager_url', 'SESSION_MANAGER_URL'))
+    session_manager_url: str = Field(default="http://automation:8001", validation_alias=AliasChoices('session_manager_url', 'SESSION_MANAGER_URL'))
 
     class Config:
         env_file = ".env"

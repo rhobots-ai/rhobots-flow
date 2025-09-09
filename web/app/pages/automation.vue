@@ -1,17 +1,17 @@
 <template>
   <div>
-    <!-- Render the original Home component -->
-    <Home />
+    <!-- Render the MainDashboard with integrated tabs -->
+    <AutomationTabsSimple />
   </div>
 </template>
 
 <script setup>
-// Import the copied original component via the @auto alias
-import Home from '@auto/components/Home.vue'
+// Import the simpler tabbed automation component to avoid timeout issues
+import AutomationTabsSimple from '~/components/automation/AutomationTabsSimple.vue'
 
 // Page metadata
 definePageMeta({
-  title: 'Automation Home',
+  title: 'Automation Dashboard',
   layout: 'default'
 })
 </script>

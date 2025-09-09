@@ -17,25 +17,32 @@ export default defineNuxtConfig({
     },
     server: {
       proxy: {
-        '/api': {
-          target: `${process.env.NUXT_PUBLIC_API_SCHEME || 'http'}://${process.env.NUXT_PUBLIC_API_BASE_URL || 'localhost:8004'}`,
+        '/api/test-browser': {
+          target: 'http://automation:8000',
+          changeOrigin: true
+        },
+        '/api/health': {
+          target: 'http://automation:8000',
           changeOrigin: true
         },
         '/api/automation': {
-          target: 'http://localhost:8000',
-          changeOrigin: true,
-          rewrite: (path: string) => path.replace(/^\/api\/automation/, '/api')
+          target: 'http://automation:8000',
+          changeOrigin: true
         },
         '/api/tasks': {
-          target: 'http://localhost:8000',
+          target: 'http://automation:8000',
           changeOrigin: true
         },
         '/api/sessions': {
-          target: 'http://localhost:8001',
+          target: 'http://automation:8001',
           changeOrigin: true
         },
         '/api/files': {
-          target: 'http://localhost:8000',
+          target: 'http://automation:8000',
+          changeOrigin: true
+        },
+        '/api': {
+          target: `${process.env.NUXT_PUBLIC_API_SCHEME || 'http'}://${process.env.NUXT_PUBLIC_API_BASE_URL || 'localhost:8004'}`,
           changeOrigin: true
         },
         '/ws': {
@@ -44,7 +51,7 @@ export default defineNuxtConfig({
           changeOrigin: true
         },
         '/ws/automation': {
-          target: 'http://localhost:8000',
+          target: 'http://automation:8000',
           ws: true,
           changeOrigin: true,
           rewrite: (path: string) => path.replace(/^\/ws\/automation/, '/ws')

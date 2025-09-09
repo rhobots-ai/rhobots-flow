@@ -8,4 +8,10 @@
 <script setup>
 // Import the copied original component via the @auto alias
 import TaskList from '@auto/components/TaskList.vue'
+
+// Page metadata
+definePageMeta({
+  title: 'Task Management',
+  layout: 'legacy'
+})
 </script>

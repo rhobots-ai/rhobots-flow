@@ -126,16 +126,56 @@ class SessionManager:
 
         session = Session(session_id, display, vnc_port, web_port, user_id)
         try:
-            # Ensure xstartup exists (Dockerfile already creates it)
+            # Ensure xstartup exists with cursor support
             xstartup_path = "/root/.vnc/xstartup"
             if not (os.path.exists(xstartup_path) and os.access(xstartup_path, os.X_OK)):
                 try:
                     os.makedirs("/root/.vnc", exist_ok=True)
                     with open(xstartup_path, "w") as f:
-                        f.write("#!/bin/sh\nunset SESSION_MANAGER\nunset DBUS_SESSION_BUS_ADDRESS\nexec startfluxbox\n")
+                        f.write("""#!/bin/sh
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+# Set default cursor and keyboard settings
+xsetroot -cursor_name left_ptr &
+xset r rate 250 30 &
+# Start window manager (try fluxbox, fallback to openbox)
+if command -v startfluxbox >/dev/null 2>&1; then
+    exec startfluxbox
+elif command -v openbox >/dev/null 2>&1; then
+    exec openbox
+else
+    exec xterm
+fi
+""")
                     os.chmod(xstartup_path, 0o755)
                 except Exception as e:
                     logger.warning(f"Failed to ensure xstartup: {e}")
+            
+            # Create VNC config file for proper interaction support (skip for now to avoid conflicts)
+            try:
+                vnc_config_path = "/root/.vnc/config"
+                # Temporarily disable config file creation to avoid startup issues
+                if False:  # Disabled until basic VNC startup works
+                    with open(vnc_config_path, "w") as f:
+                        f.write("""# TigerVNC Server Configuration
+# Accept pointer events (mouse clicks/movement)
+AcceptPointerEvents=1
+# Accept keyboard events (typing)
+AcceptKeyEvents=1
+# Allow shared connections
+AlwaysShared=1
+# Security type
+SecurityTypes=VncAuth
+# Desktop name
+desktop=AutomationSession
+""")
+                else:
+                    # Remove config file if it exists to avoid conflicts
+                    if os.path.exists(vnc_config_path):
+                        os.remove(vnc_config_path)
+                        logger.info("Removed existing VNC config file to avoid conflicts")
+            except Exception as e:
+                logger.warning(f"Failed to handle VNC config: {e}")
 
             # Generate VNC password and passfile
             vnc_password = self._generate_vnc_password()
@@ -143,7 +183,7 @@ class SessionManager:
             session.password = vnc_password
             session.passfile = passfile
 
-            # Start TigerVNC server on :display
+            # Start TigerVNC server on :display - use minimal arguments for compatibility
             vnc_cmd = [
                 "vncserver",
                 f":{display}",
@@ -155,19 +195,69 @@ class SessionManager:
             ]
             logger.info(f"Starting vncserver: {' '.join(vnc_cmd)}")
             # vncserver daemonizes and spawns Xvnc; use -kill for teardown
-            subprocess.run(vnc_cmd, check=True)
+            vnc_started = False
+            
+            try:
+                result = subprocess.run(vnc_cmd, check=True, capture_output=True, text=True)
+                logger.info(f"VNC server started successfully for display :{display}")
+                if result.stdout:
+                    logger.info(f"VNC stdout: {result.stdout}")
+                if result.stderr:
+                    logger.info(f"VNC stderr: {result.stderr}")
+                vnc_started = True
+            except subprocess.CalledProcessError as e:
+                logger.error(f"Primary VNC start failed with return code {e.returncode}")
+                logger.error(f"VNC stdout: {e.stdout}")
+                logger.error(f"VNC stderr: {e.stderr}")
+                
+                # Try to read the VNC log file for more details
+                log_file = f"/root/.vnc/{socket.gethostname()}:{vnc_port}.log"
+                if os.path.exists(log_file):
+                    try:
+                        with open(log_file, 'r') as f:
+                            log_content = f.read()
+                            logger.error(f"VNC log file content:\n{log_content}")
+                    except Exception as log_err:
+                        logger.error(f"Failed to read VNC log file: {log_err}")
+                
+                # Try alternative VNC startup without custom arguments
+                logger.info("Attempting fallback VNC startup...")
+                try:
+                    fallback_cmd = [
+                        "vncserver",
+                        f":{display}",
+                        "-geometry", "1920x1080",
+                        "-depth", "24"
+                    ]
+                    logger.info(f"Fallback VNC command: {' '.join(fallback_cmd)}")
+                    result = subprocess.run(fallback_cmd, check=True, capture_output=True, text=True)
+                    logger.info("Fallback VNC server started successfully")
+                    vnc_started = True
+                    
+                    # Update port settings for fallback (use default port mapping)
+                    session.vnc_port = 5900 + display
+                    session.web_port = 6080 + display
+                    
+                except subprocess.CalledProcessError as fallback_e:
+                    logger.error(f"Fallback VNC start also failed: {fallback_e}")
+                    raise e  # Raise original error
+            
+            if not vnc_started:
+                raise RuntimeError("Failed to start VNC server with all methods")
 
-            # Wait for VNC port to be ready
-            ok = await self._wait_for_port("127.0.0.1", vnc_port, timeout=10.0)
+            # Wait for VNC port to be ready (use the actual port that was configured)
+            actual_vnc_port = session.vnc_port
+            ok = await self._wait_for_port("127.0.0.1", actual_vnc_port, timeout=10.0)
             if not ok:
-                raise RuntimeError(f"VNC port {vnc_port} did not open")
+                raise RuntimeError(f"VNC port {actual_vnc_port} did not open")
 
-            # Start noVNC/websockify for this session
+            # Start noVNC/websockify for this session (use actual configured ports)
+            actual_web_port = session.web_port
             novnc_cmd = [
                 "python3", "-m", "websockify",
                 "--web", "/opt/noVNC",
-                str(web_port),
-                f"localhost:{vnc_port}"
+                str(actual_web_port),
+                f"localhost:{actual_vnc_port}"
             ]
             logger.info(f"Starting websockify: {' '.join(novnc_cmd)}")
             novnc_process = subprocess.Popen(

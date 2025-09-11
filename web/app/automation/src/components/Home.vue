@@ -118,6 +118,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+defineOptions({ name: 'AutomationHome' })
 
 const systemStatus = ref({
   backend: false,
@@ -138,7 +139,7 @@ const checkSystemStatus = async () => {
       vnc: true,
       timezone: response.data.timezone || 'UTC'
     }
-  } catch (error) {
+  } catch {
     systemStatus.value = {
       backend: false,
       database: false,

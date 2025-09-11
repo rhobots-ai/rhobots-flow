@@ -194,10 +194,23 @@ const testBrowser = async () => {
   }
 }
 
-const openVNC = () => {
-  // Open VNC viewer in new tab
-  const vncUrl = `${window.location.protocol}//${window.location.hostname}:7900/vnc.html`
-  window.open(vncUrl, '_blank')
+const openVNC = async () => {
+  try {
+    const sessionManager = useSessionManager()
+    // Use a transient session for viewing
+    const session = await sessionManager.createSession('vnc-viewer')
+    const url = session.web_url || `${window.location.protocol}//${window.location.hostname}:${session.web_port}/vnc.html`
+    window.open(url, '_blank')
+  } catch (e) {
+    console.error('Failed to open VNC viewer:', e)
+    // Fallback to config endpoint
+    try {
+      const cfg = await $fetch('/api/vnc/config')
+      window.open(cfg.vnc_url, '_blank')
+    } catch (e2) {
+      console.error('Fallback open VNC failed:', e2)
+    }
+  }
 }
 
 onMounted(() => {

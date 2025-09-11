@@ -15,19 +15,28 @@
         <span :class="statusClasses" class="px-2 py-1 rounded text-xs">
           {{ connectionStatus }}
         </span>
-        <button @click="requestNewSession" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded text-sm">
+        <button class="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded text-sm" @click="requestNewSession">
           New Session
         </button>
       </div>
     </div>
 
     <!-- VNC Screen -->
-    <div :id="`vnc-screen-${uniqueId}`" class="w-full h-full pt-10"></div>
+    <div :id="`vnc-screen-${uniqueId}`" class="absolute inset-0 w-full h-full" />
+
+    <!-- Fullscreen Toggle -->
+    <button
+      type="button"
+      class="absolute top-2 right-2 z-20 px-2 py-1 rounded bg-zinc-800/70 hover:bg-zinc-800 text-white text-xs"
+      @click="toggleFullscreen"
+    >
+      {{ isFullscreen ? 'Exit Fullscreen' : 'Fullscreen' }}
+    </button>
 
     <!-- Loading State -->
     <div v-if="isConnecting" class="absolute inset-0 bg-black bg-opacity-75 flex items-center justify-center">
       <div class="text-white text-center">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4" />
         <p>Requesting VNC session...</p>
         <p class="text-sm mt-2 text-zinc-400">{{ connectionMessage }}</p>
       </div>
@@ -38,7 +47,7 @@
       <div class="bg-white rounded-lg p-6 max-w-md">
         <h3 class="text-lg font-semibold text-red-600 mb-2">Connection Error</h3>
         <p class="text-zinc-700 mb-4">{{ connectionError }}</p>
-        <button @click="retry" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+        <button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" @click="retry">
           Retry
         </button>
       </div>
@@ -68,7 +77,7 @@ import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
 let RFB = null
 const loadRFB = async () => {
   if (!RFB && import.meta.client) {
-    const mod = await import('@novnc/novnc/core/rfb')
+    const mod = await import('@novnc/novnc/lib/rfb.js')
     RFB = mod.default || mod
   }
 }
@@ -135,6 +144,9 @@ const totalInQueue = ref(0)
 // Resource stats
 const resourceStats = ref(null)
 const resourcePollInterval = ref(null)
+
+// Fullscreen state
+const isFullscreen = ref(false)
 
 // Session management API (unused, kept for reference)
 class _SessionManager {
@@ -291,8 +303,14 @@ const connectToVNC = async (session) => {
       scaleViewport: true,
       clipViewport: false,
       dragViewport: false,
-      // Resize remote session to client size (helps full-window click mapping)
+      // Resize remote session to client size (fixes cursor offset)
       resizeSession: true,
+      // Enable all input methods
+      touchButton: 1,
+      // CURSOR VISIBILITY: Critical settings for mouse cursor display
+      showDotCursor: true,        // Show dot cursor when no local cursor
+      localCursor: true,          // Use local cursor when possible
+      cursorURIs: [],             // Use default cursor shapes
       credentials: {
         password: session.password || ''
       }
@@ -313,11 +331,17 @@ const connectToVNC = async (session) => {
         if (canvas) {
           canvas.style.pointerEvents = 'auto'
           canvas.style.cursor = 'default'
+          canvas.style.touchAction = 'none'
           canvas.tabIndex = 0
           canvas.focus()
+          console.log('VNC Canvas configured for input:', { 
+            viewOnly: vnc.value.viewOnly, 
+            allowInput: allowInput.value,
+            canvasTabIndex: canvas.tabIndex 
+          })
         }
-      } catch {
-        // Ignore errors setting VNC properties
+      } catch (e) {
+        console.error('Error setting VNC properties:', e)
       }
       startResourcePolling()
     })
@@ -418,20 +442,56 @@ const cleanup = async () => {
  * When automation running state changes, toggle viewOnly accordingly.
  * - true while running (prevent interference)
  * - false after stop/completion (manual control enabled)
+ * Also refocus the canvas so keyboard events route to the remote session.
  */
 watch(() => props.isRunning, (running) => {
-  if (vnc.value) {
-    vnc.value.viewOnly = running ? true : false
+  if (!vnc.value) return
+  
+  // Toggle view-only mode
+  vnc.value.viewOnly = running ? true : false
+  
+  if (!running) {
+    // Manual control is now active - ensure canvas can receive input
+    setTimeout(() => {
+      try {
+        vnc.value.focus()
+        const screen = document.getElementById(`vnc-screen-${uniqueId.value}`)
+        const canvas = screen ? screen.querySelector('canvas') : null
+        if (canvas) {
+          canvas.tabIndex = 0
+          canvas.focus()
+          canvas.style.pointerEvents = 'auto'
+          canvas.style.touchAction = 'none'
+          // Force a click event to ensure focus
+          canvas.click()
+        }
+      } catch {
+        // ignore
+      }
+    }, 500) // Small delay to ensure VNC is ready
   }
 })
 
 // Lifecycle
 onMounted(() => {
+  // track fullscreen changes
+  if (import.meta.client) {
+    document.addEventListener('fullscreenchange', fsListener)
+    document.addEventListener('webkitfullscreenchange', fsListener)
+    document.addEventListener('mozfullscreenchange', fsListener)
+    document.addEventListener('MSFullscreenChange', fsListener)
+  }
   requestNewSession()
 })
 
 onUnmounted(() => {
   cleanup()
+  if (import.meta.client) {
+    document.removeEventListener('fullscreenchange', fsListener)
+    document.removeEventListener('webkitfullscreenchange', fsListener)
+    document.removeEventListener('mozfullscreenchange', fsListener)
+    document.removeEventListener('MSFullscreenChange', fsListener)
+  }
 })
 
 // Watch for task changes
@@ -450,14 +510,33 @@ defineExpose({
   cleanup,
   getSessionInfo: () => sessionInfo.value
 })
+
+// Fullscreen helpers
+function fsListener () {
+  const fs = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement
+  isFullscreen.value = !!fs
+}
+
+function toggleFullscreen () {
+  if (!import.meta.client) return
+  const container = document.getElementById(`vnc-screen-${uniqueId.value}`)?.parentElement
+  if (!container) return
+  const fs = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement
+  if (!fs) {
+    const rfs = container.requestFullscreen || container.webkitRequestFullscreen || container.mozRequestFullScreen || container.msRequestFullscreen
+    if (rfs) rfs.call(container)
+  } else {
+    const xfs = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen
+    if (xfs) xfs.call(document)
+  }
+}
 </script>
 
 <style scoped>
-/* Ensure VNC canvas fills container */
+/* Allow noVNC to compute natural canvas size to avoid cursor offset */
 :deep(canvas) {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
   pointer-events: auto !important;
   cursor: default !important;
   user-select: none !important;

@@ -86,7 +86,7 @@ class AutomationEngine:
                     logger.error(f"Failed to allocate VNC session: {e}")
                     raise
 
-            # Browser launch arguments optimized for VNC
+            # Browser launch arguments optimized for VNC with cursor visibility
             browser_args = [
                 f'--display={display}',  # CRITICAL: Use VNC display
                 '--no-sandbox',
@@ -99,7 +99,17 @@ class AutomationEngine:
                 '--start-maximized',
                 '--force-device-scale-factor=1',
                 f'--lang=en-US',
-                f'--timezone={settings.timezone}'
+                f'--timezone={settings.timezone}',
+                # CURSOR VISIBILITY: Critical arguments for proper mouse cursor in VNC
+                '--use-gl=swiftshader',
+                '--enable-accelerated-compositing',
+                '--disable-gpu-sandbox',
+                '--allow-no-sandbox-job',
+                '--disable-backgrounding-occluded-windows',
+                '--disable-renderer-backgrounding',
+                '--disable-background-timer-throttling',
+                '--disable-features=TranslateUI',
+                '--disable-ipc-flooding-protection'
             ]
             
             # Launch browser - MUST be headless=False for VNC visibility

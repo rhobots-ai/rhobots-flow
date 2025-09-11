@@ -13,6 +13,8 @@ interface SessionInfo {
   status: 'creating' | 'active' | 'error'
   created_at: string
   password?: string
+  vnc_url?: string
+  web_url?: string
 }
 
 interface QueueStatus {

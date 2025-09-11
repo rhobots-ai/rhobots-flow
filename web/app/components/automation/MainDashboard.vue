@@ -169,9 +169,9 @@
       <!-- Center: Browser viewport with toolbar -->
       <section class="flex-1 flex flex-col">
         <!-- Browser toolbar -->
-        <div class="px-5 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-          <div class="max-w-5xl">
-            <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-sm">
+        <div class="px-5 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex-1 min-h-0">
+          <div class="max-w-full h-full">
+            <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-sm h-full flex flex-col">
               <div class="flex items-center gap-2 px-3 py-2.5 border-b border-zinc-200 dark:border-zinc-800">
                 <div class="flex items-center gap-1">
                   <span class="w-3 h-3 rounded-full bg-red-500"></span>
@@ -182,7 +182,7 @@
                 <button class="px-2.5 py-1.5 rounded-md bg-zinc-50 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-xs hover:shadow" @click="reload">⟳</button>
                 <button class="px-2.5 py-1.5 rounded-md bg-zinc-50 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-xs hover:shadow" @click="toggleFullscreen">⤢</button>
               </div>
-              <div class="h-[640px] bg-black">
+              <div class="flex-1 min-h-0 bg-black" ref="viewportContainer">
                 <MultiSessionBrowserViewport
                   v-if="sessionId"
                   :user-id="sessionId"
@@ -208,7 +208,7 @@
               </button>
             </div>
             <div v-if="executions.length === 0" class="text-xs text-zinc-500 mt-2">No runs yet.</div>
-            <div v-else class="mt-2 divide-y divide-zinc-200">
+            <div v-else class="mt-2 divide-y divide-zinc-200 max-h-56 overflow-y-auto">
               <div v-for="exec in executions" :key="exec.id" class="py-2 text-xs text-zinc-700 flex items-center justify-between">
                 <div class="flex flex-wrap items-center gap-3">
                   <span :class="statusPill(exec.status)" class="px-2 py-0.5 rounded-full capitalize">{{ exec.status }}</span>
@@ -588,7 +588,20 @@ const closeDialog = () => {
 
 // Toolbar dummy actions
 const reload = () => {}
-const toggleFullscreen = () => {}
+const viewportContainer = ref(null)
+const toggleFullscreen = () => {
+  if (!import.meta.client) return
+  const el = viewportContainer.value
+  if (!el) return
+  const isFs = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement
+  if (!isFs) {
+    const rfs = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen
+    if (rfs) rfs.call(el)
+  } else {
+    const xfs = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen
+    if (xfs) xfs.call(document)
+  }
+}
 
 onMounted(async () => {
   try {

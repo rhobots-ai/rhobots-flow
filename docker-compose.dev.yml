@@ -18,7 +18,7 @@ services:
       - DISPLAY_END=100
       - VNC_PORT_START=5901
       - VNC_PORT_END=6000
-      - WEB_PORT_START=7901
+      - WEB_PORT_START=7902
       - WEB_PORT_END=8000
       # Redis
       - REDIS_HOST=redis

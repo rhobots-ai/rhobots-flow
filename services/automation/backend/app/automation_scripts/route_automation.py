@@ -93,7 +93,7 @@ async def run_automation_async(
         })
         
         # Click the FAB button (⚡) to show the results
-        await page.get_by_role("button", name="⚡").click()
+        # await page.get_by_role("button", name="⚡").click()
         
         # Take a screenshot to capture the final state
         import time

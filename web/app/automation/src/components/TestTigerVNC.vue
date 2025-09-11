@@ -46,7 +46,7 @@
     </div>
 
     <!-- VNC Viewport -->
-    <div class="h-[600px] bg-black rounded overflow-hidden border">
+    <div class="h-[calc(100vh-240px)] bg-black rounded overflow-hidden border">
       <MultiSessionBrowserViewport
         v-if="isRunning"
         ref="viewportRef"
@@ -132,6 +132,8 @@ const onSessionCreated = async (session) => {
       autoLaunchChromium.value = false
     }
   }
+  // Enable manual control by default in the test harness
+  isRunning.value = false
 }
 
 const onSessionDestroyed = () => {

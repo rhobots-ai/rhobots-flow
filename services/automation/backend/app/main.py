@@ -94,15 +94,20 @@ async def get_vnc_config(request: Request):
     if host == 'backend':
         vnc_host = 'vnc'
     
+    # Ports are defined in docker-compose.dev.yml for the automation service
+    # noVNC web ports: start at 7902 to avoid conflicts, Session Manager API: 8001
     return {
-        "url": f"ws://{vnc_host}:7902/websockify",  # noVNC websockify endpoint (updated port)
-        "vnc_url": f"http://{vnc_host}:7902/vnc.html",  # noVNC HTTP interface (updated port)
-        "password": None,  # For dev only
+        "url": f"ws://{vnc_host}:7902/websockify",
+        "vnc_url": f"http://{vnc_host}:7902/vnc.html",
+        "password": None,
         "autoconnect": True,
         "view_only": False,
         "show_dot_cursor": True,
+        "local_cursor": True,      # Show local cursor
+        "cursor_uri": "",          # Use default cursor
+        "shared": True,            # Allow shared connections
         "timezone": settings.timezone,
-        "session_manager_url": f"http://{vnc_host}:8003"  # Session manager API
+        "session_manager_url": f"http://{vnc_host}:8001"
     }
 
 @app.get("/api/test-browser")

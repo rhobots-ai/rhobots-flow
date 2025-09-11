@@ -17,10 +17,10 @@ export const useWebSocketStore = defineStore('websocket', {
         return connectionsMap.get(sessionId)
       }
       
-      // Build absolute WebSocket URL to route via Nuxt proxy to automation backend
-      const apiScheme = (location.protocol === 'https:') ? 'https' : 'http'
-      const wsScheme = apiScheme === 'https' ? 'wss' : 'ws'
-      const wsUrl = `${wsScheme}://${location.host}/ws/automation/${sessionId}`
+      // Connect directly to automation backend on port 8000
+      const wsScheme = location.protocol === 'https:' ? 'wss' : 'ws'
+      const hostname = location.hostname
+      const wsUrl = `${wsScheme}://${hostname}:8000/ws/${sessionId}`
 
       const ws = new WebSocket(wsUrl)
       connectionsMap.set(sessionId, ws)

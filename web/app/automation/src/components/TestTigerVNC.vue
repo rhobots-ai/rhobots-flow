@@ -7,27 +7,35 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div>
         <label class="block text-sm text-zinc-600 dark:text-zinc-400 mb-1">User ID</label>
-        <input v-model="userId"
-               class="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 text-zinc-900 dark:text-zinc-100"
-               placeholder="test-user-123" />
+        <input
+          v-model="userId"
+          class="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 text-zinc-900 dark:text-zinc-100"
+          placeholder="test-user-123"
+        >
       </div>
       <div>
         <label class="block text-sm text-zinc-600 dark:text-zinc-400 mb-1">Task ID (optional)</label>
-        <input v-model.number="taskId"
-               type="number"
-               min="0"
-               class="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 text-zinc-900 dark:text-zinc-100"
-               placeholder="e.g. 1" />
+        <input
+          v-model.number="taskId"
+          type="number"
+          min="0"
+          class="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 text-zinc-900 dark:text-zinc-100"
+          placeholder="e.g. 1"
+        >
       </div>
       <div class="flex items-end gap-2">
-        <button @click="startDemo"
-                :disabled="isRunning"
-                class="px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 disabled:opacity-50">
+        <button
+          class="px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 disabled:opacity-50"
+          :disabled="isRunning"
+          @click="startDemo"
+        >
           Start Demo
         </button>
-        <button @click="destroySession"
-                :disabled="!isRunning"
-                class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50">
+        <button
+          class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
+          :disabled="!isRunning"
+          @click="destroySession"
+        >
           Stop
         </button>
       </div>
@@ -145,3 +153,14 @@ const onConnectionChanged = (state) => {
   statusMessage.value = `Connection: ${state}`
 }
 </script>
+
+<style scoped>
+/* Match viewport canvas behavior to avoid cursor offset and ensure visibility */
+:deep(canvas) {
+  max-width: 100%;
+  max-height: 100%;
+  pointer-events: auto !important;
+  cursor: default !important;
+  user-select: none !important;
+}
+</style>

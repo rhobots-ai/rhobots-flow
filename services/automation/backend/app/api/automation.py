@@ -33,6 +33,7 @@ async def end_session(session_id: str):
         raise HTTPException(status_code=500, detail=f"Failed to close session: {str(e)}")
 class ExecuteRequest(BaseModel):
     file_id: int
+    user_id: Optional[str] = None
 
 @router.post("/execute/{task_id}")
 async def execute_task(
@@ -72,7 +73,8 @@ async def execute_task(
             task_id=task_id,
             status="pending",
             total_steps=len(task.steps) if task.steps else 0,
-            file_id=file_id
+            file_id=file_id,
+            user_id=request.user_id
         )
         
         db.add(execution)
@@ -82,6 +84,8 @@ async def execute_task(
         # Create automation engine
         engine = AutomationEngine(session_id, websocket_manager)
         engine.execution_id = execution.id
+        # Bind initiating user to engine for VNC allocation
+        engine.user_id = request.user_id
         automation_engines[session_id] = engine
         
         # Convert task data
@@ -95,13 +99,14 @@ async def execute_task(
         # Start automation in background
         background_tasks.add_task(engine.execute_task, task_data, file=file_record, execution_id=execution.id)
         
-        logger.info(f"Started automation for task {task_id}, session {session_id}")
+        logger.info(f"Started automation for task {task_id}, session {session_id} (user_id={request.user_id})")
         
         return {
             "session_id": session_id,
             "task_id": task_id,
             "status": "started",
-            "message": "Automation started successfully"
+            "message": "Automation started successfully",
+            "user_id": request.user_id
         }
         
     except HTTPException:
@@ -217,7 +222,8 @@ async def get_automation_status(
             "is_active": is_active,
             "start_time": execution.start_time,
             "end_time": execution.end_time,
-            "error_message": execution.error_message
+            "error_message": execution.error_message,
+            "user_id": execution.user_id
         }
         
     except HTTPException:

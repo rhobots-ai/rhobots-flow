@@ -55,6 +55,8 @@ class AutomationEngine:
         self.is_running = False
         self.vnc_session: Optional[Dict[str, Any]] = None
         self.task_id: Optional[int] = None
+        # New: initiating Django user id (ussid)
+        self.user_id: Optional[str] = None
         
         # Set timezone
         self.timezone = pytz.timezone(settings.timezone)
@@ -73,7 +75,8 @@ class AutomationEngine:
                         resp = await client.post(
                             f"{settings.session_manager_url}/api/sessions/create",
                             json={
-                                "user_id": self.session_id,
+                                # Prefer binding to Django user id if provided; fallback to automation session id
+                                "user_id": self.user_id or self.session_id,
                                 "task_id": self.task_id,
                                 "timeout_minutes": 30
                             },

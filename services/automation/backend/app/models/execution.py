@@ -12,6 +12,8 @@ class Execution(Base):
     id = Column(Integer, primary_key=True, index=True)
     session_id = Column(String(255), unique=True, nullable=False, index=True)
     task_id = Column(Integer, ForeignKey("tasks.id"), nullable=False)
+    # New: Django user identifier (ussid) who started the execution
+    user_id = Column(String(255), nullable=True, index=True)
     status = Column(String(50), nullable=False)  # pending, running, paused, completed, failed
     current_step = Column(Integer, default=0)
     total_steps = Column(Integer, default=0)
@@ -45,6 +47,7 @@ class ExecutionResponse(BaseModel):
     id: int
     session_id: str
     task_id: int
+    user_id: Optional[str]
     status: str
     current_step: int
     total_steps: int

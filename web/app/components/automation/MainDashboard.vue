@@ -185,7 +185,7 @@
               <div class="flex-1 min-h-0 bg-black" ref="viewportContainer">
                 <MultiSessionBrowserViewport
                   v-if="sessionId"
-                  :user-id="sessionId"
+                  :user-id="userStore.profile?.id || sessionId"
                   :task-id="selectedTaskId"
                   :is-running="isRunning"
                   :show-resource-usage="true"
@@ -258,9 +258,11 @@ import { Plus, CheckCircle, XCircle, Check } from 'lucide-vue-next'
 import { useWebSocketStore } from '@auto/stores/websocket.js'
 import MultiSessionBrowserViewport from '@auto/components/MultiSessionBrowserViewport.vue'
 import { useUploadsStore } from '@auto/stores/uploads.js'
-
+import { useUserStore } from '@/stores/user'
+// Bind to authenticated user profile (Nuxt store)
 const wsStore = useWebSocketStore()
 const uploads = useUploadsStore()
+const userStore = useUserStore()
 
 // Tasks
 const tasks = ref([])
@@ -433,7 +435,7 @@ const startAutomation = async () => {
     }
     const resp = await $fetch(`/api/automation/execute/${selectedTaskId.value}`, {
       method: 'POST',
-      body: { file_id: fileResp.id },
+      body: { file_id: fileResp.id, user_id: userStore.profile?.id || null },
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
     })
     sessionId.value = resp.session_id

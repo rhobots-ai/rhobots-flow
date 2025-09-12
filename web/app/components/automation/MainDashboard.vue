@@ -217,7 +217,10 @@
                   <span v-if="exec.end_time">End: {{ new Date(exec.end_time).toLocaleString() }}</span>
                   <span v-if="exec.error_message" class="text-rose-600">Error: {{ exec.error_message }}</span>
                 </div>
-                <div class="text-[10px] text-zinc-500 dark:text-zinc-400">Exec ID: {{ exec.id }}</div>
+                <div class="flex items-center gap-2">
+                  <button class="px-2 py-1 rounded border text-[11px] bg-zinc-50 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700" @click="openExecDetail(exec)">View</button>
+                  <div class="text-[10px] text-zinc-500 dark:text-zinc-400">Exec ID: {{ exec.id }}</div>
+                </div>
               </div>
             </div>
           </div>
@@ -249,6 +252,56 @@
       </div>
     </div>
 
+    <!-- Execution detail modal -->
+    <div v-if="showExecDetail" class="fixed inset-0 z-50 flex items-center justify-center">
+      <div class="fixed inset-0 bg-black/40" @click="closeExecDetail"></div>
+      <div class="relative bg-white dark:bg-zinc-900 rounded-lg shadow-xl w-full max-w-3xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-medium text-zinc-900 dark:text-zinc-200">Execution Details</h3>
+          <button class="px-2 py-1 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-300 dark:border-zinc-700" @click="closeExecDetail">Close</button>
+        </div>
+        <div v-if="selectedExec" class="space-y-4 text-sm">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="bg-zinc-50 dark:bg-zinc-800 rounded p-3 border border-zinc-200 dark:border-zinc-700">
+              <div class="text-zinc-500 dark:text-zinc-400">Session ID</div>
+              <div class="font-mono break-all text-zinc-900 dark:text-zinc-100">{{ selectedExec.session_id }}</div>
+            </div>
+            <div class="bg-zinc-50 dark:bg-zinc-800 rounded p-3 border border-zinc-200 dark:border-zinc-700">
+              <div class="text-zinc-500 dark:text-zinc-400">User ID</div>
+              <div class="font-mono break-all text-zinc-900 dark:text-zinc-100">{{ selectedExec.user_id || '—' }}</div>
+            </div>
+            <div class="bg-zinc-50 dark:bg-zinc-800 rounded p-3 border border-zinc-200 dark:border-zinc-700">
+              <div class="text-zinc-500 dark:text-zinc-400">Status</div>
+              <div class="capitalize text-zinc-900 dark:text-zinc-100">{{ selectedExec.status }}</div>
+            </div>
+            <div class="bg-zinc-50 dark:bg-zinc-800 rounded p-3 border border-zinc-200 dark:border-zinc-700">
+              <div class="text-zinc-500 dark:text-zinc-400">Steps</div>
+              <div class="text-zinc-900 dark:text-zinc-100">{{ selectedExec.current_step }}/{{ selectedExec.total_steps }}</div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <div class="text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Screenshots</div>
+              <div v-if="selectedExec.screenshots && selectedExec.screenshots.length" class="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto">
+                <div v-for="(shot, idx) in selectedExec.screenshots" :key="idx" class="border rounded overflow-hidden bg-zinc-50 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700">
+                  <img :src="shot" :alt="`Screenshot ${idx + 1}`" class="w-full h-28 object-cover" />
+                </div>
+              </div>
+              <div v-else class="text-xs text-zinc-500">No screenshots available.</div>
+            </div>
+
+            <div>
+              <div class="text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-2">Recording</div>
+              <div class="text-xs text-zinc-500">No recording attached.</div>
+              <!-- If you later add video_url to execution, render:
+              <video v-if="selectedExec.video_url" :src="selectedExec.video_url" controls class="w-full rounded border" />
+              -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -299,6 +352,8 @@ const currentStep = ref(0)
 
 // Executions (run history)
 const executions = ref([])
+const showExecDetail = ref(false)
+const selectedExec = ref(null)
 const loadExecutions = async () => {
   try {
     if (!selectedTaskId.value) return
@@ -307,6 +362,16 @@ const loadExecutions = async () => {
   } catch (e) {
     console.error('Failed to load executions', e)
   }
+}
+
+const openExecDetail = (exec) => {
+  selectedExec.value = exec
+  showExecDetail.value = true
+}
+
+const closeExecDetail = () => {
+  showExecDetail.value = false
+  selectedExec.value = null
 }
 
 // Settings (local for UI only)
